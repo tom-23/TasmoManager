@@ -19,6 +19,7 @@ SetupDeviceDialog::SetupDeviceDialog(QWidget *parent, DeviceManager *_deviceMana
         ui->mqttServerBox->addItem(serverManager->serverList->at(i).name);
     }
     ui->mqttServerBox->setCurrentIndex(0);
+    ui->nextButton->setEnabled(true);
 
     ui->stackedWidget->setCurrentIndex(0);
     ui->doneButton->setVisible(false);

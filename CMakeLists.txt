@@ -11,6 +11,14 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if (APPLE)
+    cmake_minimum_required(VERSION 3.1)
+    set(TASMOMANAGER_EXECUTABLE_NAME "TasmoManager")
+else()
+    cmake_minimum_required(VERSION 2.8.12)
+    set(TASMOMANAGER_EXECUTABLE_NAME ${PROJECT_NAME})
+endif()
+
 # QtCreator supports the following variables for Android, which are identical to qmake Android variables.
 # Check https://doc.qt.io/qt/deployment-android.html for more information.
 # They need to be set before the find_package( ...) calls below.
@@ -47,21 +55,20 @@ set(tasmomanager_RESOURCES resources/resources.qrc)
 set(tasmomanager_COMPILE
     ${tasmomanager_COMPILE} ${tasmomanager_SOURCES} ${tasmomanager_HEADERS} ${tasmomanager_FORMS} ${tasmomanager_RESOURCES})
 
+if(APPLE)
+    set(MACOSX_BUNDLE_BUNDLE_NAME "${TASMOMANAGER_EXECUTABLE_NAME}")
+    set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.tasmomanager.tasmomanager")
+    set(MACOSX_BUNDLE_INFO_STRING "Beginner friendly management UI for Tasmota flashed devices.")
+    set(MACOSX_BUNDLE_ICON_FILE "icon.icns")
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(TasmoManager
-        ${tasmomanager_COMPILE}
-    )
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/resources/icon.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+    set(tasmomanager_COMPILE ${tasmomanager_COMPILE} "${CMAKE_CURRENT_SOURCE_DIR}/resources/icon.icns")
+
+    add_executable(${TASMOMANAGER_EXECUTABLE_NAME} MACOSX_BUNDLE ${tasmomanager_COMPILE})
+
+    set_target_properties(${TASMOMANAGER_EXECUTABLE_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/misc/Info.plist")
 else()
-    if(ANDROID)
-        add_library(TasmoManager SHARED
-            ${tasmomanager_COMPILE}
-        )
-    else()
-        add_executable(TasmoManager
-            ${tasmomanager_COMPILE}
-        )
-    endif()
+    add_executable(${TASMOMANAGER_EXECUTABLE_NAME} ${tasmomanager_COMPILE})
 endif()
 
 target_link_libraries(TasmoManager PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network qmqtt)

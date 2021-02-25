@@ -58,10 +58,7 @@ public:
 
     ConnectionStatus connectionStatus;
 
-
-
 private:
-
 
     QList<QHostAddress> getIPAddresses(QNetworkAddressEntry networkAddress);
     QList<QNetworkAddressEntry> getActiveAddresses();

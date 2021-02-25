@@ -199,24 +199,22 @@ void DeviceManager::setupNewDevice(DeviceInfo baseInfo, DeviceInfo newInfo) {
 
 QList<QHostAddress> DeviceManager::getIPAddresses(QNetworkAddressEntry networkAddress) {
 
-    struct in_addr ipaddress, subnetmask;
+    quint32 ipAddress = networkAddress.ip().toIPv4Address();
+    quint32 netmask = networkAddress.netmask().toIPv4Address();
 
-    inet_pton(AF_INET, networkAddress.ip().toString().toStdString().c_str(), &ipaddress);
-    inet_pton(AF_INET, networkAddress.netmask().toString().toStdString().c_str(), &subnetmask);
-
-    unsigned long first_ip = ntohl(ipaddress.s_addr & subnetmask.s_addr);
-    unsigned long last_ip = ntohl(ipaddress.s_addr | ~(subnetmask.s_addr));
+    quint32 first = ipAddress & netmask;
+    quint32 last = ~(netmask) + first;
 
 
     QList<QHostAddress> ipAddressList;
-    for (unsigned long ip = first_ip; ip <= last_ip; ++ip) {
-        unsigned long theip = htonl(ip);
-        struct in_addr x = { static_cast<in_addr_t>(theip) };
-        QHostAddress hostAddressIP = QHostAddress(inet_ntoa(x));
-        ipAddressList.push_back(hostAddressIP);
 
-
+    for (quint32 i = first; i < last; i++) {
+        QHostAddress ip(i);
+        ipAddressList.append(ip);
     }
+
+    ipAddressList.pop_back();
+
     return ipAddressList;
 }
 

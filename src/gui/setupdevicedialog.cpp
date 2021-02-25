@@ -18,6 +18,7 @@ SetupDeviceDialog::SetupDeviceDialog(QWidget *parent, DeviceManager *_deviceMana
     for (int i = 0; i < serverManager->serverList->size(); i++) {
         ui->mqttServerBox->addItem(serverManager->serverList->at(i).name);
     }
+    ui->mqttServerBox->setCurrentIndex(0);
 
     ui->stackedWidget->setCurrentIndex(0);
     ui->doneButton->setVisible(false);

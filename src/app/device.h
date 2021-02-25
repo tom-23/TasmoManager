@@ -62,7 +62,7 @@ struct DeviceInfo {
     int wifiRSSI = 0;
     int wifiSignal;
 
-    DeviceCapabilities capabilities;
+    DeviceCapabilities capabilities = DeviceCapabilities();
 
     QList<bool> power = {false, false, false, false};
 

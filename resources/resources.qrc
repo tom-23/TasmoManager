@@ -1,0 +1,37 @@
+<RCC>
+    <qresource prefix="/64">
+        <file>assets/64_bulb_cross.svg</file>
+        <file>assets/64_bulb_tick.svg</file>
+        <file>assets/64_bulb.svg</file>
+    </qresource>
+    <qresource prefix="/24">
+        <file>assets/24_bulb_square.svg</file>
+        <file>assets/24_about_square.svg</file>
+        <file>assets/24_servers_square.svg</file>
+        <file>assets/24_gear_square.svg</file>
+    </qresource>
+    <qresource prefix="/32">
+        <file>assets/32_disconnect.svg</file>
+        <file>assets/32_connect.svg</file>
+        <file>assets/32_web.svg</file>
+        <file>assets/32_refresh.svg</file>
+        <file>assets/32_settings.svg</file>
+        <file>assets/32_terminal.svg</file>
+        <file>assets/32_connecting.svg</file>
+        <file>assets/32_bulb_cross.svg</file>
+        <file>assets/32_bulb.svg</file>
+        <file>assets/32_backup.svg</file>
+        <file>assets/32_firmware.svg</file>
+        <file>assets/32_mqtt.svg</file>
+        <file>assets/32_restart.svg</file>
+    </qresource>
+    <qresource prefix="/gif">
+        <file>assets/loader.gif</file>
+    </qresource>
+    <qresource prefix="/16">
+        <file>assets/16_no_signal.svg</file>
+        <file>assets/16_great_signal.svg</file>
+        <file>assets/16_good_signal.svg</file>
+        <file>assets/16_weak_signal.svg</file>
+    </qresource>
+</RCC>

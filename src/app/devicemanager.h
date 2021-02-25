@@ -21,7 +21,13 @@
 class Device;
 struct DeviceInfo;
 #include "networkscanthread.h"
-#include <arpa/inet.h>
+
+#ifdef _WIN64
+    #include <winsock2.h>
+#else
+    #include <arpa/inet.h>
+#endif
+
 
 enum ConnectionStatus {
     Connected,

@@ -62,20 +62,32 @@ void DevicePowerWidget::updateUI() {
 
 void DevicePowerWidget::on_power1_toggled(bool checked)
 {
+    if (updatingUI) {
+        return;
+    }
     device->setPower(1, checked);
 }
 
 void DevicePowerWidget::on_power2_toggled(bool checked)
 {
+    if (updatingUI) {
+        return;
+    }
     device->setPower(2, checked);
 }
 
 void DevicePowerWidget::on_power3_toggled(bool checked)
 {
+    if (updatingUI) {
+        return;
+    }
     device->setPower(3, checked);
 }
 
 void DevicePowerWidget::on_power4_toggled(bool checked)
 {
+    if (updatingUI) {
+        return;
+    }
     device->setPower(4, checked);
 }

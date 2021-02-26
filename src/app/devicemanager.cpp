@@ -25,6 +25,7 @@ void DeviceManager::connect(MQTTServerInfo *serverInfo) {
         emit mqtt_onError(clientError);
         connectionStatus = Disconnected;
         qDebug() << "[MQTT Status] Got a connection error!";
+        qDebug() << clientError;
     });
 }
 
@@ -49,6 +50,10 @@ void DeviceManager::on_mqttMessage(QMQTT::Message message) {
             QString ipAddress = jsonDoc.object().value("ip").toString();
             QString fullTopicWithWildC = jsonDoc.object().value("ft").toString();
             QString topic = jsonDoc.object().value("t").toString();
+
+            if (!fullTopicWithWildC.endsWith("/")) { // Ensure the fulltopic has a trailing slash.
+                fullTopicWithWildC = fullTopicWithWildC + "/";
+            }
 
             Device *device = getDeviceByMAC(macAddress);
             if (device == nullptr) {

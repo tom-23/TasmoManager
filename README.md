@@ -16,5 +16,5 @@ A beginner friendly desktop UI for Tasmota flashed devices.
 * Color and Color Temp control
 * Power Control (Up to 4)
 * Device Renaming
-* Integrated Console / Termninal
+* Integrated Console / Terminal
 * Multiple MQTT Servers

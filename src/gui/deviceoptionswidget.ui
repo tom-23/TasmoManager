@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DeviceOptionsWidget</class>
+ <widget class="QDialog" name="DeviceOptionsWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>641</width>
+    <height>330</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">* {
+	font: &quot;Raleway&quot;;
+	color: white;
+}
+
+QMessageBox {
+	background-color: rgb(37, 37, 37);
+}
+
+#PreferencesDialog {
+	background-color: rgb(37, 37, 37);
+	font-weight: 600;
+	
+}
+QPushButton {
+	border-radius: 5px;
+	border: none;
+	padding: 5px 15px;
+	background-color: #1fa3ec;
+}
+
+QPushButton:pressed {
+	background-color: #0e70a4;
+}
+
+QPushButton:!enabled {
+	background-color: rgb(145, 145, 145);
+}
+
+QToolButton {
+	border-radius: 5px;
+	border: none;
+	padding: 3px 15px;
+	background-color: #1fa3ec;
+}
+
+QToolButton:pressed {
+	background-color: #0e70a4;
+}
+
+
+QListWidget {
+	padding: 10px;
+	background-color: rgb(37, 37, 37);
+	border: none;
+}
+
+QListView::item {
+   	padding: 3px;
+	padding-left: 0px;
+	border-radius: 5px;
+}
+
+QListView::item:selected {
+	background-color: #1fa3ec;
+}
+
+#mqttServersList {
+	background-color: rgb(37, 37, 37);
+	padding: 3px;
+	border-radius: 5px;
+	border: 1px Solid #0C0C0C;
+}
+
+QLineEdit,  QComboBox, QSpinBox {
+	background-color: #4f4f4f;
+	padding: 3px;
+	border-radius: 5px;
+	border: 1px Solid #0C0C0C;
+}
+
+QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noimg); border-width: 0px;}
+
+
+#container {
+	background-color: rgb(66, 66, 66);
+	border: none;
+	border-left: 1px Solid #0C0C0C;
+}</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QListWidget" name="listWidget">
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+     <item>
+      <property name="text">
+       <string>General</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../../resources/resources.qrc">
+        <normaloff>:/24/assets/24_gear_square.svg</normaloff>:/24/assets/24_gear_square.svg</iconset>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>MQTT Servers</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../../resources/resources.qrc">
+        <normaloff>:/24/assets/24_servers_square.svg</normaloff>:/24/assets/24_servers_square.svg</iconset>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Device Setup</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../../resources/resources.qrc">
+        <normaloff>:/24/assets/24_bulb_square.svg</normaloff>:/24/assets/24_bulb_square.svg</iconset>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Stats</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Info</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../../resources/resources.qrc">
+        <normaloff>:/24/assets/24_about_square.svg</normaloff>:/24/assets/24_about_square.svg</iconset>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="container" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+      <property name="leftMargin">
+       <number>10</number>
+      </property>
+      <property name="topMargin">
+       <number>10</number>
+      </property>
+      <property name="rightMargin">
+       <number>10</number>
+      </property>
+      <property name="bottomMargin">
+       <number>10</number>
+      </property>
+      <item>
+       <widget class="QStackedWidget" name="stackedWidget">
+        <widget class="QWidget" name="page"/>
+        <widget class="QWidget" name="page_2"/>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../resources/resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

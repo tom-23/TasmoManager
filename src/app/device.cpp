@@ -241,10 +241,7 @@ void Device::on_Message(QMQTT::Message message) {
             }
         }
 
-        if (!rootObject.value("Dimmer").isUndefined()) {
-            deviceInfo.capabilities.dimmer = true;
-            deviceInfo.dimmer = rootObject.value("Dimmer").toInt();
-        }
+
 
         // Go through 5 light channels
         for (int i = 0; i < deviceInfo.capabilities.channels.size(); i++) {
@@ -267,6 +264,15 @@ void Device::on_Message(QMQTT::Message message) {
         if (!rootObject.value("CT").isUndefined()) {
             deviceInfo.capabilities.colorTemp = true;
             deviceInfo.colorTemp = rootObject.value("CT").toInt();
+        }
+
+        if (!rootObject.value("Dimmer").isUndefined()) {
+            deviceInfo.capabilities.dimmer = true;
+            deviceInfo.dimmer = rootObject.value("Dimmer").toInt();
+
+            if (deviceInfo.capabilities.colorTemp) {
+                deviceInfo.color.setHsv(deviceInfo.color.hue(), deviceInfo.color.saturation(), map(deviceInfo.dimmer, 0, 100, 0, 255));
+            }
         }
 
         if (!rootObject.value("Restart").isUndefined()) {

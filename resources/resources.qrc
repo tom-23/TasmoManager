@@ -41,4 +41,12 @@
     <qresource prefix="/identity">
         <file>Icon.png</file>
     </qresource>
+    <qresource prefix="/fonts">
+        <file>fonts/Roboto-Bold.ttf</file>
+        <file>fonts/Roboto-BoldItalic.ttf</file>
+        <file>fonts/Roboto-Italic.ttf</file>
+        <file>fonts/Roboto-Medium.ttf</file>
+        <file>fonts/Roboto-MediumItalic.ttf</file>
+        <file>fonts/Roboto-Regular.ttf</file>
+    </qresource>
 </RCC>

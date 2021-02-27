@@ -25,7 +25,7 @@ enum DeviceStatus {
 };
 
 struct DeviceCapabilities {
-    QList<bool> power = {false, false, false, false};
+    QList<bool> power = {false, false, false, false, false, false};
     QList<bool> channels = {false, false, false, false, false};
     bool color = false;
     bool colorTemp = false;
@@ -65,7 +65,7 @@ struct DeviceInfo {
 
     DeviceCapabilities capabilities = DeviceCapabilities();
 
-    QList<bool> power = {false, false, false, false};
+    QList<bool> power = {false, false, false, false, false, false};
 
     int dimmer;
     QList<int> channels = {0, 0, 0, 0, 0};

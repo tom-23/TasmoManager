@@ -233,7 +233,7 @@ void Device::on_Message(QMQTT::Message message) {
         }
 
         // Go through 4 power swiches
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < deviceInfo.capabilities.power.size(); i++) {
             if (!rootObject.value("POWER" + QString::number(i + 1)).isUndefined()) {
                 bool value = onOffToBool(rootObject.value("POWER" + QString::number(i + 1)).toString());
                 deviceInfo.capabilities.power[i] = true;
@@ -247,7 +247,7 @@ void Device::on_Message(QMQTT::Message message) {
         }
 
         // Go through 5 light channels
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < deviceInfo.capabilities.channels.size(); i++) {
             if (!rootObject.value("Channel" + QString::number(i + 1)).isUndefined()) {
                 int value = rootObject.value("Channel" + QString::number(i + 1)).toInt();
                 deviceInfo.capabilities.channels[i] = true;

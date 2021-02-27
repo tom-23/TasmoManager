@@ -38,24 +38,15 @@ void DevicePowerWidget::setDevice(Device *_device) {
 void DevicePowerWidget::updateUI() {
     updatingUI = true;
 
-    ui->power1->setVisible(device->deviceInfo.capabilities.power[0]);
-    ui->power1->setChecked(device->deviceInfo.power[0]);
+    for (int i = 0; i < device->deviceInfo.capabilities.power.size(); i++) {
+        QPushButton *pushButton = this->findChild<QPushButton*>("power" + QString::number(i + 1));
+        if (pushButton) {
+            pushButton->setVisible(device->deviceInfo.capabilities.power[i]);
+            pushButton->setChecked(device->deviceInfo.power[i]);
+        }
+    }
 
-    ui->power2->setVisible(device->deviceInfo.capabilities.power[1]);
-    ui->power2->setChecked(device->deviceInfo.power[1]);
-
-    ui->power3->setVisible(device->deviceInfo.capabilities.power[2]);
-    ui->power3->setChecked(device->deviceInfo.power[2]);
-
-    ui->power4->setVisible(device->deviceInfo.capabilities.power[3]);
-    ui->power4->setChecked(device->deviceInfo.power[3]);
-
-    bool noPower = device->deviceInfo.capabilities.power[0]
-            || device->deviceInfo.capabilities.power[1]
-            || device->deviceInfo.capabilities.power[2]
-            || device->deviceInfo.capabilities.power[3];
-
-    this->setVisible(noPower);
+    this->setVisible(device->deviceInfo.capabilities.power[0]);
 
     updatingUI = false;
 }
@@ -90,4 +81,20 @@ void DevicePowerWidget::on_power4_toggled(bool checked)
         return;
     }
     device->setPower(4, checked);
+}
+
+void DevicePowerWidget::on_power5_toggled(bool checked)
+{
+    if (updatingUI) {
+        return;
+    }
+    device->setPower(5, checked);
+}
+
+void DevicePowerWidget::on_power6_toggled(bool checked)
+{
+    if (updatingUI) {
+        return;
+    }
+    device->setPower(6, checked);
 }

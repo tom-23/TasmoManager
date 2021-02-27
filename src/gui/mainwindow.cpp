@@ -35,8 +35,8 @@ MainWindow::MainWindow(QWidget *parent)
             m->setWindowModality(Qt::WindowModal);
             m->setStandardButtons(QMessageBox::Ok);
 
-            if (error == QMQTT::MqttBadUserNameOrPasswordError) {
-                m->setText("Bad Username or Password");
+            if (error == QMQTT::MqttBadUserNameOrPasswordError || error == QMQTT::MqttNotAuthorizedError) {
+                m->setText("Incorrect / Bad Username or Password");
                 m->setInformativeText("Ensure that you have entered in the username or password correctly. You can change this in Settings > MQTT Servers.");
             } else if (error == QMQTT::MqttNoPingResponse) {
                 m->setText("Cannot connect to server");
@@ -164,12 +164,24 @@ void MainWindow::on_deviceInfoUpdate(DeviceInfo deviceInfo) {
             item->setText(4, deviceInfo.firmwareVersion);
 
             if (deviceInfo.status == DeviceStatus::Online) {
+                QIcon onlineIcon;
+                onlineIcon.addFile(":/16/assets/16_online.svg");
+                item->setIcon(5, onlineIcon);
                 item->setText(5, "Online");
             } else if (deviceInfo.status == DeviceStatus::Offline) {
+                QIcon offlineIcon;
+                offlineIcon.addFile(":/16/assets/16_offline.svg");
+                item->setIcon(5, offlineIcon);
                 item->setText(5, "Offline");
             } else if (deviceInfo.status == DeviceStatus::Restarting) {
+                QIcon restartingIcon;
+                restartingIcon.addFile(":/16/assets/16_restarting.svg");
+                item->setIcon(5, restartingIcon);
                 item->setText(5, "Restarting...");
             } else if (deviceInfo.status == DeviceStatus::Updating) {
+                QIcon updatingIcon;
+                updatingIcon.addFile(":/16/assets/16_updating.svg");
+                item->setIcon(5, updatingIcon);
                 item->setText(5, "Updating...");
             }
 

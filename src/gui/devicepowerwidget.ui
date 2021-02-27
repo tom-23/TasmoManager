@@ -63,16 +63,6 @@ QPushButton:checked {
       <property name="spacing">
        <number>10</number>
       </property>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="power4">
-        <property name="text">
-         <string>Power 4</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="0">
        <widget class="QPushButton" name="power3">
         <property name="text">
@@ -93,10 +83,40 @@ QPushButton:checked {
         </property>
        </widget>
       </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="power4">
+        <property name="text">
+         <string>Power 4</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="0">
        <widget class="QPushButton" name="power1">
         <property name="text">
          <string>Power 1</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QPushButton" name="power5">
+        <property name="text">
+         <string>Power 5</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QPushButton" name="power6">
+        <property name="text">
+         <string>Power 6</string>
         </property>
         <property name="checkable">
          <bool>true</bool>

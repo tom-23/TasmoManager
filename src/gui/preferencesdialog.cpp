@@ -130,3 +130,8 @@ void PreferencesDialog::on_saveChangesButton_clicked()
 void PreferencesDialog::goToAboutPage() {
     ui->listWidget->setCurrentRow(ui->listWidget->count() - 1);
 }
+
+void PreferencesDialog::on_githubButton_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/tom-23/TasmoManager"));
+}

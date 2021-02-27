@@ -34,4 +34,7 @@
         <file>assets/16_good_signal.svg</file>
         <file>assets/16_weak_signal.svg</file>
     </qresource>
+    <qresource prefix="/identity">
+        <file>Icon.png</file>
+    </qresource>
 </RCC>

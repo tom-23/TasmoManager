@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Preferences</string>
   </property>
   <property name="styleSheet">
    <string notr="true">* {
@@ -265,7 +265,7 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>10</number>
+           <number>0</number>
           </property>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -284,7 +284,7 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_4">
               <property name="spacing">
-               <number>10</number>
+               <number>5</number>
               </property>
               <property name="leftMargin">
                <number>0</number>
@@ -308,7 +308,7 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_5">
                 <property name="spacing">
-                 <number>10</number>
+                 <number>5</number>
                 </property>
                 <property name="topMargin">
                  <number>0</number>
@@ -361,7 +361,7 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
                   <number>10</number>
                  </property>
                  <property name="verticalSpacing">
-                  <number>10</number>
+                  <number>5</number>
                  </property>
                  <property name="leftMargin">
                   <number>0</number>
@@ -602,22 +602,64 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="label">
-            <property name="styleSheet">
-             <string notr="true">font-size: 30pt;
-font-weight: 900;</string>
+           <widget class="QWidget" name="widget" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>128</height>
+             </size>
             </property>
-            <property name="text">
-             <string>TasmoAdmin</string>
+            <property name="maximumSize">
+             <size>
+              <width>128</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">image: url(:/identity/Icon.png);</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>v1.0.0 - Pre Alpha</string>
+           <layout class="QVBoxLayout" name="verticalLayout_8">
+            <property name="spacing">
+             <number>10</number>
             </property>
-           </widget>
+            <property name="leftMargin">
+             <number>13</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="styleSheet">
+               <string notr="true">font-size: 30pt;
+font-weight: 900;</string>
+              </property>
+              <property name="text">
+               <string>TasmoManager</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Pre Alpha</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Licenced under the GPL-2.0 License</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <spacer name="verticalSpacer">

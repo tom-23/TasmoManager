@@ -34,6 +34,8 @@ private slots:
 
     void on_saveChangesButton_clicked();
 
+    void on_githubButton_clicked();
+
 private:
     Ui::PreferencesDialog *ui;
 

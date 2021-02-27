@@ -25,8 +25,8 @@ void DeviceManager::connect(MQTTServerInfo *serverInfo) {
     });
 
     QObject::connect(mqttClient, &QMQTT::Client::error, this, [=] (QMQTT::ClientError clientError) {
-        emit mqtt_onError(clientError);
         connectionStatus = Disconnected;
+        emit mqtt_onError(clientError);
         qDebug() << "[MQTT Status] Got a connection error!";
         qDebug() << clientError;
     });

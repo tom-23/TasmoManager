@@ -24,31 +24,42 @@ MainWindow::MainWindow(QWidget *parent)
         updateInfoText();
     });
 
+    QTimer *errorCollectionTimer = new QTimer(this);
+    errorCollectionTimer->setSingleShot(true);
+
+    QList<QMQTT::ClientError> *errorList = new QList<QMQTT::ClientError>;
+
     connect(deviceManager, &DeviceManager::mqtt_onError, this, [=] (QMQTT::ClientError error) {
 
         // Only show message box is we are sure MQTT is disconnected.
         if (deviceManager->mqttClient->connectionState() != QMQTT::ConnectionState::STATE_CONNECTED) {
-            updateInfoText();
 
-            auto m = new QMessageBox(this);
-            m->setIcon(QMessageBox::Warning);
-            m->setWindowModality(Qt::WindowModal);
-            m->setStandardButtons(QMessageBox::Ok);
+            errorList->append(error);
+            if (!errorCollectionTimer->isActive()) {
+                errorCollectionTimer->start(500);
+            }
+        }
+    });
 
+    connect(errorCollectionTimer, &QTimer::timeout, this, [=] () {
+        auto m = new QMessageBox(this);
+        m->setIcon(QMessageBox::Warning);
+        m->setWindowModality(Qt::WindowModal);
+        m->setStandardButtons(QMessageBox::Ok);
+        m->setText("Cannot connect to server");
+
+        for (int i = 0; i < errorList->size(); i++) {
+            QMQTT::ClientError error = errorList->at(i);
             if (error == QMQTT::MqttBadUserNameOrPasswordError || error == QMQTT::MqttNotAuthorizedError) {
                 m->setText("Incorrect / Bad Username or Password");
-                m->setInformativeText("Ensure that you have entered in the username or password correctly. You can change this in Settings > MQTT Servers.");
-            } else if (error == QMQTT::MqttNoPingResponse || error == QMQTT::SocketRemoteHostClosedError || error == QMQTT::SocketTimeoutError) {
-                m->setText("Cannot connect to server");
-                m->setInformativeText("Ensure that you have entered the correct IP Address. You can change this in Settings > MQTT Servers.");
-            } else {
-                m->setText("Unknown error occoured!");
             }
-
-            m->setInformativeText(m->informativeText() + "\n\nReason: " + QVariant::fromValue(error).toString());
-
-            m->exec();
+            m->setInformativeText(m->informativeText() + "Error: " + QVariant::fromValue(error).toString() + "\n");
         }
+        if (m->informativeText().endsWith("\n")) {
+            m->setInformativeText(m->informativeText().left(m->informativeText().lastIndexOf("\n")));
+        }
+        m->show();
+        updateInfoText();
     });
 
     updateInfoText();

@@ -15,8 +15,8 @@ A beginner friendly desktop UI for Tasmota flashed devices.
 * Fast and Responsive
 * Device setup wizard
 * HSV Color and CCT control
-* Indervidual PWM Channel Control (Up to 4 channels)
-* Power Control (Up to 4)
+* Indervidual PWM Channel Control (Up to 5 channels)
+* Power Control (Up to 6 buttons)
 * Device Renaming
 * Integrated Console / Terminal
 * Multiple MQTT Servers

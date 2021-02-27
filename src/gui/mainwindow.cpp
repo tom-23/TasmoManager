@@ -38,12 +38,14 @@ MainWindow::MainWindow(QWidget *parent)
             if (error == QMQTT::MqttBadUserNameOrPasswordError || error == QMQTT::MqttNotAuthorizedError) {
                 m->setText("Incorrect / Bad Username or Password");
                 m->setInformativeText("Ensure that you have entered in the username or password correctly. You can change this in Settings > MQTT Servers.");
-            } else if (error == QMQTT::MqttNoPingResponse) {
+            } else if (error == QMQTT::MqttNoPingResponse || error == QMQTT::SocketRemoteHostClosedError || error == QMQTT::SocketTimeoutError) {
                 m->setText("Cannot connect to server");
                 m->setInformativeText("Ensure that you have entered the correct IP Address. You can change this in Settings > MQTT Servers.");
             } else {
                 m->setText("Unknown error occoured!");
             }
+
+            m->setInformativeText(m->informativeText() + "\n\nReason: " + QVariant::fromValue(error).toString());
 
             m->exec();
         }

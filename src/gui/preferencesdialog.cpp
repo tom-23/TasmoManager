@@ -6,6 +6,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
     ui(new Ui::PreferencesDialog)
 {
     ui->setupUi(this);
+    ui->version->setText(TASMOMANAGER_VERSION);
     ui->listWidget->setCurrentRow(0);
 }
 

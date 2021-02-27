@@ -19,43 +19,57 @@ else()
     set(TASMOMANAGER_EXECUTABLE_NAME ${PROJECT_NAME})
 endif()
 
-# QtCreator supports the following variables for Android, which are identical to qmake Android variables.
-# Check https://doc.qt.io/qt/deployment-android.html for more information.
-# They need to be set before the find_package( ...) calls below.
+# GENERATE VERSION FILE
+add_custom_target(
+    generate_version_header
+    ALL
+    COMMAND ${CMAKE_COMMAND}
+        -D INPUT_FILE=${CMAKE_CURRENT_SOURCE_DIR}/src/version.h.in
+        -D OUTPUT_FILE=${CMAKE_CURRENT_BINARY_DIR}/src/version.h
+        -P ${CMAKE_CURRENT_SOURCE_DIR}/version.cmake
+    BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/src/version.h
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+)
+set_source_files_properties(
+    ${CMAKE_CURRENT_BINARY_DIR}/src/version.h
+    PROPERTIES GENERATED TRUE
+)
 
-#if(ANDROID)
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-#    if (ANDROID_ABI STREQUAL "armeabi-v7a")
-#        set(ANDROID_EXTRA_LIBS
-#            ${CMAKE_CURRENT_SOURCE_DIR}/path/to/libcrypto.so
-#            ${CMAKE_CURRENT_SOURCE_DIR}/path/to/libssl.so)
-#    endif()
-#endif()
-
+#ADDING QMQTT TO PROJECT
 add_subdirectory(lib/qmqtt)
 include_directories("lib/qmqtt/src/mqtt")
 
+#FINDING QT FILES
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets WebSockets Network REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network REQUIRED)
 
+#SOURCE FILES
 file(GLOB tasmomanager_SOURCES src/main.cpp
     src/app/*.cpp
     src/common/*.cpp
     src/gui/*.cpp)
 
+#HEADER FILES
 file(GLOB tasmomanager_HEADERS
     src/app/*.h
     src/common/*.h
     src/gui/*.h)
 
+# UI FILES
 file(GLOB tasmomanager_FORMS src/gui/*.ui)
 
+# RESOURCE FILE
 set(tasmomanager_RESOURCES resources/resources.qrc)
 
 set(tasmomanager_COMPILE
     ${tasmomanager_COMPILE} ${tasmomanager_SOURCES} ${tasmomanager_HEADERS} ${tasmomanager_FORMS} ${tasmomanager_RESOURCES})
 
+# ON MAC OS, SPECIFY APP BUNDLE INFO
 if(APPLE)
+    set(TASMOMANAGER_VERSION_REGEX "^v([0-9]+)\.([0-9]+)\.(.*)$")
+    string(REGEX REPLACE "${TASMOMANAGER_VERSION_REGEX}" "\\1" CPACK_PACKAGE_VERSION_MAJOR "${tasmomanager_version}")
+    string(REGEX REPLACE "${TASMOMANAGER_VERSION_REGEX}" "\\2" CPACK_PACKAGE_VERSION_MINOR "${tasmomanager_version}")
+    string(REGEX REPLACE "${TASMOMANAGER_VERSION_REGEX}" "\\3" CPACK_PACKAGE_VERSION_PATCH "${tasmomanager_version}")
     set(MACOSX_BUNDLE_BUNDLE_NAME "${TASMOMANAGER_EXECUTABLE_NAME}")
     set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.tasmomanager.tasmomanager")
     set(MACOSX_BUNDLE_INFO_STRING "Beginner friendly management UI for Tasmota flashed devices.")
@@ -70,6 +84,8 @@ if(APPLE)
 else()
     add_executable(${TASMOMANAGER_EXECUTABLE_NAME} ${tasmomanager_COMPILE})
 endif()
+
+add_dependencies(${TASMOMANAGER_EXECUTABLE_NAME} generate_version_header)
 
 target_link_libraries(TasmoManager PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network qmqtt)
 

@@ -646,9 +646,9 @@ font-weight: 900;</string>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_3">
+             <widget class="QLabel" name="version">
               <property name="text">
-               <string>Pre Alpha</string>
+               <string>version_text</string>
               </property>
              </widget>
             </item>

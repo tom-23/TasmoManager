@@ -1,0 +1,6 @@
+#ifndef VERSION_H
+#define VERSION_H
+
+#define TASMOMANAGER_VERSION "${tasmomanager_version}"
+
+#endif // VERSION_H

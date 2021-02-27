@@ -5,6 +5,7 @@
 #include <QListWidgetItem>
 #include "mainwindow.h"
 #include "editserverdialog.h"
+#include "src/version.h"
 
 
 namespace Ui {

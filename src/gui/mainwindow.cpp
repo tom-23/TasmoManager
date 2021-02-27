@@ -1,11 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-#include <QHostInfo>
-#include <QNetworkInterface>
-
-
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)

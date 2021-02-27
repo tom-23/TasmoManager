@@ -59,6 +59,21 @@ void Device::openWebUI() {
 void Device::getState() {
     QMQTT::Message message;
     message.setTopic((cmndTopic + "STATE").toUtf8());
+
+    // Reset all capabilites (things might change if you changed the configuration)
+
+    deviceInfo.capabilities.color = false;
+    deviceInfo.capabilities.dimmer = false;
+    deviceInfo.capabilities.colorTemp = false;
+
+    for (int i = 0; i < deviceInfo.capabilities.power.size(); i++) {
+        deviceInfo.capabilities.power[i] = false;
+    }
+
+    for (int i = 0; i < deviceInfo.capabilities.channels.size(); i++) {
+        deviceInfo.capabilities.channels[i] = false;
+    }
+
     deviceManager->mqttClient->publish(message);
 }
 
@@ -86,6 +101,26 @@ void Device::setPower(int powerID, bool on) {
     } else {
         qDebug() << "[Device] Power ID is out of range (1 - 4)";
     }
+}
+
+void Device::setChannel(int channelID, int value) {
+    if (channelID <= 5 && channelID >= 1){
+        deviceInfo.channels[channelID - 1] = value;
+        QMQTT::Message message;
+        message.setTopic((cmndTopic + "Channel" + QString::number(channelID)).toUtf8());
+        message.setPayload(QString::number(map(value, 0, 255, 0, 100)).toUtf8());
+        deviceManager->mqttClient->publish(message);
+    } else {
+        qDebug() << "[Device] Power ID is out of range (1 - 4)";
+    }
+}
+
+void Device::setDimmer(int value) {
+    deviceInfo.dimmer = value;
+    QMQTT::Message message;
+    message.setTopic((cmndTopic + "Dimmer").toUtf8());
+    message.setPayload(QString::number(value).toUtf8());
+    deviceManager->mqttClient->publish(message);
 }
 
 void Device::setColor(QColor color) {
@@ -190,34 +225,34 @@ void Device::on_Message(QMQTT::Message message) {
         jsonDoc = QJsonDocument::fromJson(message.payload());
         QJsonObject rootObject = jsonDoc.object();
 
+        // Here is where we identify a device's capabilities (color, power, etc...) and set the respective values.
+
         if (!rootObject.value("POWER").isUndefined()) {
             deviceInfo.capabilities.power[0] = true;
             deviceInfo.power[0] = onOffToBool(rootObject.value("POWER").toString());
         }
 
-        if (!rootObject.value("POWER1").isUndefined()) {
-            deviceInfo.capabilities.power[0] = true;
-            deviceInfo.power[0] = onOffToBool(rootObject.value("POWER1").toString());
-        }
-
-        if (!rootObject.value("POWER2").isUndefined()) {
-            deviceInfo.capabilities.power[1] = true;
-            deviceInfo.power[1] = onOffToBool(rootObject.value("POWER2").toString());
-        }
-
-        if (!rootObject.value("POWER3").isUndefined()) {
-            deviceInfo.capabilities.power[2] = true;
-            deviceInfo.power[2] = onOffToBool(rootObject.value("POWER3").toString());
-        }
-
-        if (!rootObject.value("POWER4").isUndefined()) {
-            deviceInfo.capabilities.power[3] = true;
-            deviceInfo.power[3] = onOffToBool(rootObject.value("POWER4").toString());
+        // Go through 4 power swiches
+        for (int i = 0; i < 4; i++) {
+            if (!rootObject.value("POWER" + QString::number(i + 1)).isUndefined()) {
+                bool value = onOffToBool(rootObject.value("POWER" + QString::number(i + 1)).toString());
+                deviceInfo.capabilities.power[i] = true;
+                deviceInfo.power[i] = value;
+            }
         }
 
         if (!rootObject.value("Dimmer").isUndefined()) {
             deviceInfo.capabilities.dimmer = true;
             deviceInfo.dimmer = rootObject.value("Dimmer").toInt();
+        }
+
+        // Go through 5 light channels
+        for (int i = 0; i < 5; i++) {
+            if (!rootObject.value("Channel" + QString::number(i + 1)).isUndefined()) {
+                int value = rootObject.value("Channel" + QString::number(i + 1)).toInt();
+                deviceInfo.capabilities.channels[i] = true;
+                deviceInfo.channels[i] = map(value, 0, 100, 0, 255);
+            }
         }
 
         if (!rootObject.value("HSBColor").isUndefined()) {

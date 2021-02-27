@@ -27,6 +27,16 @@ private slots:
 
     void on_colorTemp_valueChanged(int value);
 
+    void on_channel1_valueChanged(int value);
+
+    void on_channel2_valueChanged(int value);
+
+    void on_channel3_valueChanged(int value);
+
+    void on_channel4_valueChanged(int value);
+
+    void on_channel5_valueChanged(int value);
+
 private:
     Ui::DeviceColorWidget *ui;
 
@@ -40,6 +50,9 @@ private:
 
     QColor previousColor;
     int previousCT;
+    int previousDimmer;
+
+    QList<int> previousChannels;
 
     bool updatingUI = false;
 };

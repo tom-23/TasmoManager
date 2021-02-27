@@ -1,0 +1,86 @@
+version: 1.0.{build}
+
+# This file defines all the magic to test the build on every push to GitHub with the help of appveyor.com
+# We use different (virtual) build environments that work sequentially and provide their artifacts.
+# The artifacts of every push/build are available in appveyor for 6 months from build.
+# Artifacts of tagged pushes ("unstable" or release number) are deployed into the GitHub release.
+
+#define the build environments
+image:
+  - Visual Studio 2019
+  - macOS
+
+
+# Process the build for each build environment
+for:
+# Build Windows packages
+- matrix:
+    only:
+      - image: Visual Studio 2019
+  before_build:
+    - set qtpath64="C:\Qt\5.15\msvc2019_64"
+    - set arch64=x64
+    - set dir64=build_x64
+    - md build_x64
+    - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+    - cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_PREFIX_PATH=%qtpath64% -DCMAKE_BUILD_TYPE=Release -Bbuild_x64 -H.
+  build_script:
+    - cmake --build build_x64 --config Release --target package
+  artifacts:
+    - path: build_x64\tasmomanager\Release
+      name: TasmoManager-Win-x64-Release-b$(APPVEYOR_BUILD_NUMBER)
+
+# Build MacOS packages
+- matrix:
+    only:
+      - image: macOS
+  install:
+    - git submodule update --init --recursive
+    - brew update
+    - brew install qt5 fftw binutils create-dmg
+    - export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
+  build_script:
+    - mkdir build
+    - cd build
+    - cmake -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH} ../
+    - make -j4
+    - sudo make -j4 package
+    # add all dependencies to *.app, create a *.dmg file
+    - if test -d tasmomanager/Tasmomanager.app; then
+          export PATH=${CMAKE_PREFIX_PATH}/bin:${PATH} ;
+          cd tasmomanager ;
+          macdeployqt Tasmomanager.app -always-overwrite -verbose=1 ;
+          create-dmg --volname Tasmomanager --volicon --window-pos 200 120 --window-size 800 400 --icon-size 100 --icon "TasmoManager.app" 200 190 --skip-jenkins --hide-extension "TasmoManager.app" --app-drop-link 600 185 --eula ../../LICENSE TasmoManager.dmg TasmoManager.app ;
+          cd .. ;
+      else
+          true ;
+      fi
+    #- ls -l tasmomanager || true
+    # zip *.app, move *.dmg to packages directory, (re)name both accordingly
+    - if test -d tasmomanager/Tasmomanager.app; then
+          cd tasmomanager ;
+          sudo tar -czf ../packages/tasmomanager_*_osx_*.tar.gz Tasmomanager.app ;
+          if test -f Tasmomanager.dmg; then
+              sudo mv Tasmomanager.dmg ../packages/$(basename ../packages/tasmomanager_*_osx_*.tar.gz .tar.gz).dmg ;
+          fi ;
+          cd .. ;
+      else
+          true ;
+      fi
+    #- ls -l packages || true
+  artifacts:
+    - path: build/packages/*.dmg
+    - path: build/packages/*.tar.gz
+
+
+# Upload all packages to GitHub, but only if the push was tagged
+deploy:
+- provider: GitHub
+  tag: $(APPVEYOR_REPO_TAG_NAME)
+  auth_token:
+    secure: kOuvS5K+YgF6WCqkdU9EXV3eVDUhmnb7jSqY4WoZIrqFRMup7+NFR51LOaZSvOpm
+  artifact: /.*\.deb/, /.*\.rpm/, /.*\.tar.gz/, /.*\.zip/, /.*\.dmg/
+  prerelease: true
+  force_update: true
+  on:
+    APPVEYOR_REPO_TAG: true

@@ -33,6 +33,10 @@
         <file>assets/16_great_signal.svg</file>
         <file>assets/16_good_signal.svg</file>
         <file>assets/16_weak_signal.svg</file>
+        <file>assets/16_online.svg</file>
+        <file>assets/16_offline.svg</file>
+        <file>assets/16_restarting.svg</file>
+        <file>assets/16_updating.svg</file>
     </qresource>
     <qresource prefix="/identity">
         <file>Icon.png</file>

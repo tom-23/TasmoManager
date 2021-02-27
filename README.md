@@ -12,8 +12,10 @@ A beginner friendly desktop UI for Tasmota flashed devices.
 ## Features
 
 * Native Tasmota device discovery (via tasmota/discovery topic)
+* Fast and Responsive
 * Device setup wizard
-* Color and Color Temp control
+* HSV Color and CCT control
+* Indervidual PWM Channel Control (Up to 4 channels)
 * Power Control (Up to 4)
 * Device Renaming
 * Integrated Console / Terminal

@@ -11,6 +11,10 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+IF(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
+   SET(CMAKE_BUILD_TYPE RelWithDebInfo)
+ENDIF(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
+
 if (APPLE)
     cmake_minimum_required(VERSION 3.1)
     set(TASMOMANAGER_EXECUTABLE_NAME "TasmoManager")
@@ -36,7 +40,9 @@ set_source_files_properties(
 )
 
 #ADDING QMQTT TO PROJECT
+option(qmqtt_SHARED "" OFF)
 add_subdirectory(lib/qmqtt)
+
 include_directories("lib/qmqtt/src/mqtt")
 
 #FINDING QT FILES

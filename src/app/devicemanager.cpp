@@ -3,12 +3,15 @@
 DeviceManager::DeviceManager(QObject *parent) : QObject(parent)
 {
     deviceList = new QList<Device*>;
+    mqttClient = new QMQTT::Client();
     connectionStatus = Disconnected;
 }
 
 void DeviceManager::connect(MQTTServerInfo *serverInfo) {
     mqttServerInfo = serverInfo;
-    mqttClient = new QMQTT::Client(mqttServerInfo->ipAddress, mqttServerInfo->port);
+    mqttClient = new QMQTT::Client();
+    mqttClient->setHost(mqttServerInfo->ipAddress);
+    mqttClient->setPort(mqttServerInfo->port);
     mqttClient->setUsername(mqttServerInfo->username);
     mqttClient->setPassword(mqttServerInfo->password);
     connectionStatus = Connecting;

@@ -6,13 +6,12 @@
 #include <QNetworkInterface>
 #include <QTreeWidgetItem>
 #include <QProgressDialog>
+#include <QCloseEvent>
 
 #include "setupdevicedialog.h"
 #include "preferencesdialog.h"
 #include "terminaldialog.h"
 #include "selectserverdialog.h"
-
-#include "devicecolorwidget.h"
 
 #include "../app/devicemanager.h"
 #include "../app/mqttservermanager.h"
@@ -62,6 +61,8 @@ private slots:
     void on_deviceButton_clicked();
 
     void on_restartButton_clicked();
+
+    void closeEvent(QCloseEvent *event);
 
 private:
     Ui::MainWindow *ui;

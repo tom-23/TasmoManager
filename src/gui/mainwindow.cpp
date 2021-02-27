@@ -62,6 +62,27 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    // We only want to show a warning dialog if the user is still connected.
+    if (deviceManager->mqttClient != nullptr) {
+        if (deviceManager->connectionStatus == Connected || deviceManager->connectionStatus == Connecting) {
+            auto m = new QMessageBox(this);
+            m->setText("Are you sure you want to quit?");
+            m->setInformativeText("You are currently connected / connecting to '" + deviceManager->mqttServerInfo->name + "'.");
+            m->setIcon(QMessageBox::Warning);
+            m->setWindowModality(Qt::WindowModal);
+            m->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            if (m->exec() == QMessageBox::Yes) {
+                deviceManager->disconnect();
+                event->accept();
+            } else {
+                event->ignore();
+            }
+        }
+    }
+}
+
 void MainWindow::on_actiontest_triggered()
 {
     SetupDeviceDialog *setupDeviceDialog = new SetupDeviceDialog(this, deviceManager, serverManager);
@@ -104,6 +125,9 @@ void MainWindow::on_deviceDiscovered(DeviceInfo deviceInfo) {
     item->setText(3, deviceInfo.macAddress);
     item->setText(4, "Offline");
     ui->deviceList->addTopLevelItem(item);
+    if (ui->deviceList->selectedItems().size() == 0) {
+        ui->deviceList->topLevelItem(0)->setSelected(true);
+    }
 }
 
 void MainWindow::on_deviceInfoUpdate(DeviceInfo deviceInfo) {

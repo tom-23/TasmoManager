@@ -130,6 +130,11 @@ QMenu::item {
 
 QMenu::item:selected { 
     background-color: #1fa3ec;
+}
+
+#qt_msgbox_informativelabel {
+	
+	color: rgb(146, 146, 146);
 }</string>
   </property>
   <property name="toolButtonStyle">

@@ -87,13 +87,13 @@ if(APPLE AND BUILD_MACOSX_BUNDLE)
 
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/resources/icon.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
     set(tasmomanager_COMPILE ${tasmomanager_COMPILE} "${CMAKE_CURRENT_SOURCE_DIR}/resources/icon.icns")
-
-    add_executable(${TASMOMANAGER_EXECUTABLE_NAME} MACOSX_BUNDLE ${tasmomanager_COMPILE})
-
-    set_target_properties(${TASMOMANAGER_EXECUTABLE_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/cmake/TasmoManagerBundleInfo.plist")
 endif()
 
 add_executable(${TASMOMANAGER_EXECUTABLE_NAME} ${EXECTYPE} ${tasmomanager_COMPILE})
+
+if( APPLE AND BUILD_MACOSX_BUNDLE )
+    set_target_properties(${TASMOMANAGER_EXECUTABLE_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/cmake/TasmoManagerBundleInfo.plist")
+endif()
 
 include(cmake/CPackInfos.cmake)
 

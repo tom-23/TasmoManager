@@ -73,4 +73,12 @@ Thumbs.db
 *.exe
 
 # CMake User Files
-CMakeLists.txt.user
+*.user
+
+packages
+src/version.h
+cmake_install.cmake
+CMakeCache.txt
+CPackConfig.cmake
+CPackSourceConfig.cmake
+install_manifest.txt

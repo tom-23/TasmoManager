@@ -17,6 +17,8 @@ for:
 - matrix:
     only:
       - image: Visual Studio 2019
+  install:
+      - git submodule update --init --recursive
   before_build:
     - set qtpath64="C:\Qt\5.15\msvc2019_64"
     - set arch64=x64
@@ -37,7 +39,7 @@ for:
   install:
     - git submodule update --init --recursive
     - brew update
-    - brew install qt5 fftw binutils create-dmg
+    - brew install qt5 binutils create-dmg
     - export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
   build_script:
     - mkdir build

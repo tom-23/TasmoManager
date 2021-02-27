@@ -64,8 +64,15 @@ set(tasmomanager_RESOURCES resources/resources.qrc)
 set(tasmomanager_COMPILE
     ${tasmomanager_COMPILE} ${tasmomanager_SOURCES} ${tasmomanager_HEADERS} ${tasmomanager_FORMS} ${tasmomanager_RESOURCES})
 
+set(EXECTYPE "")
+if(WIN32 AND MINGW)
+    set(EXECTYPE WIN32)
+endif()
+
 # ON MAC OS, SPECIFY APP BUNDLE INFO
-if(APPLE)
+option(BUILD_MACOSX_BUNDLE "Build macOS App Bundle" ON)
+if(APPLE AND BUILD_MACOSX_BUNDLE)
+    set( EXECTYPE MACOSX_BUNDLE )
     set(TASMOMANAGER_VERSION_REGEX "^v([0-9]+)\.([0-9]+)\.(.*)$")
     string(REGEX REPLACE "${TASMOMANAGER_VERSION_REGEX}" "\\1" CPACK_PACKAGE_VERSION_MAJOR "${tasmomanager_version}")
     string(REGEX REPLACE "${TASMOMANAGER_VERSION_REGEX}" "\\2" CPACK_PACKAGE_VERSION_MINOR "${tasmomanager_version}")
@@ -74,18 +81,26 @@ if(APPLE)
     set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.tasmomanager.tasmomanager")
     set(MACOSX_BUNDLE_INFO_STRING "Beginner friendly management UI for Tasmota flashed devices.")
     set(MACOSX_BUNDLE_ICON_FILE "icon.icns")
+    set(MACOSX_BUNDLE_LONG_VERSION_STRING "${horizon_version}")
+    set(MACOSX_BUNDLE_SHORT_VERSION_STRING "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}")
+    set(MACOSX_BUNDLE_BUNDLE_VERSION "${horizon_version}")
 
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/resources/icon.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
     set(tasmomanager_COMPILE ${tasmomanager_COMPILE} "${CMAKE_CURRENT_SOURCE_DIR}/resources/icon.icns")
 
     add_executable(${TASMOMANAGER_EXECUTABLE_NAME} MACOSX_BUNDLE ${tasmomanager_COMPILE})
 
-    set_target_properties(${TASMOMANAGER_EXECUTABLE_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/misc/Info.plist")
-else()
-    add_executable(${TASMOMANAGER_EXECUTABLE_NAME} ${tasmomanager_COMPILE})
+    set_target_properties(${TASMOMANAGER_EXECUTABLE_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/cmake/TasmoManagerBundleInfo.plist")
+endif()
+
+add_executable(${TASMOMANAGER_EXECUTABLE_NAME} ${EXECTYPE} ${tasmomanager_COMPILE})
+
+include(cmake/CPackInfos.cmake)
+
+if ( NOT (APPLE AND BUILD_MACOSX_BUNDLE) )
+    install(TARGETS ${TASMOMANAGER_EXECUTABLE_NAME} RUNTIME DESTINATION "bin")
 endif()
 
 add_dependencies(${TASMOMANAGER_EXECUTABLE_NAME} generate_version_header)
-
 target_link_libraries(TasmoManager PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network qmqtt)
 

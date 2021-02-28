@@ -14,7 +14,6 @@
 
 #include <qmqtt.h>
 
-
 #include "mqttserver.h"
 
 #include "device.h"

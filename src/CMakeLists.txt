@@ -94,3 +94,9 @@ else()
     target_compile_options(${PROJECT_NAME} PRIVATE "$<$<CONFIG:DEBUG>:-O0>")
     target_compile_options(${PROJECT_NAME} PRIVATE "$<$<CONFIG:RELEASE>:-fno-rtti>")
 endif()
+
+if ( NOT (APPLE AND BUILD_MACOSX_BUNDLE) )
+    install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION "bin")
+endif()
+
+include(../cmake/copy_qt5_dlls_to_bin_dir.cmake)

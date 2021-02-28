@@ -18,11 +18,12 @@ for:
     only:
       - image: Visual Studio 2019
   install:
+      - set PATH=%PATH%;C:\Qt\5.15\msvc2019_64\
       - git submodule update --init --recursive
       - cd lib/qmqtt
       - md build
       - cd build
-      - C:\Qt\5.15\msvc2019_64\qmake.exe ..
+      - qmake ..
       - nmake
       - nmake install
       - cd ..\..\..

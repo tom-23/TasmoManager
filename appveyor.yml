@@ -30,7 +30,6 @@ for:
       - nmake install
       - cd ..\..\..
   before_build:
-    
     - set arch64=x64
     - set dir64=build_x64
     - md build_x64
@@ -77,11 +76,11 @@ for:
       fi
     #- ls -l tasmomanager || true
     # zip *.app, move *.dmg to packages directory, (re)name both accordingly
-    - if test -d tasmoManager/TasmoManager.app; then
-          cd tasmomanager ;
-          sudo tar -czf ../packages/tasmoManager_*_osx_*.tar.gz TasmoManager.app ;
+    - if test -d src/TasmoManager.app; then
+          cd src ;
+          sudo tar -czf ../packages/tasmomanager_*_osx_*.tar.gz TasmoManager.app ;
           if test -f TasmoManager.dmg; then
-              sudo mv TasmoManager.dmg ../packages/$(basename ../packages/tasmoManager_*_osx_*.tar.gz .tar.gz).dmg ;
+              sudo mv TasmoManager.dmg ../packages/$(basename ../packages/tasmomanager_*_osx_*.tar.gz .tar.gz).dmg ;
           fi ;
           cd .. ;
       else
@@ -103,4 +102,4 @@ deploy:
   prerelease: true
   force_update: true
   on:
-    APPVEYOR_REPO_TAG: true
+    APPVEYOR_REPO_TAG: true 

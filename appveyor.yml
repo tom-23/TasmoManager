@@ -29,7 +29,7 @@ for:
   build_script:
     - cmake --build build_x64 --config Release --target package
   artifacts:
-    - path: build_x64\tasmomanager\Release
+    - path: build_x64\src\Release
       name: TasmoManager-Win-x64-Release-b$(APPVEYOR_BUILD_NUMBER)
 
 # Build MacOS packages
@@ -48,22 +48,22 @@ for:
     - make -j4
     - sudo make -j4 package
     # add all dependencies to *.app, create a *.dmg file
-    - if test -d tasmomanager/Tasmomanager.app; then
+    - if test -d src/TasmoManager.app; then
           export PATH=${CMAKE_PREFIX_PATH}/bin:${PATH} ;
-          cd tasmomanager ;
-          macdeployqt Tasmomanager.app -always-overwrite -verbose=1 ;
-          create-dmg --volname Tasmomanager --volicon --window-pos 200 120 --window-size 800 400 --icon-size 100 --icon "TasmoManager.app" 200 190 --skip-jenkins --hide-extension "TasmoManager.app" --app-drop-link 600 185 --eula ../../LICENSE TasmoManager.dmg TasmoManager.app ;
+          cd src ;
+          macdeployqt TasmoManager.app -always-overwrite -verbose=1 ;
+          create-dmg --volname TasmoManager --volicon --window-pos 200 120 --window-size 800 400 --icon-size 100 --icon "TasmoManager.app" 200 190 --skip-jenkins --hide-extension "TasmoManager.app" --app-drop-link 600 185 --eula ../../LICENSE TasmoManager.dmg TasmoManager.app ;
           cd .. ;
       else
           true ;
       fi
     #- ls -l tasmomanager || true
     # zip *.app, move *.dmg to packages directory, (re)name both accordingly
-    - if test -d tasmomanager/Tasmomanager.app; then
+    - if test -d tasmoManager/TasmoManager.app; then
           cd tasmomanager ;
-          sudo tar -czf ../packages/tasmomanager_*_osx_*.tar.gz Tasmomanager.app ;
-          if test -f Tasmomanager.dmg; then
-              sudo mv Tasmomanager.dmg ../packages/$(basename ../packages/tasmomanager_*_osx_*.tar.gz .tar.gz).dmg ;
+          sudo tar -czf ../packages/tasmoManager_*_osx_*.tar.gz TasmoManager.app ;
+          if test -f TasmoManager.dmg; then
+              sudo mv TasmoManager.dmg ../packages/$(basename ../packages/tasmoManager_*_osx_*.tar.gz .tar.gz).dmg ;
           fi ;
           cd .. ;
       else

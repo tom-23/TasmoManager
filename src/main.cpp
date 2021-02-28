@@ -1,5 +1,5 @@
 #include "gui/mainwindow.h"
-#include "src/version.h"
+#include "version.h"
 
 #include <QApplication>
 #include <QFontDatabase>

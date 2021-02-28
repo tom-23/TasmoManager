@@ -1,3 +1,6 @@
 [submodule "lib/qmqtt"]
 	path = lib/qmqtt
 	url = https://github.com/emqx/qmqtt.git
+[submodule "lib/macdeployqtfix"]
+	path = lib/macdeployqtfix
+	url = https://github.com/iltommi/macdeployqtfix.git

@@ -39,6 +39,7 @@ for:
   artifacts:
     - path: build_x64\src\Release
       name: TasmoManager-Win-x64-Release-b$(APPVEYOR_BUILD_NUMBER)
+    - path: build_x64\packages\*.exe
 
 # Build MacOS packages
 - matrix:

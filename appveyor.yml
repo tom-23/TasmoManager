@@ -24,6 +24,7 @@ for:
       - cd lib/qmqtt
       - md build
       - cd build
+      - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
       - qmake ..
       - nmake
       - nmake install
@@ -33,7 +34,6 @@ for:
     - set arch64=x64
     - set dir64=build_x64
     - md build_x64
-    - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
     - cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_PREFIX_PATH=%QTDIR% -DCMAKE_BUILD_TYPE=Release -Bbuild_x64 -H.
   build_script:
     - cmake --build build_x64 --config Release --target package

@@ -69,9 +69,9 @@ if(APPLE AND BUILD_MACOSX_BUNDLE)
     set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.tasmomanager.tasmomanager")
     set(MACOSX_BUNDLE_INFO_STRING "Beginner friendly management UI for Tasmota flashed devices.")
     set(MACOSX_BUNDLE_ICON_FILE "icon.icns")
-    set(MACOSX_BUNDLE_LONG_VERSION_STRING "${horizon_version}")
+    set(MACOSX_BUNDLE_LONG_VERSION_STRING "${tasmomanager_version}")
     set(MACOSX_BUNDLE_SHORT_VERSION_STRING "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}")
-    set(MACOSX_BUNDLE_BUNDLE_VERSION "${horizon_version}")
+    set(MACOSX_BUNDLE_BUNDLE_VERSION "${tasmomanager_version}")
 
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/../resources/icon.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
     set(tasmomanager_COMPILE ${tasmomanager_COMPILE} "${CMAKE_CURRENT_SOURCE_DIR}/../resources/icon.icns")
@@ -98,5 +98,12 @@ endif()
 if ( NOT (APPLE AND BUILD_MACOSX_BUNDLE) )
     install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION "bin")
 endif()
+
+install (TARGETS ${PROJECT_NAME}
+  BUNDLE DESTINATION . COMPONENT Runtime
+  RUNTIME DESTINATION bin COMPONENT Runtime
+  LIBRARY DESTINATION lib COMPONENT Libraries
+  ARCHIVE DESTINATION lib COMPONENT Libraries
+  )
 
 include(../cmake/copy_qt5_dlls_to_bin_dir.cmake)

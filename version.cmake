@@ -4,6 +4,7 @@ find_package(Git)
 if(GIT_FOUND)
     execute_process(COMMAND
         "${GIT_EXECUTABLE}" describe --tags
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         RESULT_VARIABLE tasmomanager_git_describe_result
         OUTPUT_VARIABLE tasmomanager_git_describe_output
         ERROR_QUIET

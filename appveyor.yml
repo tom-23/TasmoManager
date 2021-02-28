@@ -36,14 +36,17 @@ for:
     - cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_PREFIX_PATH=%QTDIR% -DCMAKE_BUILD_TYPE=Release -Bbuild_x64 -H.
   build_script:
     - cmake --build build_x64 --config Release --target package
+    - cmake --build build_x86 --config Release --target package
   artifacts:
     - path: build_x64\src\Release
       name: TasmoManager-Win-x64-Release-b$(APPVEYOR_BUILD_NUMBER)
+    - path: build_x86\src\Release
+      name: TasmoManager-Win-x86-Release-b$(APPVEYOR_BUILD_NUMBER)
     - path: build_x64\packages\*.exe
-
+    
 # Build MacOS packages
 - matrix:
-    only:
+    only: 
       - image: macOS
   install:
     - git submodule update --init --recursive

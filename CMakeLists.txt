@@ -11,6 +11,9 @@ ENDIF(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
 
 INCLUDE_DIRECTORIES(".")
 
+#ADDING QMQTT TO PROJECT
+add_subdirectory(lib/qmqtt EXCLUDE_FROM_ALL)
+include_directories("lib/qmqtt/src/mqtt")
 
 include(cmake/CPackInfos.cmake)
 
@@ -38,6 +41,4 @@ if (WIN32)
     )
 endif()
 
-#ADDING QMQTT TO PROJECT
-add_subdirectory(lib/qmqtt)
-include_directories("lib/qmqtt/src/mqtt")
+

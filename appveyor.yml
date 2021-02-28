@@ -51,7 +51,7 @@ for:
     - if test -d src/TasmoManager.app; then
           export PATH=${CMAKE_PREFIX_PATH}/bin:${PATH} ;
           cd src ;
-          macdeployqt TasmoManager.app -always-overwrite -verbose=1 ;
+          macdeployqt TasmoManager.app -always-overwrite -verbose=3 ;
           create-dmg --volname TasmoManager --volicon --window-pos 200 120 --window-size 800 400 --icon-size 100 --icon "TasmoManager.app" 200 190 --skip-jenkins --hide-extension "TasmoManager.app" --app-drop-link 600 185 --eula ../../LICENSE TasmoManager.dmg TasmoManager.app ;
           cd .. ;
       else

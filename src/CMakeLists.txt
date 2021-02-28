@@ -1,8 +1,8 @@
 project(TasmoManager CXX)
 
 #FINDING QT FILES
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets WebSockets Network REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets WebSockets Qmqtt Network REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network Qmqtt REQUIRED)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -80,7 +80,7 @@ endif()
 add_executable(${PROJECT_NAME} ${EXECTYPE} ${tasmomanager_COMPILE})
 add_dependencies(${PROJECT_NAME} generate_version_header)
 
-target_link_libraries(TasmoManager PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network qmqtt)
+target_link_libraries(TasmoManager PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Qmqtt)
 
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE "/W4" "/wd4251" "/wd4127" "/wd4275" "/wd4200" "/nologo" "/J" "/Zi")

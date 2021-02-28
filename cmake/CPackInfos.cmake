@@ -8,16 +8,6 @@ if(APPLE)
     set(CPACK_GENERATOR TGZ)
     set(CPACK_TARGET "osx_")
 
-    install(
-        FILES CHANGELOG.md LICENSE README.md ${PDF}
-        DESTINATION share/doc/tasmomanager
-    )
-
-    install(
-        FILES cmake/TasmoManager.desktop
-        DESTINATION share/applications
-    )
-
 elseif(WIN32)
     set(CPACK_TARGET "win_")
     set(CPACK_PACKAGING_INSTALL_PREFIX "/usr")

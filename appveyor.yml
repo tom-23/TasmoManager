@@ -19,6 +19,13 @@ for:
       - image: Visual Studio 2019
   install:
       - git submodule update --init --recursive
+      - cd lib/qmqtt
+      - md build
+      - cd build
+      - C:\Qt\5.15\msvc2019_64\qmake.exe ..
+      - nmake
+      - nmake install
+      - cd ..\..\..
   before_build:
     - set qtpath64="C:\Qt\5.15\msvc2019_64"
     - set arch64=x64
@@ -41,6 +48,14 @@ for:
     - brew update
     - brew install qt5 binutils create-dmg
     - export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
+    - export PATH=${CMAKE_PREFIX_PATH}/bin:${PATH} ;
+    - cd lib/qmqtt
+    - mkdir build
+    - cd build
+    - qmake ..
+    - make -j4
+    - sudo make install
+    - cd ../../..
   build_script:
     - mkdir build
     - cd build

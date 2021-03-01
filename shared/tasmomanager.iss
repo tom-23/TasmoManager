@@ -12,7 +12,6 @@ AppUpdatesURL=https://github.com/tom-23/TasmoManager
 DefaultDirName={pf}\TasmoManager
 DefaultGroupName=TasmoManager
 AllowNoIcons=yes
-LicenseFile=\..\LICENSE
 OutputDir={#Output}
 OutputBaseFilename=tasmomanager-{#AppVersion}-setup
 Compression=lzma

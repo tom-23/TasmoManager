@@ -16,10 +16,11 @@ for:
 - matrix:
     only:
       - image: Visual Studio 2019
-      - QTDIR: /c/Qt/5.15/msvc2019_64
-      CMAKE_GENERATOR: Visual Studio 16 2019
-      CMAKE_GENERATOR_ARCH: x64
-      BUILD_SUB_DIR: Release
+  environment:
+    QTDIR: /c/Qt/5.15/msvc2019_64
+    CMAKE_GENERATOR: Visual Studio 16 2019
+    CMAKE_GENERATOR_ARCH: x64
+    BUILD_SUB_DIR: Release
   install:
     - ps: $env:Path = "C:\Program Files\Git\bin;$env:Path"
     - bash scripts/win/install.sh

@@ -21,6 +21,8 @@ for:
     BUILD_SUB_DIR: Release
   install:
     - ps: $env:Path = "C:\Program Files\Git\bin;$env:Path"
+    - set QTDIR=C:\Qt\5.15\msvc2019_64
+    - set PATH=%PATH%;%QTDIR%\bin
     - git submodule update --init --recursive
     - cd lib/qmqtt
     - md build

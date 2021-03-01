@@ -21,6 +21,12 @@ SetupIconFile=installicon.ico
 WizardImageFile=logo.bmp
 WizardSmallImageFile=logo-small.bmp
 
+[Languages]
+Name: en; MessagesFile: "compiler:Default.isl"
+
+[CustomMessages]
+en.ProgramFiles=Program Files
+
 [Types]
 Name: "full"; Description: "{code:GetFullInstallation}"
 

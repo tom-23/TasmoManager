@@ -21,6 +21,14 @@ for:
     BUILD_SUB_DIR: Release
   install:
     - ps: $env:Path = "C:\Program Files\Git\bin;$env:Path"
+    - git submodule update --init --recursive
+    - cd lib/qmqtt
+    - md build
+    - cd build
+    - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+    - qmake ..
+    - nmake
+    - nmake install
     - bash scripts/win/install.sh
   before_build:
     - bash scripts/win/before_build.sh

@@ -8,12 +8,3 @@ ls "$QTDIR/bin"
 ls "$QTDIR/lib/cmake"
 
 "$QTDIR/bin/qmake" --version
-
-git submodule update --init --recursive
-
-cd lib/qmqtt
-mkdir build
-
-cd build
-cmd "scripts/win/install_qmqtt.bat"
-cd ..\..\..

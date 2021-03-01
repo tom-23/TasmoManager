@@ -45,7 +45,6 @@ Source: "{#Root}\*.dll"; DestDir: "{app}"; Components: program; Flags: ignorever
 [Icons]
 Name: "{group}\TasmoManager"; Filename: "{app}\tasmomanager.exe"
 Name: "{commondesktop}\TasmoManager"; Filename: "{app}\tasmomanager.exe"; Tasks: desktopicon
-Name: "{userstartup}\TasmoManager"; Filename: "{app}\tasmomanager.exe"; Tasks: startup
 
 [Run]
 Filename: "{app}\tasmomanager.exe"; Description: "{cm:LaunchProgram,TasmoManager}"; Flags: nowait postinstall skipifsilent

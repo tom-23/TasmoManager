@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
-
+source scripts/macOS/env.sh
 brew update
 brew install create-dmg
-export CMAKE_PREFIX_PATH=$HOME/Qt/5.12.10/clang_64
-export PATH=${CMAKE_PREFIX_PATH}/bin:${PATH} ;
 git submodule update --init --recursive
 cd lib/qmqtt
 mkdir build

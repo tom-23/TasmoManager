@@ -4,7 +4,7 @@ set -exo pipefail
 # shellcheck disable=SC1091
 source scripts/win/env.sh
 
-export PATH=$PATH:$INSTALL_PREFIX/bin
+
 
 cmake -B"$BUILD_PATH" -DCMAKE_BUILD_TYPE=Release \
     -G "$CMAKE_GENERATOR" -A "$CMAKE_GENERATOR_ARCH" \

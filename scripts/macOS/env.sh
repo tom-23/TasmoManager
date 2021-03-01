@@ -1,13 +1,7 @@
-#!/usr/bin/bash
-set -exu
-
-export CMAKE_GENERATOR=Visual Studio 16 2019
-export CMAKE_GENERATOR_ARCH=x64
-
 export PATH=$QTDIR/bin:$PATH
 
 export BUILD_PATH=$APPVEYOR_BUILD_FOLDER/build
-export CMAKE_PREFIX_PATH=$QTDIR/lib/cmake
+export CMAKE_PREFIX_PATH=$HOME/Qt/5.12.10/clang_64
 
 APP_VERSION=$(git describe --tags --always HEAD)
 export APP_VERSION

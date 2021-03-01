@@ -28,7 +28,7 @@ for:
     - bash scripts/win/before_build.sh
   build_script:
     - bash scripts/win/build.sh
-  after_script:
+  after_build:
     - bash scripts/win/after_build.sh
   artifacts:
     - path: 'tasmomanager-*-setup.exe'

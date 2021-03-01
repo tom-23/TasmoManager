@@ -12,12 +12,12 @@ AppUpdatesURL=https://github.com/tom-23/TasmoManager
 DefaultDirName={pf}\TasmoManager
 DefaultGroupName=TasmoManager
 AllowNoIcons=yes
-LicenseFile={#Source}\LICENSE
+LicenseFile=\..\LICENSE
 OutputDir={#Output}
 OutputBaseFilename=tasmomanager-{#AppVersion}-setup
 Compression=lzma
 SolidCompression=yes
-SetupIconFile={#Source}\resources\appicon.ico
+SetupIconFile=installicon.ico
 WizardImageFile=logo.bmp
 WizardSmallImageFile=logo-small.bmp
 

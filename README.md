@@ -1,9 +1,6 @@
-| macOS | win64 |
-|---|---|
-| [![Build status](https://ci.appveyor.com/api/projects/status/cr51v0y2shticljs/branch/master?svg=true)](https://ci.appveyor.com/project/tom-23/tasmomanager-macos/branch/master) | [![Build status](https://ci.appveyor.com/api/projects/status/wocxjcap5230ix8w/branch/master?svg=true)](https://ci.appveyor.com/project/tom-23/tasmomanager-win64/branch/master) |
-
 ![Alt text](resources/Icon.png?raw=true "TasmoManager")
 # TasmoManager
+[![Build status](https://ci.appveyor.com/api/projects/status/cr51v0y2shticljs/branch/master?svg=true)](https://ci.appveyor.com/project/tom-23/tasmomanager-macos/branch/master)
 
 A beginner friendly desktop UI for Tasmota flashed devices.
 

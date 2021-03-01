@@ -15,7 +15,5 @@ cd lib/qmqtt
 mkdir build
 
 cd build
-qmake ..
-nmake
-nmake install
+cmd "scripts/win/install_qmqtt.bat"
 cd ..\..\..

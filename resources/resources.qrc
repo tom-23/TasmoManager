@@ -39,7 +39,7 @@
         <file>assets/16_updating.svg</file>
     </qresource>
     <qresource prefix="/identity">
-        <file>Icon.png</file>
+        <file>appicon.png</file>
     </qresource>
     <qresource prefix="/fonts">
         <file>fonts/Roboto-Bold.ttf</file>

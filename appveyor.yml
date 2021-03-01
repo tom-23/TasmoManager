@@ -10,87 +10,43 @@ image:
   - Visual Studio 2019
   - macOS
 
-
 # Process the build for each build environment
 for:
 # Build Windows packages
 - matrix:
     only:
       - image: Visual Studio 2019
+      - QTDIR: /c/Qt/5.15/msvc2019_64
+      CMAKE_GENERATOR: Visual Studio 16 2019
+      CMAKE_GENERATOR_ARCH: x64
+      BUILD_SUB_DIR: Release
   install:
-      - set QTDIR=C:\Qt\5.15\msvc2019_64
-      - set PATH=%PATH%;%QTDIR%\bin
-      - git submodule update --init --recursive
-      - cd lib/qmqtt
-      - md build
-      - cd build
-      - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-      - qmake ..
-      - nmake
-      - nmake install
-      - cd ..\..\..
+    - ps: $env:Path = "C:\Program Files\Git\bin;$env:Path"
+    - bash scripts/win/install.sh
   before_build:
-    - set arch64=x64
-    - set dir64=build_x64
-    - md build_x64
-    - cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_PREFIX_PATH=%QTDIR% -DCMAKE_BUILD_TYPE=Release -Bbuild_x64 -H.
+    - bash scripts/win/before_build.sh
   build_script:
-    - cmake --build build_x64 --config Release --target package
+    - bash scripts/win/build.sh
+  after_script:
+    - bash scripts/win/after_build.sh
   artifacts:
-    - path: build_x64\src\Release
-      name: TasmoManager-Win-x64-Release-b$(APPVEYOR_BUILD_NUMBER)
-    - path: build_x64\packages\*.exe
+    - path: 'tasmomanager-*-setup.exe'
+      name: TasmoManager Windows Installer
 
 # Build MacOS packages
 - matrix:
     only: 
       - image: macOS
   install:
-    - git submodule update --init --recursive
-    - brew update
-    - brew install qt5 binutils create-dmg
-    - export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
-    - export PATH=${CMAKE_PREFIX_PATH}/bin:${PATH} ;
-    - cd lib/qmqtt
-    - mkdir build
-    - cd build
-    - qmake ..
-    - make -j4
-    - sudo make install
-    - cd ../../..
+    - scripts/macOS/install.sh
+  before_build:
+    - scripts/macOS/before_build.sh
   build_script:
-    - mkdir build
-    - cd build
-    - cmake -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH} ../
-    - make -j4
-    - sudo make -j4 package
-    # add all dependencies to *.app, create a *.dmg file
-    - if test -d src/TasmoManager.app; then
-          export PATH=${CMAKE_PREFIX_PATH}/bin:${PATH} ;
-          cd src ;
-          macdeployqt TasmoManager.app -always-overwrite -verbose=1 ;
-          python ../../lib/macdeployqtfix/macdeployqtfix.py --quiet TasmoManager.app/Contents/MacOS/TasmoManager ${CMAKE_PREFIX_PATH} ;
-          create-dmg --volname TasmoManager --volicon ../../resources/icon.icns --window-pos 200 120 --window-size 800 400 --icon-size 100 --icon "TasmoManager.app" 200 190 --skip-jenkins --hide-extension "TasmoManager.app" --app-drop-link 600 185 --eula ../../LICENSE TasmoManager.dmg TasmoManager.app ;
-          cd .. ;
-      else
-          true ;
-      fi
-    #- ls -l tasmomanager || true
-    # zip *.app, move *.dmg to packages directory, (re)name both accordingly
-    - if test -d src/TasmoManager.app; then
-          cd src ;
-          sudo tar -czf ../packages/tasmomanager_*_osx_*.tar.gz TasmoManager.app ;
-          if test -f TasmoManager.dmg; then
-              sudo mv TasmoManager.dmg ../packages/$(basename ../packages/tasmomanager_*_osx_*.tar.gz .tar.gz).dmg ;
-          fi ;
-          cd .. ;
-      else
-          true ;
-      fi
-    #- ls -l packages || true
+    - scripts/macOS/build.sh
+  after_build:
+    - scripts/macOS/after_build.sh
   artifacts:
-    - path: build/packages/*.dmg
-    - path: build/packages/*.tar.gz
+    - path: build/*.dmg
 
 
 # Upload all packages to GitHub, but only if the push was tagged
@@ -99,7 +55,7 @@ deploy:
   tag: $(APPVEYOR_REPO_TAG_NAME)
   auth_token:
     secure: kOuvS5K+YgF6WCqkdU9EXV3eVDUhmnb7jSqY4WoZIrqFRMup7+NFR51LOaZSvOpm
-  artifact: /.*\.deb/, /.*\.rpm/, /.*\.tar.gz/, /.*\.zip/, /.*\.dmg/
+  artifact: /.*\.dmg/, /.*\.exe/
   prerelease: true
   force_update: true
   on:

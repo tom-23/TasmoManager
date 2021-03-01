@@ -616,7 +616,7 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">image: url(:/identity/Icon.png);</string>
+             <string notr="true">image: url(:/identity/appicon.png);</string>
             </property>
            </widget>
           </item>

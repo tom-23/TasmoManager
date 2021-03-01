@@ -199,7 +199,7 @@ QMenu::item:selected {
           <string>Connect</string>
          </property>
          <property name="icon">
-          <iconset resource="../../resources/resources.qrc">
+          <iconset>
            <normaloff>:/32/assets/32_connect.svg</normaloff>:/32/assets/32_connect.svg</iconset>
          </property>
          <property name="iconSize">
@@ -228,7 +228,7 @@ QMenu::item:selected {
           <string>Refresh</string>
          </property>
          <property name="icon">
-          <iconset resource="../../resources/resources.qrc">
+          <iconset>
            <normaloff>:/32/assets/32_refresh.svg</normaloff>:/32/assets/32_refresh.svg</iconset>
          </property>
          <property name="iconSize">
@@ -257,7 +257,7 @@ QMenu::item:selected {
           <string>Settings</string>
          </property>
          <property name="icon">
-          <iconset resource="../../resources/resources.qrc">
+          <iconset>
            <normaloff>:/32/assets/32_settings.svg</normaloff>:/32/assets/32_settings.svg</iconset>
          </property>
          <property name="iconSize">
@@ -320,7 +320,7 @@ QMenu::item:selected {
              <string>Device</string>
             </property>
             <property name="icon">
-             <iconset resource="../../resources/resources.qrc">
+             <iconset>
               <normaloff>:/32/assets/32_bulb.svg</normaloff>:/32/assets/32_bulb.svg</iconset>
             </property>
             <property name="iconSize">
@@ -355,7 +355,7 @@ QMenu::item:selected {
              <string>Restart</string>
             </property>
             <property name="icon">
-             <iconset resource="../../resources/resources.qrc">
+             <iconset>
               <normaloff>:/32/assets/32_restart.svg</normaloff>:/32/assets/32_restart.svg</iconset>
             </property>
             <property name="iconSize">
@@ -387,7 +387,7 @@ QMenu::item:selected {
              <string>Terminal</string>
             </property>
             <property name="icon">
-             <iconset resource="../../resources/resources.qrc">
+             <iconset>
               <normaloff>:/32/assets/32_terminal.svg</normaloff>:/32/assets/32_terminal.svg</iconset>
             </property>
             <property name="iconSize">
@@ -422,7 +422,7 @@ QMenu::item:selected {
              <string>MQTT</string>
             </property>
             <property name="icon">
-             <iconset resource="../../resources/resources.qrc">
+             <iconset>
               <normaloff>:/32/assets/32_mqtt.svg</normaloff>:/32/assets/32_mqtt.svg</iconset>
             </property>
             <property name="iconSize">
@@ -460,7 +460,7 @@ QMenu::item:selected {
              <string>Firmware</string>
             </property>
             <property name="icon">
-             <iconset resource="../../resources/resources.qrc">
+             <iconset>
               <normaloff>:/32/assets/32_firmware.svg</normaloff>:/32/assets/32_firmware.svg</iconset>
             </property>
             <property name="iconSize">
@@ -495,7 +495,7 @@ QMenu::item:selected {
              <string>Backup</string>
             </property>
             <property name="icon">
-             <iconset resource="../../resources/resources.qrc">
+             <iconset>
               <normaloff>:/32/assets/32_backup.svg</normaloff>:/32/assets/32_backup.svg</iconset>
             </property>
             <property name="iconSize">
@@ -527,7 +527,7 @@ QMenu::item:selected {
              <string>Web UI</string>
             </property>
             <property name="icon">
-             <iconset resource="../../resources/resources.qrc">
+             <iconset>
               <normaloff>:/32/assets/32_web.svg</normaloff>:/32/assets/32_web.svg</iconset>
             </property>
             <property name="iconSize">
@@ -834,24 +834,22 @@ QMenu::item:selected {
   <customwidget>
    <class>DeviceColorWidget</class>
    <extends>QWidget</extends>
-   <header>src/gui/devicecolorwidget.h</header>
+   <header>gui/devicecolorwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>DeviceInfoWidget</class>
    <extends>QWidget</extends>
-   <header>src/gui/deviceinfowidget.h</header>
+   <header>gui/deviceinfowidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>DevicePowerWidget</class>
    <extends>QWidget</extends>
-   <header>src/gui/devicepowerwidget.h</header>
+   <header>gui/devicepowerwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../../resources/resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

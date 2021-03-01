@@ -10,5 +10,5 @@ mkdir build
 cd build
 qmake ..
 make -j4
-make install
+sudo make install
 cd ../../..

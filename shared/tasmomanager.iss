@@ -31,7 +31,6 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; Flags: unchecked
 
 [Files]
 Source: "{#Root}\tasmomanager.exe"; DestDir: "{app}"; Components: program; Flags: ignoreversion
-Source: "{#Root}\LICENSE"; DestDir: "{app}"; Components: program; Flags: ignoreversion
 Source: "{#Root}\README.md"; DestDir: "{app}"; Components: program; Flags: ignoreversion
 
 ; Qt and toolchain

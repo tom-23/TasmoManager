@@ -12,6 +12,9 @@ mkdir -p "$Destination"
 
 cmake --install "$BUILD_PATH" --config Release --prefix "$Destination" --verbose
 
+cp -v "$Source/LICENSE" "$Destination"
+cp -v "$Source/README.md" "$Destination"
+
 "$QTDIR/bin/windeployqt" --help
 "$QTDIR/bin/windeployqt" \
     --no-system-d3d-compiler \

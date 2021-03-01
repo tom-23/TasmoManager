@@ -12,6 +12,7 @@ AppUpdatesURL=https://github.com/tom-23/TasmoManager
 DefaultDirName={pf}\TasmoManager
 DefaultGroupName=TasmoManager
 AllowNoIcons=yes
+LicenseFile={#Source}\LICENSE
 OutputDir={#Output}
 OutputBaseFilename=tasmomanager-{#AppVersion}-setup
 Compression=lzma
@@ -31,6 +32,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; Flags: unchecked
 
 [Files]
 Source: "{#Root}\tasmomanager.exe"; DestDir: "{app}"; Components: program; Flags: ignoreversion
+Source: "{#Root}\LICENSE"; DestDir: "{app}"; Components: program; Flags: ignoreversion
 Source: "{#Root}\README.md"; DestDir: "{app}"; Components: program; Flags: ignoreversion
 
 ; Qt and toolchain

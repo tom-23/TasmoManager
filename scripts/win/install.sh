@@ -2,7 +2,7 @@
 set -exo pipefail
 
 # shellcheck disable=SC1091
-source utils/appveyor/env.sh
+source scripts/win/env.sh
 
 ls "$QTDIR/bin"
 ls "$QTDIR/lib/cmake"

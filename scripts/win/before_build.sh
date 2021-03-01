@@ -2,7 +2,7 @@
 set -exo pipefail
 
 # shellcheck disable=SC1091
-source utils/appveyor/env.sh
+source scripts/win/env.sh
 
 export PATH=$PATH:$INSTALL_PREFIX/bin
 

@@ -39,13 +39,13 @@ for:
     only: 
       - image: macOS
   install:
-    - scripts/macOS/install.sh
+    - sudo scripts/macOS/install.sh
   before_build:
-    - scripts/macOS/before_build.sh
+    - sudo scripts/macOS/before_build.sh
   build_script:
-    - scripts/macOS/build.sh
+    - sudo scripts/macOS/build.sh
   after_build:
-    - scripts/macOS/after_build.sh
+    - sudo scripts/macOS/after_build.sh
   artifacts:
     - path: build/*.dmg
 

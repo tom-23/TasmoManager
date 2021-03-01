@@ -2,7 +2,7 @@
 set -exo pipefail
 
 # shellcheck disable=SC1091
-source utils/appveyor/env.sh
+source scripts/win/env.sh
 
 Source=$APPVEYOR_BUILD_FOLDER
 Destination=$APPVEYOR_BUILD_FOLDER/$APP

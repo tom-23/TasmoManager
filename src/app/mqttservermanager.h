@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QStandardPaths>
 #include <QFile>
+#include <QDir>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>

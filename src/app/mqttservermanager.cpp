@@ -2,7 +2,12 @@
 
 MQTTServerManager::MQTTServerManager(QObject *parent) : QObject(parent)
 {
+    QDir dir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+    if (!dir.exists())
+        dir.mkpath(".");
+
     serverListJSONLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/.tasmoManagerServers.json";
+    qDebug() << "[Server Man] JSON Location:" << serverListJSONLocation;
     serverList = new QList<MQTTServerInfo>;
 }
 
@@ -58,6 +63,7 @@ void MQTTServerManager::saveServerList() {
         file.write(jsonDoc.toJson());
 
     } else {
-        qDebug() << "[Server Man] Could not load server file.";
+        qDebug() << "[Server Man] Could not save server file.";
+        qDebug() << "[Server Man] Error: " << file.errorString();
     }
 }

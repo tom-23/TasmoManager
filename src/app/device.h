@@ -17,11 +17,32 @@
 class DeviceManager;
 struct MQTTServerInfo;
 
+enum SetOptionCategory {
+    General,
+    Buttons,
+    Ligting,
+    Temperature,
+    MQTT,
+    WIFI,
+    Misc,
+    null,
+};
+
+
+struct SetOption {
+    int number;
+    int value;
+    bool restartRequired = false;
+    QString name;
+    SetOptionCategory category;
+    QList<QString> valueNames;
+};
+
 enum DeviceStatus {
     Online,
     Offline,
     Restarting,
-    Updating
+    Updating,
 };
 
 struct DeviceCapabilities {
@@ -72,6 +93,8 @@ struct DeviceInfo {
 
     QColor color;
     int colorTemp;
+
+    QList<SetOption> setOptions;
 };
 
 Q_DECLARE_METATYPE(DeviceInfo)

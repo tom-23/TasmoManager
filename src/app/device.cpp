@@ -2,7 +2,50 @@
 
 Device::Device(QObject *parent) : QObject(parent)
 {
+    SetOption setOption0;
+    setOption0.name = "Save state after restart";
+    setOption0.category = General;
+    setOption0.valueNames = {"Disable", "Enable"};
+    deviceInfo.setOptions.append(setOption0);
 
+    SetOption setOption1;
+    setOption1.name = "Button Multipress mode";
+    setOption1.category = Buttons;
+    setOption1.valueNames = {"Allow all button actions", "Restrict to single to penta press and hold actions"};
+    deviceInfo.setOptions.append(setOption1);
+
+    SetOption setOption2;
+    setOption2.category = null;
+    deviceInfo.setOptions.append(setOption2);
+
+    SetOption setOption3;
+    setOption3.name = "MQTT";
+    setOption3.category = MQTT;
+    setOption3.valueNames = {"Disable MQTT", "Enable MQTT (default)"};
+    deviceInfo.setOptions.append(setOption3);
+
+    SetOption setOption4;
+    setOption3.name = "Return MQTT response as";
+    setOption3.category = MQTT;
+    setOption3.valueNames = {"RESULT topic (default)", " %COMMAND% topic"};
+    deviceInfo.setOptions.append(setOption3);
+
+    SetOption setOption5;
+    setOption5.category = null;
+    deviceInfo.setOptions.append(setOption5);
+
+    SetOption setOption6;
+    setOption6.category = null;
+    deviceInfo.setOptions.append(setOption6);
+
+    SetOption setOption7;
+    setOption5.category = null;
+    deviceInfo.setOptions.append(setOption7);
+
+    SetOption setOption8;
+    setOption8.category = Temperature;
+    setOption8.
+    deviceInfo.setOptions.append(setOption8);
 }
 
 void Device::getDeviceInfo(QString fullTopic, int delay) {

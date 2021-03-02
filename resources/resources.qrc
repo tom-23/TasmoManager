@@ -13,6 +13,8 @@
         <file>assets/24_wifi_square.svg</file>
         <file>assets/24_lighting_square.svg</file>
         <file>assets/24_stats_square.svg</file>
+        <file>assets/24_temperature_square.svg</file>
+        <file>assets/24_button_square.svg</file>
     </qresource>
     <qresource prefix="/32">
         <file>assets/32_disconnect.svg</file>
@@ -31,6 +33,7 @@
     </qresource>
     <qresource prefix="/gif">
         <file>assets/loader.gif</file>
+        <file>assets/light_loader.gif</file>
     </qresource>
     <qresource prefix="/16">
         <file>assets/16_no_signal.svg</file>
@@ -56,5 +59,8 @@
         <file>fonts/Rubik-Bold.ttf</file>
         <file>fonts/Rubik-BlackItalic.ttf</file>
         <file>fonts/Rubik-Black.ttf</file>
+    </qresource>
+    <qresource prefix="/schema">
+        <file>setoptions.schema.json</file>
     </qresource>
 </RCC>

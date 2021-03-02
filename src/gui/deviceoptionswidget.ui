@@ -137,11 +137,29 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
      </item>
      <item>
       <property name="text">
+       <string>Buttons / Switches</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../../resources/resources.qrc">
+        <normaloff>:/24/assets/24_button_square.svg</normaloff>:/24/assets/24_button_square.svg</iconset>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Lights</string>
       </property>
       <property name="icon">
        <iconset resource="../../resources/resources.qrc">
         <normaloff>:/24/assets/24_lighting_square.svg</normaloff>:/24/assets/24_lighting_square.svg</iconset>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Temperature</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../../resources/resources.qrc">
+        <normaloff>:/24/assets/24_temperature_square.svg</normaloff>:/24/assets/24_temperature_square.svg</iconset>
       </property>
      </item>
      <item>
@@ -164,20 +182,20 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
      </item>
      <item>
       <property name="text">
-       <string>Misc</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../../resources/resources.qrc">
-        <normaloff>:/24/assets/24_misc_square.svg</normaloff>:/24/assets/24_misc_square.svg</iconset>
-      </property>
-     </item>
-     <item>
-      <property name="text">
        <string>Stats</string>
       </property>
       <property name="icon">
        <iconset resource="../../resources/resources.qrc">
         <normaloff>:/24/assets/24_stats_square.svg</normaloff>:/24/assets/24_stats_square.svg</iconset>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Misc</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../../resources/resources.qrc">
+        <normaloff>:/24/assets/24_misc_square.svg</normaloff>:/24/assets/24_misc_square.svg</iconset>
       </property>
      </item>
      <item>
@@ -212,9 +230,10 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>7</number>
         </property>
         <widget class="QWidget" name="generalPage"/>
+        <widget class="QWidget" name="buttonsPage"/>
         <widget class="QWidget" name="lightsPage">
          <layout class="QFormLayout" name="formLayout">
           <property name="fieldGrowthPolicy">
@@ -391,10 +410,11 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
           </item>
          </layout>
         </widget>
+        <widget class="QWidget" name="temperaturePage"/>
         <widget class="QWidget" name="wifiPage"/>
         <widget class="QWidget" name="mqttPage"/>
-        <widget class="QWidget" name="miscPage"/>
         <widget class="QWidget" name="statsPage"/>
+        <widget class="QWidget" name="miscPage"/>
         <widget class="QWidget" name="infoPage"/>
        </widget>
       </item>
@@ -406,6 +426,25 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
         <property name="topMargin">
          <number>0</number>
         </property>
+        <item>
+         <widget class="QLabel" name="spinner">
+          <property name="minimumSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
         <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
@@ -420,9 +459,9 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="cancelButton">
           <property name="text">
-           <string>Discard</string>
+           <string>Cancel</string>
           </property>
          </widget>
         </item>

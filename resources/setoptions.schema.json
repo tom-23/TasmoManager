@@ -1,0 +1,559 @@
+{
+    "setOptions": [
+        {
+            "number": 0,
+            "name": "Save state after restart",
+            "category": "General",
+            "type": "enum",
+            "values": [
+                "Disable",
+                "Enable"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 1,
+            "name": "Button Multipress mode",
+            "category": "Buttons",
+            "type": "enum",
+            "values": [
+                "Allow all button actions",
+                "Restrict to single to penta press and hold actions"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 3,
+            "name": "MQTT",
+            "category": "MQTT",
+            "type": "enum",
+            "values": [
+                "RESULT topic (default)",
+                "%COMMAND% topic"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 8,
+            "name": "Show temperature in",
+            "category": "Temperature",
+            "type": "enum",
+            "values": [
+                "Celsius (default)",
+                "Celsius (default)"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 10,
+            "name": "When the device MQTT topic changes",
+            "category": "Temperature",
+            "type": "enum",
+            "values": [
+                "Semove retained message on old topic LWT (default)",
+                "Send 'Offline' to old topic LWT"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 11,
+            "name": "Swap button single and double press",
+            "category": "Buttons",
+            "type": "enum",
+            "values": [
+                "Disabled (default)",
+                "Enabled"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 12,
+            "name": "Configuration saving to flash",
+            "category": "Misc",
+            "type": "enum",
+            "values": [
+                "Allow dynamic flash save slot rotation",
+                "Use fixed eeprom flash slot"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 13,
+            "name": "Allow immediate action on single button press",
+            "category": "Buttons",
+            "type": "enum",
+            "values": [
+                "Single, multi-press and hold button actions (default)",
+                "Only single press action for immediate response (i.e., disable multipress detection)."
+            ],
+            "info": "Disable by holding for 4 x button hold time (see SetOption32).",
+            "requiresRestart": false
+        },
+        {
+            "number": 15,
+            "name": "PWM control for LED lights",
+            "category": "Lighting",
+            "type": "enum",
+            "values": [
+                "Basic PWM control",
+                "Control with Color or Dimmer commands (default)"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 16,
+            "name": "Addressable LED Clock scheme parameter",
+            "category": "Lighting",
+            "type": "enum",
+            "values": [
+                "Clock-wise mode (default)",
+                "Counter-clock-wise mode"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 17,
+            "name": "Show 'Color' string as",
+            "category": "Lighting",
+            "type": "enum",
+            "values": [
+                "Hex string (default)",
+                "Comma-separated decimal string"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 18,
+            "name": "Status of signal light paired with CO2 sensor",
+            "category": "Misc",
+            "type": "enum",
+            "values": [
+                "Disable light (default)",
+                "Enable light"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 19,
+            "name": "Home Assistant discovery protocol",
+            "category": "Misc",
+            "type": "enum",
+            "values": [
+                "Tasmota integration (default)",
+                "MQTT discovery"
+            ],
+            "info": "To ensure TasmoManager is able to discover devices, set this value to 'Tasmota integration (default)'.",
+            "requiresRestart": false
+        },
+        {
+            "number": 20,
+            "name": "Update of Dimmer/Color/CT without turning power on",
+            "category": "Lighting",
+            "type": "enum",
+            "values": [
+                "Disabled (default)",
+                "Enabled"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 21,
+            "name": "Energy monitoring when power is off",
+            "category": "Misc",
+            "type": "enum",
+            "values": [
+                "Disabled (default)",
+                "Enabled"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 24,
+            "name": "Pressure units",
+            "category": "Misc",
+            "type": "enum",
+            "values": [
+                "hPa (default)",
+                "mmHg"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 26,
+            "name": "Use indexes even when only one relay is present",
+            "category": "Buttons",
+            "type": "enum",
+            "values": [
+                "Messages use POWER (default)",
+                "Messages use POWER1"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 28,
+            "name": "RF received data format",
+            "category": "Misc",
+            "type": "enum",
+            "values": [
+                "Hex (default)",
+                "Decimal"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 30,
+            "name": "Enforce Home Assistant auto-discovery as light",
+            "category": "Misc",
+            "type": "enum",
+            "values": [
+                "Relays are announced as a switch and PWM as a light (default)",
+                "Both relays and PWM are announced as light"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 31,
+            "name": "Set status LED blinking during Wi-Fi and MQTT connection problems",
+            "category": "General",
+            "type": "enum",
+            "values": [
+                "Enabled (default)",
+                "Disabled"
+            ],
+            "info": "'LedPower' must be set to 0 for this feature to work",
+            "requiresRestart": false
+        },
+        {
+            "number": 32,
+            "name": "Number of 0.1 seconds to hold button before sending HOLD action message",
+            "category": "Misc",
+            "type": "integer",
+            "min": 1,
+            "max": 100,
+            "info": " This option also affects the time required to perform a firmware defaults reset (10x HOLD action time)",
+            "requiresRestart": false
+        },
+        {
+            "number": 33,
+            "name": "Number of seconds for which the maximum power limit can be exceeded before the power is turned off",
+            "category": "Misc",
+            "type": "integer",
+            "min": 1,
+            "max": 250,
+            "requiresRestart": false
+        },
+        {
+            "number": 34,
+            "name": "Backlog inter-command delay in milliseconds",
+            "category": "Misc",
+            "type": "integer",
+            "min": 0,
+            "max": 255,
+            "requiresRestart": false
+        },
+        {
+            "number": 36,
+            "name": "Boot loop defaults restoration control.",
+            "category": "Misc",
+            "type": "integer",
+            "min": 0,
+            "max": 200,
+            "info": "0 = disable boot loop control",
+            "info1": "1..200 = set number of boot loops (a restart caused by any exception or watchdog timer within less than BOOT_LOOP_TIME (default 10 seconds) before beginning to restore settings (default = 1). Once this number is reached, subsequent restarts will:",
+            "info2": "1st restart: disable ESP8285 generic GPIOs interfering with flash SPI",
+            "info3": "2nd restart: disable rules causing boot loop",
+            "info4": "3rd restart: disable all rules",
+            "info5": "4th restart: reset user defined GPIOs to disable any attached peripherals",
+            "info6": "5th restart: reset module to Sonoff Basic (1)",
+            "requiresRestart": false
+        },
+        {
+            "number": 38,
+            "name": "IRReceive protocol detection sensitivity minimizing UNKNOWN protocols",
+            "category": "Misc",
+            "type": "integer",
+            "min": 0,
+            "max": 255,
+            "info": "0 = reset to default on next restart",
+            "info1": "1..255 = number of invalid power readings before reporting no load (default =128).",
+            "requiresRestart": false
+        },
+        {
+            "number": 39,
+            "name": "Control handling of invalid power measurements",
+            "category": "Misc",
+            "type": "integer",
+            "min": 0,
+            "max": 255,
+            "info": "0 = reset to default on next restart",
+            "info1": "1..255 = number of invalid power readings before reporting no load (default = 128).",
+            "requiresRestart": false
+        },
+        {
+            "number": 41,
+            "name": "Stop detecting input change on the button GPIO",
+            "category": "Misc",
+            "type": "integer",
+            "min": 0,
+            "max": 250,
+            "info": "Solves https://github.com/arendst/Tasmota/issues/5449",
+            "info1": "0 = Disable ARP (default) ",
+            "info2": "Force sending gratuitous ARP (Wi-Fi keep alive) every <x> seconds (default = 0)",
+            "info3": "If <x> is below 100 it is the number of seconds, if <x> is above 100, it is the number of minutes after substracting 100. Ex: 105 is every 5 minutes, while 90 is every 90 seconds.",
+            "requiresRestart": false
+        },
+        {
+            "number": 42,
+            "name": "Over-temperature (Celsius only) Threshold",
+            "category": "Temperature",
+            "type": "integer",
+            "min": 0,
+            "max": 255,
+            "info": "Over-temperature (Celsius only) threshold resulting in power off on all energy monitoring devices (default = 90)",
+            "requiresRestart": false
+        },
+        {
+            "number": 51,
+            "name": "Enable GPIO9 and GPIO10",
+            "category": "misc",
+            "type": "enum",
+            "values" : [
+                "Disable (default)",
+                "Enable"
+            ],
+            "info": "Enable GPIO9 and GPIO10 component selections in Module Configuration",
+            "warning": "WARNING Do not use on ESP8266 devices!",
+            "requiresRestart": false
+        },
+        {
+            "number": 52,
+            "name": "Control display of optional time offset from UTC in JSON payloads",
+            "category": "misc",
+            "type": "enum",
+            "values" : [
+                "Disable (default)",
+                "Enable"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 53,
+            "name": "Display hostname and IP address in Web UI",
+            "category": "WIFI",
+            "type": "enum",
+            "values" : [
+                "Disable (default)",
+                "Enable"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 54,
+            "name": "Apply SetOption20 settings to commands from Tuya device",
+            "category": "misc",
+            "type": "enum",
+            "values" : [
+                "Disable (default)",
+                "Enable"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 55,
+            "name": "mDNS service",
+            "category": "WIFI",
+            "type": "enum",
+            "values" : [
+                "Disable (default)",
+                "Enable"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 56,
+            "name": "Wi-Fi network re-scan every 44 minutes with alternate to +10dB stronger signal if detected.",
+            "category": "WIFI",
+            "type": "enum",
+            "values" : [
+                "Disable (default)",
+                "Enable"
+            ],
+            "info": "Network has to be visible",
+            "requiresRestart": false
+        },
+        {
+            "number": 57,
+            "name": "Wi-Fi network scan to select strongest signal on restart",
+            "category": "WIFI",
+            "type": "enum",
+            "values" : [
+                "Disable (default)",
+                "Enable"
+            ],
+            "info": "Network has to be visible",
+            "requiresRestart": false
+        },
+        {
+            "number": 58,
+            "name": "Wi-Fi network re-scan every 44 minutes with alternate to +10dB stronger signal if detected.",
+            "category": "WIFI",
+            "type": "enum",
+            "values" : [
+                "Disable (default)",
+                "Enable"
+            ],
+            "link": "https://github.com/arendst/Tasmota/issues/2116#issuecomment-440716483",
+            "requiresRestart": false
+        },
+        {
+            "number": 58,
+            "name": "IR Raw data in JSON payload",
+            "category": "misc",
+            "type": "enum",
+            "values" : [
+                "Disable (default)",
+                "Enable"
+            ],
+            "info": "Network has to be visible",
+            "requiresRestart": false
+        },
+        {
+            "number": 59,
+            "name": "Send tele/%topic%/STATE in addition to stat/%topic%/RESULT",
+            "category": "misc",
+            "type": "enum",
+            "values" : [
+                "Disable (default)",
+                "Enable"
+            ],
+            "info": "Send tele/%topic%/STATE in addition to stat/%topic%/RESULT for commands: State, Power and any command causing a light to be turned on.",
+            "requiresRestart": false
+        },
+        {
+            "number": 60,
+            "name": "Set sleep mode",
+            "category": "General",
+            "type": "enum",
+            "values" : [
+                "Dynamic sleep (default)",
+                "Normal sleep"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 61,
+            "name": "Force local operation when ButtonTopic or SwitchTopic is set.",
+            "category": "misc",
+            "type": "enum",
+            "values" : [
+                "Disable (default)",
+                "Enable"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 62,
+            "name": "Set retain on Button or Switch hold messages",
+            "category": "misc",
+            "type": "enum",
+            "values" : [
+                "Disable (default)",
+                "Don't use retain flag on HOLD messages"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 63,
+            "name": "Set relay state feedback scan at restart",
+            "category": "misc",
+            "type": "enum",
+            "values" : [
+                "Disable (default)",
+                "Don't use retain flag on HOLD messages"
+            ],
+            "link": "https://github.com/arendst/Tasmota/issues/5594",
+            "link1": "https://github.com/arendst/Tasmota/issues/5663",
+            "requiresRestart": false
+        },
+        {
+            "number": 64,
+            "name": "Switch between - or _ as sensor name separator",
+            "category": "misc",
+            "type": "enum",
+            "values" : [
+                "Sensor name index separator is - (hyphen) (default)",
+                "Sensor name index separator is _ (underscore)"
+            ],
+            "info": "Affects DS18X20, DHT, BMP and SHT3X sensor names in tele messages",
+            "requiresRestart": false
+        },
+        {
+            "number": 65,
+            "name": "Device recovery using fast power cycle detection.",
+            "category": "general",
+            "type": "enum",
+            "values" : [
+                "Enabled (default)",
+                "Disabled"
+            ],
+            "link": "https://tasmota.github.io/docs/Device-Recovery/#fast-power-cycle-device-recovery",
+            "requiresRestart": false
+        },
+        {
+            "number": 66,
+            "name": "Set publishing TuyaReceived to MQTT",
+            "category": "misc",
+            "type": "enum",
+            "values" : [
+                "Disable publishing TuyaReceived over MQTT (default)",
+                "Enable publishing TuyaReceived over MQTT"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 71,
+            "name": "Set DDS238 Modbus register for active energy",
+            "category": "misc",
+            "type": "enum",
+            "values" : [
+                "Set primary register (default)",
+                "Set alternate register"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 72,
+            "name": "Reference used for total energy",
+            "category": "misc",
+            "type": "enum",
+            "values" : [
+                "Use firmware counter (default)",
+                "Use energy monitor (e.g., PZEM-0xx, SDM120, SDM630, DDS238, DDSU666) hardware counter"
+            ],
+            "requiresRestart": false
+        },
+        {
+            "number": 73,
+            "name": "Detach buttons from relays and send multi-press and hold MQTT messages instead",
+            "category": "Buttons",
+            "type": "enum",
+            "values" : [
+                "Disabled (default)",
+                "Enabled"
+            ],
+            "info": "Example message: {'Button1':{'Action':'SINGLE'}}",
+            "requiresRestart": false
+        },
+        {
+            "number": 74,
+            "name": "Enable internal pullup for single DS18x20 sensor",
+            "category": "misc",
+            "type": "enum",
+            "values" : [
+                "Disabled (default)",
+                "Internal pullup enabled"
+            ],
+            "requiresRestart": false
+        }
+    ]
+}

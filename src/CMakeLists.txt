@@ -155,7 +155,4 @@ if (APPLE)
         "
         COMPONENT Runtime
         )
-
-    set(CPACK_GENERATOR "DragNDrop")
-    include(CPack)
 endif()

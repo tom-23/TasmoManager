@@ -1,5 +1,7 @@
-![Alt text](resources/Icon.png?raw=true "TasmoManager")
+![Alt text](resources/appicon.png?raw=true "TasmoManager")
+
 # TasmoManager
+
 [![Build status](https://ci.appveyor.com/api/projects/status/cr51v0y2shticljs/branch/master?svg=true)](https://ci.appveyor.com/project/tom-23/tasmomanager-macos/branch/master)
 
 A beginner friendly desktop UI for Tasmota flashed devices.

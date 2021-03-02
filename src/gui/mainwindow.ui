@@ -21,8 +21,9 @@
   </property>
   <property name="styleSheet">
    <string notr="true">* {
-	font: 12pt &quot;Rublik&quot;;
-	font-weight: 300;
+	font: &quot;Rublik&quot;;
+	font-size: 12px;
+	font-weight: 400;
 	color: white;
 }
 

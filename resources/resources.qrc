@@ -42,11 +42,15 @@
         <file>appicon.png</file>
     </qresource>
     <qresource prefix="/fonts">
-        <file>fonts/Roboto-Bold.ttf</file>
-        <file>fonts/Roboto-BoldItalic.ttf</file>
-        <file>fonts/Roboto-Italic.ttf</file>
-        <file>fonts/Roboto-Medium.ttf</file>
-        <file>fonts/Roboto-MediumItalic.ttf</file>
-        <file>fonts/Roboto-Regular.ttf</file>
+        <file>fonts/Rubik-Regular.ttf</file>
+        <file>fonts/Rubik-MediumItalic.ttf</file>
+        <file>fonts/Rubik-Medium.ttf</file>
+        <file>fonts/Rubik-LightItalic.ttf</file>
+        <file>fonts/Rubik-Light.ttf</file>
+        <file>fonts/Rubik-Italic.ttf</file>
+        <file>fonts/Rubik-BoldItalic.ttf</file>
+        <file>fonts/Rubik-Bold.ttf</file>
+        <file>fonts/Rubik-BlackItalic.ttf</file>
+        <file>fonts/Rubik-Black.ttf</file>
     </qresource>
 </RCC>

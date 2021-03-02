@@ -11,6 +11,8 @@ file(GLOB tasmomanager_FORMS
 
 set(tasmomanager_RESOURCES ../resources/resources.qrc)
 
+set(tasmomanager_WINRC ../resources/win.rc)
+
 # Qt include paths and definitions
 include_directories(${CMAKE_CURRENT_BINARY_DIR} .)
 include_directories(${Qt5Widgets_INCLUDES})
@@ -36,9 +38,9 @@ if (NOT tasmomanager_version)
     message(FATAL_ERROR "Application version is unset")
 endif()
 
-if (NOT APPLE)
-    add_executable(${TASMOMANAGER_EXECUTABLE_NAME} ${tasmomanager_COMPILE})
-else()
+if (WIN32)
+    add_executable(${TASMOMANAGER_EXECUTABLE_NAME} WIN32 ${tasmomanager_WINRC} ${tasmomanager_COMPILE})
+elseif(APPLE)
     set(TASMOMANAGER_VERSION_REGEX "^v([0-9]+)\.([0-9]+)\.(.*)$")
     string(REGEX REPLACE "${TASMOMANAGER_VERSION_REGEX}"
         "\\1" CPACK_PACKAGE_VERSION_MAJOR

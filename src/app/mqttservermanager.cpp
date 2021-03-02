@@ -2,7 +2,7 @@
 
 MQTTServerManager::MQTTServerManager(QObject *parent) : QObject(parent)
 {
-    serverListJSONLocation = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/.tasmoManagerServers.json";
+    serverListJSONLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/.tasmoManagerServers.json";
     serverList = new QList<MQTTServerInfo>;
 }
 

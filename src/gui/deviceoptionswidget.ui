@@ -15,7 +15,6 @@
   </property>
   <property name="styleSheet">
    <string notr="true">* {
-	font: &quot;Raleway&quot;;
 	color: white;
 }
 

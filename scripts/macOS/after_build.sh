@@ -14,6 +14,7 @@ if test -d build/TasmoManager.app; then
     --icon "TasmoManager.app" 120 88 \
     --hide-extension "TasmoManager.app" \
     --app-drop-link 368 88 \
+    --skip-jenkins \
     "TasmoManager.dmg" \
     "TasmoManager.app"
 else

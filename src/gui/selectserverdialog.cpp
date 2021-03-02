@@ -7,6 +7,9 @@ SelectServerDialog::SelectServerDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
+#if defined(Q_OS_MAC)
+    ui->serverComboBox->setStyle(QStyleFactory::create("Windows"));
+#endif
 }
 
 SelectServerDialog::~SelectServerDialog()

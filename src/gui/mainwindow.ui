@@ -27,6 +27,10 @@
 	color: white;
 }
 
+QToolTip {
+	color: black;
+}
+
 #sideBarContainer {
 	border: none;
 	
@@ -126,6 +130,10 @@ QMenu {
 	border-top-left-radius: 0px;
 }
 
+QMenu {
+    background-color: rgb(37, 37, 37);
+}
+
 QMenu::item {
     background-color: transparent;
 }
@@ -140,8 +148,28 @@ QMenuBar {
 }
 
 #qt_msgbox_informativelabel {
-	
 	color: rgb(146, 146, 146);
+}
+
+QComboBox {
+	padding-top: 0.5px;
+	padding-bottom: 0.5px;
+	padding-left: 10px;
+	padding-right: 1px;
+	font-size: 11px;
+	qproperty-frame: false;
+	min-width: 250px;
+}
+
+QComboBox QAbstractItemView {
+	border: 1px Solid #0C0C0C;
+	background-color: rgb(37, 37, 37);
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+QComboBox:item::hover {
+    background-color: #1fa3ec;
 }</string>
   </property>
   <property name="toolButtonStyle">

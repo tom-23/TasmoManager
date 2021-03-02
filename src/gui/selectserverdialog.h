@@ -2,6 +2,7 @@
 #define SELECTSERVERDIALOG_H
 
 #include <QDialog>
+#include <QStyleFactory>
 
 #include "../app/mqttservermanager.h"
 

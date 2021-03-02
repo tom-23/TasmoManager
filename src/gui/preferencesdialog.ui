@@ -98,6 +98,11 @@ QLineEdit,  QComboBox, QSpinBox {
 
 QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noimg); border-width: 0px;}
 
+QComboBox::drop-down {
+    background-color: rgb(66, 66, 66);
+	color: white;
+	border: 1px Solid #0C0C0C;
+}
 
 #container {
 	background-color: rgb(66, 66, 66);

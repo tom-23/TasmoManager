@@ -9,6 +9,10 @@
         <file>assets/24_about_square.svg</file>
         <file>assets/24_servers_square.svg</file>
         <file>assets/24_gear_square.svg</file>
+        <file>assets/24_misc_square.svg</file>
+        <file>assets/24_wifi_square.svg</file>
+        <file>assets/24_lighting_square.svg</file>
+        <file>assets/24_stats_square.svg</file>
     </qresource>
     <qresource prefix="/32">
         <file>assets/32_disconnect.svg</file>

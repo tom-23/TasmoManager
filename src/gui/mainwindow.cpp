@@ -9,6 +9,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     deviceManager = new DeviceManager(this);
     serverManager = new MQTTServerManager(this);
+
+
+
     serverManager->loadServerList();
 
     connect(deviceManager, &DeviceManager::device_Discovered, this, &MainWindow::on_deviceDiscovered);
@@ -62,7 +65,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->mqttButton->setVisible(false);
     ui->firmwareButton->setVisible(false);
     ui->backupButton->setVisible(false);
-    ui->deviceButton->setVisible(false);
 }
 
 MainWindow::~MainWindow()
@@ -291,13 +293,9 @@ void MainWindow::on_refreshButton_clicked()
 
 void MainWindow::on_deviceButton_clicked()
 {
-    QMenu toolButtonMenu(this);
-    toolButtonMenu.setObjectName("toolButtonMenu");
-    toolButtonMenu.addAction(new QAction("Restart", this));
-    toolButtonMenu.addAction(new QAction("Reset", this));
-    toolButtonMenu.addAction(new QAction("Restore From Backup...", this));
-
-    toolButtonMenu.exec(QPoint(ui->deviceButton->mapToGlobal(ui->deviceButton->pos()).x(), ui->deviceButton->mapToGlobal(ui->deviceButton->pos()).y() + ui->deviceButton->height()));
+    DeviceOptionsWidget *deviceOptionsWidget = new DeviceOptionsWidget(this);
+    deviceOptionsWidget->setWindowModality(Qt::WindowModality::WindowModal);
+    deviceOptionsWidget->exec();
 }
 
 void MainWindow::on_restartButton_clicked()

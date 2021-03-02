@@ -12,6 +12,7 @@
 #include "preferencesdialog.h"
 #include "terminaldialog.h"
 #include "selectserverdialog.h"
+#include "deviceoptionswidget.h"
 
 #include "../app/devicemanager.h"
 #include "../app/mqttservermanager.h"

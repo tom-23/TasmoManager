@@ -65,12 +65,19 @@ private slots:
 
     void closeEvent(QCloseEvent *event);
 
+    void on_mqttButton_clicked();
+
+    void on_wifiButton_clicked();
+
+    void on_deviceList_itemDoubleClicked(QTreeWidgetItem *item, int column);
+
 private:
     Ui::MainWindow *ui;
 
     void updateInfoText();
 
     PreferencesDialog *preferencesDialog;
+    DeviceOptionsWidget *deviceOptionsWidget = nullptr;
 
     Device *selectedDevice;
 

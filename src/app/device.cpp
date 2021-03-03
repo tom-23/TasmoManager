@@ -2,50 +2,7 @@
 
 Device::Device(QObject *parent) : QObject(parent)
 {
-    SetOption setOption0;
-    setOption0.name = "Save state after restart";
-    setOption0.category = General;
-    setOption0.valueNames = {"Disable", "Enable"};
-    deviceInfo.setOptions.append(setOption0);
 
-    SetOption setOption1;
-    setOption1.name = "Button Multipress mode";
-    setOption1.category = Buttons;
-    setOption1.valueNames = {"Allow all button actions", "Restrict to single to penta press and hold actions"};
-    deviceInfo.setOptions.append(setOption1);
-
-    SetOption setOption2;
-    setOption2.category = null;
-    deviceInfo.setOptions.append(setOption2);
-
-    SetOption setOption3;
-    setOption3.name = "MQTT";
-    setOption3.category = MQTT;
-    setOption3.valueNames = {"Disable MQTT", "Enable MQTT (default)"};
-    deviceInfo.setOptions.append(setOption3);
-
-    SetOption setOption4;
-    setOption3.name = "Return MQTT response as";
-    setOption3.category = MQTT;
-    setOption3.valueNames = {"RESULT topic (default)", " %COMMAND% topic"};
-    deviceInfo.setOptions.append(setOption3);
-
-    SetOption setOption5;
-    setOption5.category = null;
-    deviceInfo.setOptions.append(setOption5);
-
-    SetOption setOption6;
-    setOption6.category = null;
-    deviceInfo.setOptions.append(setOption6);
-
-    SetOption setOption7;
-    setOption5.category = null;
-    deviceInfo.setOptions.append(setOption7);
-
-    SetOption setOption8;
-    setOption8.category = Temperature;
-    setOption8.
-    deviceInfo.setOptions.append(setOption8);
 }
 
 void Device::getDeviceInfo(QString fullTopic, int delay) {
@@ -191,6 +148,48 @@ void Device::sendCommand(QString command) {
     deviceManager->mqttClient->publish(message);
 }
 
+void Device::getSetOptions(QList<SetOption *> *setOptionList) {
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "Backlog");
+    QString payload = "";
+    for (int i = 0; i < setOptionList->size(); i++) {
+        SetOption *setOption = setOptionList->at(i);
+        payload = payload + "SetOption" + QString::number(setOption->number);
+        if (i != setOptionList->size()) {
+            payload = payload + "; ";
+        }
+    }
+    getSetOptionsAmount = setOptionList->size() - 1;
+    getSetOptionsProgress = 0;
+    message.setPayload(payload.toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
+void Device::saveSetOptions(QList<SetOption *> *setOptionList) {
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "Backlog");
+    QString payload = "";
+    for (int i = 0; i < setOptionList->size(); i++) {
+        SetOption *setOption = setOptionList->at(i);
+
+        if (setOption->typeName == "ENUM" || setOption->typeName == "INTEGER") {
+            payload = payload + "SetOption" + QString::number(setOption->number) + " "
+            + QString::number(setOption->value);
+        } else {
+            payload = payload + "SetOption" + QString::number(setOption->number) + " "
+            + setOption->valueString;
+        }
+
+        if (i != setOptionList->size()) {
+            payload = payload + "; ";
+        }
+    }
+    getSetOptionsAmount = setOptionList->size() - 1;
+    getSetOptionsProgress = 0;
+    message.setPayload(payload.toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
 void Device::on_Message(QMQTT::Message message) {
 
     QStringList topicSplit = message.topic().split("/");
@@ -205,6 +204,7 @@ void Device::on_Message(QMQTT::Message message) {
         } else if (message.payload() == "Offline") {
             deviceInfo.status = Offline;
         }
+        emit recievedInfoUpdate();
         emit deviceManager->device_InfoUpdate(deviceInfo);
     }
 
@@ -215,6 +215,7 @@ void Device::on_Message(QMQTT::Message message) {
         deviceInfo.name = statusObject.value("DeviceName").toString();
         deviceInfo.friendlyName = statusObject.value("FriendlyName").toArray()[0].toString();
 
+        emit recievedInfoUpdate();
         emit deviceManager->device_InfoUpdate(deviceInfo);
 
     } else if (endTopic == "STATUS1") {
@@ -224,6 +225,7 @@ void Device::on_Message(QMQTT::Message message) {
         deviceInfo.OTAUrl = QUrl(status1Object.value("OtaUrl").toString());
         deviceInfo.bootCount = status1Object.value("BootCount").toInt();
 
+        emit recievedInfoUpdate();
         emit deviceManager->device_InfoUpdate(deviceInfo);
 
     } else if (endTopic == "STATUS2") {
@@ -231,10 +233,12 @@ void Device::on_Message(QMQTT::Message message) {
         jsonDoc = QJsonDocument::fromJson(message.payload());
         QJsonObject status2Object = jsonDoc.object().value("StatusFWR").toObject();
         deviceInfo.firmwareVersion = status2Object.value("Version").toString();
+        deviceInfo.coreSDKVersion = status2Object.value("Core").toString() + " / " + status2Object.value("SDK").toString();
         deviceInfo.buildDateAndTime = status2Object.value("BuildDateTime").toString();
         deviceInfo.cpuFreq = status2Object.value("CpuFrequency").toInt();
         deviceInfo.hardware = status2Object.value("Hardware").toString();
 
+        emit recievedInfoUpdate();
         emit deviceManager->device_InfoUpdate(deviceInfo);
 
     } else if (endTopic == "STATUS5") {
@@ -243,10 +247,12 @@ void Device::on_Message(QMQTT::Message message) {
         QJsonObject status5Object = jsonDoc.object().value("StatusNET").toObject();
         deviceInfo.hostName = status5Object.value("Hostname").toString();
         deviceInfo.ipAddress = QHostAddress(status5Object.value("IPAddress").toString());
+        deviceInfo.subnetMask = QHostAddress(status5Object.value("Subnetmask").toString());
         deviceInfo.gateway = QHostAddress(status5Object.value("Gateway").toString());
         deviceInfo.dnsServer = QHostAddress(status5Object.value("DNSServer").toString());
         deviceInfo.macAddress = status5Object.value("Mac").toString();
 
+        emit recievedInfoUpdate();
         emit deviceManager->device_InfoUpdate(deviceInfo);
 
     } else if (endTopic == "STATUS11") {
@@ -259,9 +265,10 @@ void Device::on_Message(QMQTT::Message message) {
         deviceInfo.wifiRSSI = wifiObject.value("RSSI").toInt();
         deviceInfo.wifiSignal = wifiObject.value("Signal").toInt();
 
+        emit recievedInfoUpdate();
         emit deviceManager->device_InfoUpdate(deviceInfo);
-    } else if (endTopic == "LOGGING") {
 
+    } else if (endTopic == "LOGGING") {
         emit recievedLogMessage(message.payload());
     } else if (endTopic == "RESULT") {
 
@@ -283,8 +290,6 @@ void Device::on_Message(QMQTT::Message message) {
                 deviceInfo.power[i] = value;
             }
         }
-
-
 
         // Go through 5 light channels
         for (int i = 0; i < deviceInfo.capabilities.channels.size(); i++) {
@@ -323,7 +328,31 @@ void Device::on_Message(QMQTT::Message message) {
             emit deviceManager->device_InfoUpdate(deviceInfo);
         }
 
-        emit recievedStateUpdate();
+        for (int i = 0; i < deviceInfo.setOptions->size(); i++) {
+            SetOption *setOption = deviceInfo.setOptions->at(i);
+            if (!rootObject.value("SetOption" + QString::number(setOption->number)).isUndefined()) {
+                QJsonValue value = rootObject.value("SetOption" + QString::number(setOption->number));
+                if (value.type() == QJsonValue::String) {
+                    if (value.toString() == "OFF") {
+                        setOption->value = 0;
 
+                    } else if (value.toString() == "ON") {
+                        setOption->value = 1;
+                    } else {
+                        setOption->valueString = value.toString();
+                    }
+                } else {
+                    setOption->value = value.toInt();
+                }
+                emit setOptionValueUpdate(setOption);
+                getSetOptionsProgress = getSetOptionsProgress + 1;
+                if (getSetOptionsProgress - 1 == getSetOptionsAmount) {
+                    emit getSetOptionsDone();
+                }
+            }
+
+        }
+
+        emit recievedStateUpdate();
     }
 }

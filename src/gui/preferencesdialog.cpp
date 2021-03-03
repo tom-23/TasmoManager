@@ -17,6 +17,8 @@ PreferencesDialog::~PreferencesDialog()
 
 void PreferencesDialog::on_listWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
+    Q_UNUSED(current);
+    Q_UNUSED(previous);
     ui->stackedWidget->setCurrentIndex(ui->listWidget->currentIndex().row());
 }
 
@@ -72,6 +74,8 @@ void PreferencesDialog::on_removeButton_clicked()
 
 void PreferencesDialog::on_mqttServersList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
+    Q_UNUSED(current);
+    Q_UNUSED(previous);
     if (!updatingServerList) {
         if (serverManager->serverList->size() == ui->mqttServersList->count()) {
             MQTTServerInfo info = serverManager->serverList->at(ui->mqttServersList->currentRow());

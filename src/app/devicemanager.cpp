@@ -3,6 +3,7 @@
 DeviceManager::DeviceManager(QObject *parent) : QObject(parent)
 {
     deviceList = new QList<Device*>;
+    setOptionsList = new QList<SetOption>;
     mqttClient = new QMQTT::Client();
     connectionStatus = Disconnected;
 }
@@ -62,6 +63,13 @@ void DeviceManager::on_mqttMessage(QMQTT::Message message) {
             if (device == nullptr) {
                 device = new Device(this);
                 device->deviceManager = this;
+                device->deviceInfo.setOptions = new QList<SetOption*>;
+                for (int i = 0; i < setOptionsList->size(); i++) {
+                    SetOption setOption = setOptionsList->at(i);
+                    SetOption *deviceSetOption = new SetOption(setOption);
+                    deviceSetOption->device = device;
+                    device->deviceInfo.setOptions->append(deviceSetOption);
+                }
                 device->deviceInfo.name = "Tasmota Device";
                 device->deviceInfo.ipAddress = QHostAddress(ipAddress);
                 device->deviceInfo.macAddress = macAddress;
@@ -265,4 +273,78 @@ QList<QNetworkAddressEntry> DeviceManager::getActiveAddresses() {
       }
     }
     return possibleInterfaceMatches;
+}
+
+void DeviceManager::loadSetOptionsSchema() {
+    qDebug() << "[Device Manager] Loading set options schema...";
+    QFile file(":/schema/setoptions.schema.json");
+    if (file.open(QFile::ReadOnly)) {
+        QJsonDocument document = QJsonDocument::fromJson(file.readAll());
+        QJsonArray setOptions = document.object().value("setOptions").toArray();
+
+        for (int i = 0; i < setOptions.size(); i++) {
+            QJsonObject setOptionObject = setOptions.at(i).toObject();
+            SetOption setOption;
+            setOption.number = setOptionObject.value("number").toInt();
+            setOption.name = setOptionObject.value("name").toString();
+            setOption.typeName = setOptionObject.value("type").toString().toUpper();
+            if (setOption.typeName == "ENUM") {
+                QJsonArray valuesObject = setOptionObject.value("values").toArray();
+                for (int v = 0; v < valuesObject.size(); v++) {
+                    setOption.values.append(valuesObject.at(v).toString());
+                }
+            } else if (setOption.typeName == "INTEGER") {
+                setOption.valueMin = setOptionObject.value("min").toInt();
+                setOption.valueMax = setOptionObject.value("max").toInt();
+            }
+            if (!setOptionObject.value("info").isUndefined()) {
+                setOption.info = setOptionObject.value("info").toString();
+            }
+            if (!setOptionObject.value("info1").isUndefined()) {
+                setOption.info1 = setOptionObject.value("info1").toString();
+            }
+            if (!setOptionObject.value("info2").isUndefined()) {
+                setOption.info2 = setOptionObject.value("info2").toString();
+            }
+            if (!setOptionObject.value("info3").isUndefined()) {
+                setOption.info3 = setOptionObject.value("info3").toString();
+            }
+            if (!setOptionObject.value("info4").isUndefined()) {
+                setOption.info4 = setOptionObject.value("info4").toString();
+            }
+            if (!setOptionObject.value("info5").isUndefined()) {
+                setOption.info5 = setOptionObject.value("info5").toString();
+            }
+            if (!setOptionObject.value("info6").isUndefined()) {
+                setOption.info6 = setOptionObject.value("info6").toString();
+            }
+            if (!setOptionObject.value("warning").isUndefined()) {
+                setOption.warning = setOptionObject.value("warning").toString();
+            }
+            if (!setOptionObject.value("link1").isUndefined()) {
+                setOption.link = QUrl(setOptionObject.value("link").toString());
+            }
+            if (!setOptionObject.value("link2").isUndefined()) {
+                setOption.link1 = QUrl(setOptionObject.value("link1").toString());
+            }
+            if (!setOptionObject.value("requiresRestart").isUndefined()) {
+                setOption.restartRequired = setOptionObject.value("requiresRestart").toBool();
+            }
+            QString categoryString = setOptionObject.value("category").toString().toUpper();
+            SetOptionCategory category = SetOptionCategory::Misc;
+            if (categoryString == "GENERAL") { category = SetOptionCategory::General; };
+            if (categoryString == "BUTTONS") { category = SetOptionCategory::Buttons; };
+            if (categoryString == "LIGHTING") { category = SetOptionCategory::Lighting; };
+            if (categoryString == "TEMPERATURE") { category = SetOptionCategory::Temperature; };
+            if (categoryString == "MQTT") { category = SetOptionCategory::MQTT; };
+            if (categoryString == "WIFI") { category = SetOptionCategory::WIFI; };
+            if (categoryString == "MISC") { category = SetOptionCategory::Misc; };
+            if (categoryString == "IRRF") { category = SetOptionCategory::IrRf; };
+            setOption.category = category;
+            setOptionsList->append(setOption);
+        }
+
+    } else {
+        emit schemeLoadFailed();
+    }
 }

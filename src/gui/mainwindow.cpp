@@ -8,11 +8,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     deviceManager = new DeviceManager(this);
+    deviceManager->loadSetOptionsSchema();
     serverManager = new MQTTServerManager(this);
-
-
-
     serverManager->loadServerList();
+
+
 
     connect(deviceManager, &DeviceManager::device_Discovered, this, &MainWindow::on_deviceDiscovered);
     connect(deviceManager, &DeviceManager::device_InfoUpdate, this, &MainWindow::on_deviceInfoUpdate);
@@ -22,6 +22,16 @@ MainWindow::MainWindow(QWidget *parent)
         updateInfoText();
     });
 
+    connect(deviceManager, &DeviceManager::schemeLoadFailed, this, [this] () {
+        auto m = new QMessageBox(this);
+        m->setText("Fatal Error");
+        m->setInformativeText("Unable to load setoptions.schema.json!");
+        m->setIcon(QMessageBox::Critical);
+        m->setWindowModality(Qt::WindowModal);
+        m->setStandardButtons(QMessageBox::Ok);
+        m->exec();
+        this->close();
+    });
     QTimer *errorCollectionTimer = new QTimer(this);
     errorCollectionTimer->setSingleShot(true);
 
@@ -62,7 +72,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     updateInfoText();
 
-    ui->mqttButton->setVisible(false);
     ui->firmwareButton->setVisible(false);
     ui->backupButton->setVisible(false);
 }
@@ -102,6 +111,7 @@ void MainWindow::on_actiontest_triggered()
 void MainWindow::on_actionPreferences_triggered()
 {
     preferencesDialog = new PreferencesDialog(this);
+    preferencesDialog->setWindowModality(Qt::WindowModal);
     preferencesDialog->setMQTTManager(serverManager);
     preferencesDialog->show();
 }
@@ -195,6 +205,35 @@ void MainWindow::on_deviceInfoUpdate(DeviceInfo deviceInfo) {
                 item->setText(5, "Updating...");
             }
 
+            if (selectedDevice->deviceInfo.status == DeviceStatus::Online) {
+                ui->deviceInfoWidget->setDevice(selectedDevice);
+                ui->devicePowerWidget->setDevice(selectedDevice);
+                ui->deviceColorWidget->setDevice(selectedDevice);
+                ui->deviceActionsContainer->setEnabled(true);
+            } else {
+                ui->deviceInfoWidget->setDevice(nullptr);
+                ui->devicePowerWidget->setDevice(nullptr);
+                ui->deviceColorWidget->setDevice(nullptr);
+                ui->deviceActionsContainer->setEnabled(false);
+            }
+
+            if (!(deviceInfo.status == DeviceStatus::Online)) {
+                if (deviceOptionsWidget) {
+                    if (deviceOptionsWidget->isVisible()) {
+                        if (deviceOptionsWidget->deviceInfoMac == deviceInfoMac) {
+                            deviceOptionsWidget->close();
+                            auto m = new QMessageBox(this);
+                            m->setText("Device is restarting");
+                            m->setInformativeText("'" + deviceInfo.name + "' is restarting. Please wait...");
+                            m->setIcon(QMessageBox::Information);
+                            m->setWindowModality(Qt::WindowModal);
+                            m->setStandardButtons(QMessageBox::Ok);
+                            m->exec();
+                        }
+                    }
+                }
+            }
+
             return;
         }
     }
@@ -208,13 +247,26 @@ void MainWindow::on_terminalButton_clicked()
 
 void MainWindow::on_deviceList_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
+    Q_UNUSED(current);
+    Q_UNUSED(previous);
     if (current) {
         selectedDevice = deviceManager->getDeviceByMAC(current->text(3));
-        ui->deviceInfoWidget->setDevice(selectedDevice);
-        ui->devicePowerWidget->setDevice(selectedDevice);
-        ui->deviceColorWidget->setDevice(selectedDevice);
-         ui->deviceActionsContainer->setEnabled(true);
+        if (selectedDevice->deviceInfo.status == DeviceStatus::Online) {
+            ui->deviceInfoWidget->setDevice(selectedDevice);
+            ui->devicePowerWidget->setDevice(selectedDevice);
+            ui->deviceColorWidget->setDevice(selectedDevice);
+            ui->deviceActionsContainer->setEnabled(true);
+        } else {
+            ui->deviceInfoWidget->setDevice(nullptr);
+            ui->devicePowerWidget->setDevice(nullptr);
+            ui->deviceColorWidget->setDevice(nullptr);
+            ui->deviceActionsContainer->setEnabled(false);
+        }
+
     } else {
+        ui->deviceInfoWidget->setDevice(nullptr);
+        ui->devicePowerWidget->setDevice(nullptr);
+        ui->deviceColorWidget->setDevice(nullptr);
         ui->deviceActionsContainer->setEnabled(false);
     }
 }
@@ -293,12 +345,38 @@ void MainWindow::on_refreshButton_clicked()
 
 void MainWindow::on_deviceButton_clicked()
 {
-    DeviceOptionsWidget *deviceOptionsWidget = new DeviceOptionsWidget(this);
+    deviceOptionsWidget = new DeviceOptionsWidget(this);
     deviceOptionsWidget->setWindowModality(Qt::WindowModality::WindowModal);
+    deviceOptionsWidget->setDevice(selectedDevice);
     deviceOptionsWidget->exec();
 }
 
 void MainWindow::on_restartButton_clicked()
 {
     selectedDevice->restart();
+}
+
+void MainWindow::on_mqttButton_clicked()
+{
+    deviceOptionsWidget = new DeviceOptionsWidget(this);
+    deviceOptionsWidget->setWindowModality(Qt::WindowModality::WindowModal);
+    deviceOptionsWidget->setDevice(selectedDevice);
+    deviceOptionsWidget->showMQTTPage();
+    deviceOptionsWidget->exec();
+}
+
+void MainWindow::on_wifiButton_clicked()
+{
+    deviceOptionsWidget = new DeviceOptionsWidget(this);
+    deviceOptionsWidget->setWindowModality(Qt::WindowModality::WindowModal);
+    deviceOptionsWidget->setDevice(selectedDevice);
+    deviceOptionsWidget->showWIFIPage();
+    deviceOptionsWidget->exec();
+}
+
+void MainWindow::on_deviceList_itemDoubleClicked(QTreeWidgetItem *item, int column)
+{
+    if (selectedDevice->deviceInfo.status == DeviceStatus::Online) {
+        on_deviceButton_clicked();
+    }
 }

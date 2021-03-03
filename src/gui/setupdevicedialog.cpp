@@ -127,6 +127,8 @@ void SetupDeviceDialog::on_stackedWidget_currentChanged(int arg1)
 
 void SetupDeviceDialog::on_discoveredDeviceList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
+    Q_UNUSED(current)
+    Q_UNUSED(previous);
     if (current != nullptr) {
         ui->nextButton->setEnabled(true);
     }
@@ -134,16 +136,19 @@ void SetupDeviceDialog::on_discoveredDeviceList_currentItemChanged(QListWidgetIt
 
 void SetupDeviceDialog::on_topic_textChanged(const QString &arg1)
 {
+    Q_UNUSED(arg1);
     mqttDetailsFilled();
 }
 
 void SetupDeviceDialog::on_fulltopic_textChanged(const QString &arg1)
 {
+    Q_UNUSED(arg1);
     mqttDetailsFilled();
 }
 
 void SetupDeviceDialog::on_mqttServerBox_currentIndexChanged(const QString &arg1)
 {
+    Q_UNUSED(arg1);
     mqttDetailsFilled();
 }
 

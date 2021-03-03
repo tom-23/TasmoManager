@@ -192,7 +192,7 @@
         {
             "number": 28,
             "name": "RF received data format",
-            "category": "Misc",
+            "category": "irRf",
             "type": "enum",
             "values": [
                 "Hex (default)",
@@ -214,7 +214,7 @@
         {
             "number": 31,
             "name": "Set status LED blinking during Wi-Fi and MQTT connection problems",
-            "category": "General",
+            "category": "mqtt",
             "type": "enum",
             "values": [
                 "Enabled (default)",
@@ -235,7 +235,7 @@
         },
         {
             "number": 33,
-            "name": "Number of seconds for which the maximum power limit can be exceeded before the power is turned off",
+            "name": "Number of seconds for which the maximum power limit can be exceeded \nbefore the power is turned off",
             "category": "Misc",
             "type": "integer",
             "min": 1,
@@ -268,14 +268,31 @@
             "requiresRestart": false
         },
         {
+            "number": 37,
+            "name": "Channel Remap",
+            "category": "Lighting",
+            "type": "integer",
+            "min": 0,
+            "max": 255,
+            "info": "Color remapping for led channels, also provides an option for allowing independent handling of RGB and white channels.",
+            "info1": "Setting changes require a device reboot.",
+            "info2": "0 = disabled",
+            "info3": "1..119 = according to this table (see link)",
+            "info4": "120..127 = invalid (results in same as 0)",
+            "info5": "128..255 = same as 0..127 but with independent channel handling enabled",
+            "link": "https://tasmota.github.io/docs/SetOption37",
+            "requiresRestart": true
+        },
+        {
             "number": 38,
-            "name": "IRReceive protocol detection sensitivity minimizing UNKNOWN protocols",
+            "name": "IRReceive protocol detection sensitivity",
             "category": "Misc",
             "type": "integer",
             "min": 0,
             "max": 255,
-            "info": "0 = reset to default on next restart",
-            "info1": "1..255 = number of invalid power readings before reporting no load (default =128).",
+            "info": "Minimizing UNKNOWN protocols.",
+            "info1": "0 = reset to default on next restart",
+            "info2": "1..255 = number of invalid power readings before reporting no load (default =128).",
             "requiresRestart": false
         },
         {
@@ -371,14 +388,14 @@
         },
         {
             "number": 56,
-            "name": "Wi-Fi network re-scan every 44 minutes with alternate to +10dB stronger signal if detected.",
+            "name": "Wi-Fi network re-scan every 44 minutes with alternate to \n+10dB stronger signal if detected.",
             "category": "WIFI",
             "type": "enum",
             "values" : [
                 "Disable (default)",
                 "Enable"
             ],
-            "info": "Network has to be visible",
+            "info": "WIFI Network needs to be visible",
             "requiresRestart": false
         },
         {
@@ -390,31 +407,19 @@
                 "Disable (default)",
                 "Enable"
             ],
-            "info": "Network has to be visible",
+            "info": "WIFI Network needs to be visible",
             "requiresRestart": false
         },
         {
             "number": 58,
-            "name": "Wi-Fi network re-scan every 44 minutes with alternate to +10dB stronger signal if detected.",
-            "category": "WIFI",
+            "name": "IR Raw data in JSON payload",
+            "category": "irRf",
             "type": "enum",
             "values" : [
                 "Disable (default)",
                 "Enable"
             ],
             "link": "https://github.com/arendst/Tasmota/issues/2116#issuecomment-440716483",
-            "requiresRestart": false
-        },
-        {
-            "number": 58,
-            "name": "IR Raw data in JSON payload",
-            "category": "misc",
-            "type": "enum",
-            "values" : [
-                "Disable (default)",
-                "Enable"
-            ],
-            "info": "Network has to be visible",
             "requiresRestart": false
         },
         {
@@ -511,6 +516,18 @@
             "requiresRestart": false
         },
         {
+            "number": 68,
+            "name": "Multi Channel PWM",
+            "category": "Lighting",
+            "type": "enum",
+            "values" : [
+                "Treat PWM as a single light (default)",
+                "Treat PWM as separate channels."
+            ],
+            "info": " In this mode, use Power<x> to turn lights on and off, and Channel<x> to change the value of each channel. \nColor still works to set all channels at once.",
+            "requiresRestart": true
+        },
+        {
             "number": 71,
             "name": "Set DDS238 Modbus register for active energy",
             "category": "misc",
@@ -534,7 +551,7 @@
         },
         {
             "number": 73,
-            "name": "Detach buttons from relays and send multi-press and hold MQTT messages instead",
+            "name": "Detach buttons from relays and send multi-press and hold \n MQTT messages instead",
             "category": "Buttons",
             "type": "enum",
             "values" : [

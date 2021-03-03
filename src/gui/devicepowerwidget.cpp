@@ -27,12 +27,15 @@ void DevicePowerWidget::setDevice(Device *_device) {
 
     device = _device;
 
-    updateUI();
+    if (device != nullptr) {
+        updateUI();
 
-    connect(device, &Device::recievedStateUpdate, this, [=] () {
-        delayTimer->start();
-    });
-
+        connect(device, &Device::recievedStateUpdate, this, [=] () {
+            delayTimer->start();
+        });
+    } else {
+        this->setVisible(false);
+    }
 }
 
 void DevicePowerWidget::updateUI() {

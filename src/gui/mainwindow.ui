@@ -71,6 +71,7 @@ QHeaderView::section::first {
 	border-radius: 0px;
 	padding-left: 5px;
 	padding-right: 5px;
+	min-width: 45px;
 }
 
 #toolBar QToolButton:pressed {
@@ -118,6 +119,7 @@ QPushButton:!enabled {
 
 QMessageBox {
 	background-color: rgb(37, 37, 37);
+	min-width: 500px;
 }
 
 QMenu {
@@ -140,6 +142,18 @@ QMenu::item {
 
 QMenu::item:selected { 
     background-color: #1fa3ec;
+}
+
+QProgressBar:horizontal {
+    border: 1px solid #0C0C0C;
+    border-radius: 5px;
+    background-color: transparent;
+	padding: 1px;
+	margin: 0px;
+    height: 5px;
+}
+QProgressBar::chunk:horizontal {
+    background: #1fa3ec;
 }
 
 QMenuBar {
@@ -170,7 +184,33 @@ QComboBox QAbstractItemView {
 
 QComboBox:item::hover {
     background-color: #1fa3ec;
-}</string>
+}
+
+QTabWidget::pane {
+	top:-1px; 
+	border: 1px Solid #0C0C0C;
+	border-radius: 5px;
+	background-color: transparent;
+} 
+
+  QTabBar::tab {
+	background-color: #4f4f4f;
+	border: 1px Solid #0C0C0C;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+	padding-left: 12px;
+	padding-right: 12px;
+	margin-left: 2px;
+	margin-right: 2px;
+	font-size: 11px;
+  } 
+  
+  QTabBar::tab:selected { 
+	background-color: #1fa3ec;
+	color: white;
+  }</string>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonTextUnderIcon</enum>
@@ -376,6 +416,82 @@ QComboBox:item::hover {
            </widget>
           </item>
           <item>
+           <widget class="QToolButton" name="mqttButton">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="contextMenuPolicy">
+             <enum>Qt::NoContextMenu</enum>
+            </property>
+            <property name="text">
+             <string>MQTT</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../resources/resources.qrc">
+              <normaloff>:/32/assets/32_mqtt.svg</normaloff>:/32/assets/32_mqtt.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextUnderIcon</enum>
+            </property>
+            <property name="arrowType">
+             <enum>Qt::NoArrow</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="wifiButton">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="contextMenuPolicy">
+             <enum>Qt::NoContextMenu</enum>
+            </property>
+            <property name="text">
+             <string>WIFI</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../resources/resources.qrc">
+              <normaloff>:/32/assets/32_wifi.svg</normaloff>:/32/assets/32_wifi.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextUnderIcon</enum>
+            </property>
+            <property name="arrowType">
+             <enum>Qt::NoArrow</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QToolButton" name="restartButton">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -436,44 +552,6 @@ QComboBox:item::hover {
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextUnderIcon</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="mqttButton">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
-            </property>
-            <property name="text">
-             <string>MQTT</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../resources/resources.qrc">
-              <normaloff>:/32/assets/32_mqtt.svg</normaloff>:/32/assets/32_mqtt.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>30</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="popupMode">
-             <enum>QToolButton::InstantPopup</enum>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextUnderIcon</enum>
-            </property>
-            <property name="arrowType">
-             <enum>Qt::NoArrow</enum>
             </property>
            </widget>
           </item>

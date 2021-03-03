@@ -22,12 +22,18 @@ void DeviceColorWidget::setDevice(Device *_device) {
 
     device = _device;
 
-    previousChannels.clear();
-    previousChannels.append(device->deviceInfo.channels);
+    if (device != nullptr) {
+        previousChannels.clear();
+        previousChannels.append(device->deviceInfo.channels);
 
-    updateUI();
+        updateUI();
 
-    connect(device, &Device::recievedStateUpdate, this, &DeviceColorWidget::updateUI);
+        connect(device, &Device::recievedStateUpdate, this, &DeviceColorWidget::updateUI);
+    } else {
+        this->setVisible(false);
+    }
+
+
 }
 
 void DeviceColorWidget::updateColor() {

@@ -11,6 +11,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
+#include <QFile>
+#include <QMessageBox>
 
 #include <qmqtt.h>
 
@@ -19,6 +21,7 @@
 #include "device.h"
 class Device;
 struct DeviceInfo;
+struct SetOption;
 #include "networkscanthread.h"
 
 enum ConnectionStatus {
@@ -44,6 +47,7 @@ public:
     void subscribeToDiscovery();
 
     QList<Device *> *deviceList;
+    QList<SetOption> *setOptionsList;
 
     void scanNewDevices();
     void setupNewDevice(DeviceInfo baseInfo, DeviceInfo newInfo);
@@ -56,6 +60,8 @@ public:
     Device* getDeviceByMAC(QString mac);
 
     ConnectionStatus connectionStatus;
+
+    void loadSetOptionsSchema();
 
 private:
 
@@ -76,7 +82,6 @@ private:
     int getDeviceInfoDelay = 0;
 
     int refreshDelay = 200;
-
 signals:
 
     void scanNewDevices_Progress(int progress, int amount);
@@ -90,6 +95,8 @@ signals:
 
     void device_Discovered(DeviceInfo deviceInfo);
     void device_InfoUpdate(DeviceInfo deviceInfo);
+
+    void schemeLoadFailed();
 };
 
 #endif // DEVICEMANAGER_H

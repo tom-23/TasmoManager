@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SetOptionWidget</class>
+ <widget class="QWidget" name="SetOptionWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>421</width>
+    <height>88</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton {
+	padding: 4px 15px;
+}
+
+#linkButton {
+	image: url(:/16/assets/16_open.svg);
+padding: 4px 2px;
+}
+
+#link1Button {
+	image: url(:/16/assets/16_open.svg);
+padding: 4px 2px;
+}
+
+#infoButton {
+padding: 4px 15px;
+}
+
+#revertButton {
+	background-color: #FF9400;
+	image: url(:/16/assets/16_revert.svg);
+padding: 4px 2px;
+}
+
+#saveButton {
+	background-color: #47c266;
+	image: url(:/16/assets/16_tick.svg);
+padding: 4px 2px;
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>5</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>5</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="nameLayout">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QWidget" name="iconWidget" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>12</width>
+           <height>12</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>12</width>
+           <height>12</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Requires Restart</string>
+         </property>
+         <property name="toolTipDuration">
+          <number>5000</number>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">image: url(:/32/assets/32_restart.svg);</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="nameLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="warningLabel">
+         <property name="styleSheet">
+          <string notr="true">color: red;</string>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="controlsLayout"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

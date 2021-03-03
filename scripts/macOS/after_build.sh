@@ -1,4 +1,4 @@
-source utils/macOS/env.sh
+source scripts/macOS/env.sh
 
 if test -d build/TasmoManager.app; then
     export PATH=${CMAKE_PREFIX_PATH}/bin:${PATH}

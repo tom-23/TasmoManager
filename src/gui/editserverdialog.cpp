@@ -21,11 +21,9 @@ void EditServerDialog::setMQTTServer(MQTTServerInfo _serverInfo) {
 void EditServerDialog::on_saveChangesButton_clicked()
 {
     if (ui->name->text() == ""
-            || ui->host->text() == ""
-            || ui->username->text() == ""
-            || ui->password->text() == "") {
+            || ui->host->text() == "") {
         auto m = new QMessageBox(this);
-        m->setText("Please fill out all parameters.");
+        m->setText("Please fill out all required parameters.");
         m->setIcon(QMessageBox::Warning);
         m->setWindowModality(Qt::WindowModal);
         m->setStandardButtons(QMessageBox::Ok);

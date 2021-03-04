@@ -376,6 +376,8 @@ void MainWindow::on_wifiButton_clicked()
 
 void MainWindow::on_deviceList_itemDoubleClicked(QTreeWidgetItem *item, int column)
 {
+    Q_UNUSED(item);
+    Q_UNUSED(column);
     if (selectedDevice->deviceInfo.status == DeviceStatus::Online) {
         on_deviceButton_clicked();
     }

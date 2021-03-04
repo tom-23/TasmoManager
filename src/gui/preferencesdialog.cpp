@@ -29,10 +29,8 @@ void PreferencesDialog::setMQTTManager(MQTTServerManager *_serverManager) {
 
 void PreferencesDialog::on_addButton_clicked()
 {
-    MQTTServerInfo serverInfo;
     EditServerDialog *editServerDialog = new EditServerDialog(this);
     editServerDialog->setWindowModality(Qt::WindowModal);
-    editServerDialog->setMQTTServer(serverInfo);
     if (editServerDialog->exec() == 1) {
         serverManager->serverList->append(editServerDialog->serverInfo);
         serverManager->saveServerList();
@@ -90,7 +88,6 @@ void PreferencesDialog::on_githubButton_clicked()
 void PreferencesDialog::on_editButton_clicked()
 {
     if (ui->mqttServersList->selectedItems().size() != 0) {
-        qDebug() << ui->mqttServersList->currentRow();
         int itemIndex = ui->mqttServersList->currentRow();
         EditServerDialog *editServerDialog = new EditServerDialog(this);
         editServerDialog->setWindowModality(Qt::WindowModal);

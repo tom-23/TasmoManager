@@ -7,6 +7,9 @@ EditServerDialog::EditServerDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
+    MQTTServerInfo _serverInfo;
+    _serverInfo.port = 1883;
+    setMQTTServer(_serverInfo);
 }
 
 EditServerDialog::~EditServerDialog()

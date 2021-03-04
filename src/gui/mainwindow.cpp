@@ -209,6 +209,7 @@ void MainWindow::on_terminalButton_clicked()
 
 void MainWindow::on_deviceList_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
+    Q_UNUSED(previous);
     if (current) {
         selectedDevice = deviceManager->getDeviceByMAC(current->text(3));
         ui->deviceInfoWidget->setDevice(selectedDevice);

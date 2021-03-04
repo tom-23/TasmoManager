@@ -143,10 +143,6 @@ QScrollArea {
 	background-color: #1FA3EC;
 }
 
-#cancelButton {
-	background-color: #d43535;
-}
-
 #saveChangesButton {
 	background-color: #47c266;
 }
@@ -422,8 +418,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>480</width>
-               <height>342</height>
+               <width>100</width>
+               <height>50</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -521,8 +517,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>480</width>
-               <height>342</height>
+               <width>100</width>
+               <height>50</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -806,8 +802,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>480</width>
-               <height>342</height>
+               <width>100</width>
+               <height>50</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -989,8 +985,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>480</width>
-               <height>342</height>
+               <width>100</width>
+               <height>50</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -1173,9 +1169,9 @@ image: url(:/16/assets/16_refresh.svg);</string>
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="cancelButton">
+         <widget class="QPushButton" name="closeButton">
           <property name="text">
-           <string>Close / Done</string>
+           <string>Close</string>
           </property>
          </widget>
         </item>

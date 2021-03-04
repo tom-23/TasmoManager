@@ -42,7 +42,7 @@ QMessageBox {
 QPushButton {
 	border-radius: 5px;
 	border: none;
-	padding: 5px 15px;
+	padding: 4px 15px;
 	background-color: #1fa3ec;
 }
 
@@ -183,12 +183,12 @@ QComboBox::drop-down {
    </item>
    <item>
     <widget class="QWidget" name="container" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0">
+     <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0">
       <property name="spacing">
        <number>10</number>
       </property>
       <property name="leftMargin">
-       <number>15</number>
+       <number>10</number>
       </property>
       <property name="topMargin">
        <number>10</number>
@@ -202,7 +202,7 @@ QComboBox::drop-down {
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="generalPage">
          <layout class="QFormLayout" name="formLayout_3">
@@ -288,7 +288,7 @@ QComboBox::drop-down {
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_4">
               <property name="spacing">
-               <number>5</number>
+               <number>10</number>
               </property>
               <property name="leftMargin">
                <number>0</number>
@@ -312,19 +312,6 @@ QComboBox::drop-down {
                  <number>0</number>
                 </property>
                 <item>
-                 <spacer name="horizontalSpacer_2">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
                  <widget class="QPushButton" name="addButton">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -332,15 +319,13 @@ QComboBox::drop-down {
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="text">
-                   <string>Add</string>
+                  <property name="styleSheet">
+                   <string notr="true">image: url(:/16/assets/16_add.svg);
+padding: 4px 2px;
+background-color: #47c266;</string>
                   </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="editButton">
                   <property name="text">
-                   <string>Edit</string>
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -352,8 +337,24 @@ QComboBox::drop-down {
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">image: url(:/16/assets/16_remove.svg);
+padding: 4px 2px;
+background-color: #d43535;</string>
+                  </property>
                   <property name="text">
-                   <string>Remove</string>
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="editButton">
+                  <property name="styleSheet">
+                   <string notr="true">image: url(:/16/assets/16_edit.svg);
+padding: 4px 2px;</string>
+                  </property>
+                  <property name="text">
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -397,6 +398,9 @@ QComboBox::drop-down {
           </property>
           <item>
            <layout class="QFormLayout" name="formLayout_2">
+            <property name="fieldGrowthPolicy">
+             <enum>QFormLayout::ExpandingFieldsGrow</enum>
+            </property>
             <property name="topMargin">
              <number>10</number>
             </property>
@@ -410,7 +414,7 @@ QComboBox::drop-down {
             <item row="0" column="1">
              <layout class="QVBoxLayout" name="verticalLayout_6">
               <item>
-               <widget class="QRadioButton" name="radioButton">
+               <widget class="QRadioButton" name="automaticButton">
                 <property name="text">
                  <string>Automatic (Default)</string>
                 </property>
@@ -425,7 +429,7 @@ QComboBox::drop-down {
                  </size>
                 </property>
                 <property name="text">
-                 <string>TasmoManager will automatically detect the active network interface(s) on this computer and iterate through the IP addresses in that particular subnet until a tasmota device is found.</string>
+                 <string>TasmoManager will automatically detect the active network interface(s) on this computer and iterate through the IP addresses in that particular subnet until a Tasmota device is found.</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -436,7 +440,7 @@ QComboBox::drop-down {
                </widget>
               </item>
               <item>
-               <widget class="QRadioButton" name="radioButton_2">
+               <widget class="QRadioButton" name="manualButton">
                 <property name="text">
                  <string>Manual</string>
                 </property>
@@ -445,16 +449,50 @@ QComboBox::drop-down {
               <item>
                <widget class="QLabel" name="label_12">
                 <property name="text">
-                 <string>Enter an IP that TasmoManager will use to detect devices.</string>
+                 <string>Enter an IP range that TasmoManager will use to detect devices.</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_5">
-                <property name="inputMask">
-                 <string>000.000.000.000 - 000.000.000.000;_</string>
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <property name="spacing">
+                 <number>10</number>
                 </property>
-               </widget>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLineEdit" name="firstIP"/>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_3">
+                  <property name="text">
+                   <string>-</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="lastIP"/>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="saveIPSettingsButton">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">image: url(:/16/assets/16_tick.svg);
+padding: 4px 2px;
+background-color: #47c266;</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </item>
@@ -574,6 +612,20 @@ font-weight: 900;</string>
              <number>0</number>
             </property>
             <item>
+             <widget class="QPushButton" name="githubButton">
+              <property name="text">
+               <string>GitHub</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="openIssueButton">
+              <property name="text">
+               <string>Report an Issue</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="horizontalSpacer">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -586,18 +638,38 @@ font-weight: 900;</string>
               </property>
              </spacer>
             </item>
-            <item>
-             <widget class="QPushButton" name="githubButton">
-              <property name="text">
-               <string>GitHub</string>
-              </property>
-             </widget>
-            </item>
            </layout>
           </item>
          </layout>
         </widget>
        </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="closeButton">
+          <property name="text">
+           <string>Close</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>

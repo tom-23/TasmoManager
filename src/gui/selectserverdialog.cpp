@@ -17,8 +17,8 @@ SelectServerDialog::~SelectServerDialog()
 void SelectServerDialog::setMQTTServerManager(MQTTServerManager *_serverManager) {
     serverManager = _serverManager;
     for (int i = 0; i < serverManager->serverList->size(); ++i) {
-        MQTTServerInfo info = serverManager->serverList->at(i);
-        ui->serverComboBox->addItem(info.name + " (" + info.ipAddress.toString() + ")");
+        MQTTServerInfo *info = serverManager->serverList->at(i);
+        ui->serverComboBox->addItem(info->name + " (" + info->ipAddress.toString() + ")");
     }
     ui->serverComboBox->setCurrentIndex(0);
 }

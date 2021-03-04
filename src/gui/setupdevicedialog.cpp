@@ -16,7 +16,7 @@ SetupDeviceDialog::SetupDeviceDialog(QWidget *parent, DeviceManager *_deviceMana
     serverManager = _serverManager;
 
     for (int i = 0; i < serverManager->serverList->size(); i++) {
-        ui->mqttServerBox->addItem(serverManager->serverList->at(i).name);
+        ui->mqttServerBox->addItem(serverManager->serverList->at(i)->name);
     }
     ui->mqttServerBox->setCurrentIndex(0);
     ui->nextButton->setEnabled(true);

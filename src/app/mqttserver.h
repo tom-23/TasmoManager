@@ -11,6 +11,7 @@ struct MQTTServerInfo {
     QByteArray password;
     QString clientID;
     QString name;
+    bool currentlyConnected;
 };
 
 Q_DECLARE_METATYPE(MQTTServerInfo);

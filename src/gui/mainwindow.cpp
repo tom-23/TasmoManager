@@ -11,8 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
     deviceManager->loadSetOptionsSchema();
     serverManager = new MQTTServerManager(this);
     serverManager->loadServerList();
-
-
+    preferencesManager = new PreferencesManager(this);
+    preferencesManager->loadPreferences();
 
     connect(deviceManager, &DeviceManager::device_Discovered, this, &MainWindow::on_deviceDiscovered);
     connect(deviceManager, &DeviceManager::device_InfoUpdate, this, &MainWindow::on_deviceInfoUpdate);
@@ -72,7 +72,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     updateInfoText();
 
-    ui->deviceButton->setVisible(false);
     ui->firmwareButton->setVisible(false);
     ui->backupButton->setVisible(false);
 }
@@ -114,6 +113,7 @@ void MainWindow::on_actionPreferences_triggered()
     preferencesDialog = new PreferencesDialog(this);
     preferencesDialog->setWindowModality(Qt::WindowModal);
     preferencesDialog->setMQTTManager(serverManager);
+    preferencesDialog->setPreferencesManager(preferencesManager);
     preferencesDialog->show();
 }
 
@@ -129,7 +129,7 @@ void MainWindow::on_connectButton_clicked()
         selectServerDialog->setWindowModality(Qt::WindowModal);
         if (selectServerDialog->exec() == 1) {
 
-            deviceManager->connect(&selectServerDialog->selectedServer);
+            deviceManager->connect(selectServerDialog->selectedServer);
             updateInfoText();
         }
     } else {

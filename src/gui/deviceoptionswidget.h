@@ -34,14 +34,14 @@ public:
 
 
 private slots:
-    void on_cancelButton_clicked();
+
     void on_listWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 
     void on_showSetOptionsButton_toggled(bool checked);
 
-    void on_saveChangesButton_clicked();
-
     void on_refreshUIButton_clicked();
+
+    void on_closeButton_clicked();
 
 private:
     Ui::DeviceOptionsWidget *ui;

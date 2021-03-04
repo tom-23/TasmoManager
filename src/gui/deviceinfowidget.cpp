@@ -17,12 +17,10 @@ DeviceInfoWidget::~DeviceInfoWidget()
 void DeviceInfoWidget::setDevice(Device *_device) {
     device = _device;
     if (device != nullptr) {
-        ui->deviceName->setText(device->deviceInfo.name);
         lastDeviceName = device->deviceInfo.name;
-        deviceNameChanged = false;
-        ui->deviceFriendlyName->setText(device->deviceInfo.friendlyName);
+        ui->deviceName->setText(device->deviceInfo.name);
         lastDeviceFriendlyName = device->deviceInfo.friendlyName;
-        deviceNameChanged = false;
+        ui->deviceFriendlyName->setText(device->deviceInfo.friendlyName);
         ui->ipAddress->setText(device->deviceInfo.ipAddress.toString());
         ui->macAddress->setText(device->deviceInfo.macAddress);
 
@@ -34,31 +32,32 @@ void DeviceInfoWidget::setDevice(Device *_device) {
     }
 }
 
-void DeviceInfoWidget::on_saveChangesButton_clicked()
-{
-    device->setDeviceNames(ui->deviceName->text(), ui->deviceFriendlyName->text());
-}
-
 void DeviceInfoWidget::on_deviceName_textChanged(const QString &arg1)
 {
-    Q_UNUSED(arg1);
-    deviceNameChanged = (lastDeviceName != ui->deviceName->text());
+    qDebug() << lastDeviceName;
+    qDebug() << arg1;
+    deviceNameChanged = (lastDeviceName != arg1);
     updateButtonVisibility();
 }
 
 void DeviceInfoWidget::on_deviceFriendlyName_textChanged(const QString &arg1)
 {
-    Q_UNUSED(arg1);
-    deviceFriendlyNameChanged = (lastDeviceFriendlyName != ui->deviceFriendlyName->text());
+    deviceFriendlyNameChanged = (lastDeviceFriendlyName != arg1);
     updateButtonVisibility();
 }
 
 void DeviceInfoWidget::updateButtonVisibility() {
-    ui->saveButton->setVisible(deviceNameChanged || deviceFriendlyNameChanged);
-    ui->revertButton->setVisible(deviceNameChanged || deviceFriendlyNameChanged);
+    ui->saveButton->setVisible(deviceNameChanged | deviceFriendlyNameChanged);
+    ui->revertButton->setVisible(deviceNameChanged | deviceFriendlyNameChanged);
+}
+
+void DeviceInfoWidget::on_saveButton_clicked()
+{
+    device->setDeviceNames(ui->deviceName->text(), ui->deviceFriendlyName->text());
 }
 
 void DeviceInfoWidget::on_revertButton_clicked()
 {
-
+    ui->deviceName->setText(lastDeviceName);
+    ui->deviceFriendlyName->setText(lastDeviceFriendlyName);
 }

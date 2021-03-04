@@ -16,6 +16,7 @@ void DeviceManager::connect(MQTTServerInfo *serverInfo) {
     mqttClient->setUsername(mqttServerInfo->username);
     mqttClient->setPassword(mqttServerInfo->password);
     connectionStatus = Connecting;
+    mqttServerInfo->currentlyConnected = true;
     mqttClient->connectToHost();
 
     QObject::connect(mqttClient, &QMQTT::Client::received, this, &DeviceManager::on_mqttMessage);
@@ -27,6 +28,7 @@ void DeviceManager::connect(MQTTServerInfo *serverInfo) {
 
     QObject::connect(mqttClient, &QMQTT::Client::error, this, [=] (QMQTT::ClientError clientError) {
         connectionStatus = Disconnected;
+        mqttServerInfo->currentlyConnected = false;
         emit mqtt_onError(clientError);
         qDebug() << "[MQTT Status] Got a connection error!";
         qDebug() << clientError;
@@ -36,6 +38,7 @@ void DeviceManager::connect(MQTTServerInfo *serverInfo) {
 void DeviceManager::disconnect() {
     qDebug() << "[MQTT Status] Disconnected from MQTT Broker";
     mqttClient->disconnectFromHost();
+    mqttServerInfo->currentlyConnected = false;
     connectionStatus = Disconnected;
     deviceList->clear();
 }
@@ -173,10 +176,10 @@ void DeviceManager::setupNewDevice(DeviceInfo baseInfo, DeviceInfo newInfo) {
     QUrl url("http://" + baseInfo.ipAddress.toString() + "/cm");
     QUrlQuery urlQuery;
 
-    QString query = "Backlog MqttHost " + newInfo.mqttServer.ipAddress.toString() +
-            "; MqttUser " + newInfo.mqttServer.username +
-            "; MqttPassword " + newInfo.mqttServer.password +
-            "; MqttPort " + QString::number(newInfo.mqttServer.port) +
+    QString query = "Backlog MqttHost " + newInfo.mqttServer->ipAddress.toString() +
+            "; MqttUser " + newInfo.mqttServer->username +
+            "; MqttPassword " + newInfo.mqttServer->password +
+            "; MqttPort " + QString::number(newInfo.mqttServer->port) +
             "; MqttTopic " + newInfo.mqttTopic +
             "/; MqttFullTopic " + newInfo.mqttFullTopic +
             "; SetOption19 0";

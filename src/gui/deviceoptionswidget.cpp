@@ -25,11 +25,6 @@ DeviceOptionsWidget::~DeviceOptionsWidget()
     delete ui;
 }
 
-void DeviceOptionsWidget::on_cancelButton_clicked()
-{
-    this->reject();
-}
-
 bool DeviceOptionsWidget::updateCurrentInfo() {
 
     switch (ui->stackedWidget->currentIndex()) {
@@ -207,19 +202,6 @@ void DeviceOptionsWidget::initalizeUI() {
     updateCurrentSetOptions();
 }
 
-void DeviceOptionsWidget::on_saveChangesButton_clicked()
-{
-    QList<SetOption *> *editedSetOptions = new QList<SetOption *>;
-    for (int i = 0; i < device->deviceInfo.setOptions->size(); i++) {
-        SetOption *setOption = device->deviceInfo.setOptions->at(i);
-        if (setOption->valueChanged) {
-            editedSetOptions->append(setOption);
-        }
-    }
-    device->saveSetOptions(editedSetOptions);
-    ui->spinner->setVisible(true);
-}
-
 void DeviceOptionsWidget::on_refreshUIButton_clicked()
 {
     updateCurrentInfo();
@@ -237,4 +219,9 @@ bool DeviceOptionsWidget::askToDiscard() {
     } else {
         return true;
     }
+}
+
+void DeviceOptionsWidget::on_closeButton_clicked()
+{
+    this->accept();
 }

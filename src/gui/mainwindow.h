@@ -14,8 +14,9 @@
 #include "selectserverdialog.h"
 #include "deviceoptionswidget.h"
 
-#include "../app/devicemanager.h"
-#include "../app/mqttservermanager.h"
+#include "app/devicemanager.h"
+#include "app/mqttservermanager.h"
+#include "app/preferencesmanager.h"
 
 class DeviceColorWidget;
 class PreferencesDialog;
@@ -34,6 +35,7 @@ public:
 
     DeviceManager *deviceManager;
     MQTTServerManager *serverManager;
+    PreferencesManager *preferencesManager;
 
 private slots:
 

@@ -79,7 +79,7 @@ struct DeviceInfo {
 
     QString moduleTemplate;
 
-    MQTTServerInfo mqttServer;
+    MQTTServerInfo *mqttServer;
     QString mqttTopic;
     QString mqttFullTopic;
 

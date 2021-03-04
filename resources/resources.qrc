@@ -52,6 +52,8 @@
         <file>assets/16_revert.svg</file>
         <file>assets/16_tick.svg</file>
         <file>assets/16_edit.svg</file>
+        <file>assets/16_add.svg</file>
+        <file>assets/16_remove.svg</file>
     </qresource>
     <qresource prefix="/identity">
         <file>appicon.png</file>

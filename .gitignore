@@ -72,4 +72,4 @@ Thumbs.db
 *.exe
 
 # CMake User Files
-*.use
+CMakeLists.txt.user

@@ -6,6 +6,7 @@
 
 struct MQTTServerInfo {
     QHostAddress ipAddress;
+    QString host;
     int port;
     QString username;
     QByteArray password;

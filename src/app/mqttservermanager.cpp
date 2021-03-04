@@ -26,7 +26,7 @@ void MQTTServerManager::loadServerList() {
             QJsonObject server = serversArray.at(i).toObject();
             MQTTServerInfo *serverInf = new MQTTServerInfo();
             serverInf->ipAddress = QHostAddress(server.value("ipAddress").toString());
-            serverInf->name = server.value("name").toString();
+            serverInf.host = server.value("host").toString();
             serverInf->password = server.value("password").toString().toUtf8();
             serverInf->username = server.value("username").toString();
             serverInf->port = server.value("port").toInt();
@@ -48,7 +48,7 @@ void MQTTServerManager::saveServerList() {
             MQTTServerInfo *serverInfo = serverList->at(i);
             server.insert("ipAddress", serverInfo->ipAddress.toString());
             server.insert("name", serverInfo->name);
-            server.insert("username", serverInfo->username);
+            server.insert("host", serverInfo.host);
             server.insert("password", QString::fromUtf8(serverInfo->password));
             server.insert("port", serverInfo->port);
 

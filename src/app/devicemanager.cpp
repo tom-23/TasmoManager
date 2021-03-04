@@ -11,7 +11,11 @@ DeviceManager::DeviceManager(QObject *parent) : QObject(parent)
 void DeviceManager::connect(MQTTServerInfo *serverInfo) {
     mqttServerInfo = serverInfo;
     mqttClient = new QMQTT::Client();
-    mqttClient->setHost(mqttServerInfo->ipAddress);
+    if (!mqttServerInfo->ipAddress.isNull()) {
+        mqttClient->setHost(mqttServerInfo->ipAddress);
+    } else {
+        mqttClient->setHostName(mqttServerInfo->host);
+    }
     mqttClient->setPort(mqttServerInfo->port);
     mqttClient->setUsername(mqttServerInfo->username);
     mqttClient->setPassword(mqttServerInfo->password);

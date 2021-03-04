@@ -285,8 +285,18 @@ void MainWindow::on_settingsButton_clicked()
 void MainWindow::updateInfoText() {
 
     if (deviceManager->connectionStatus == Connected || deviceManager->connectionStatus == Connecting) {
-        ui->userLabel->setText("User: " + deviceManager->mqttServerInfo->username);
-        ui->serverLabel->setText("Server: " + deviceManager->mqttServerInfo->name + " (" + deviceManager->mqttServerInfo->ipAddress.toString() + ")");
+        if (deviceManager->mqttServerInfo->username != "") {
+            ui->userLabel->setText("User: " + deviceManager->mqttServerInfo->username);
+        } else {
+            ui->userLabel->setText("User: none");
+        }
+        QString host;
+        if (!deviceManager->mqttServerInfo->ipAddress.isNull()) {
+            host = deviceManager->mqttServerInfo->ipAddress.toString();
+        } else {
+            host = deviceManager->mqttServerInfo->host;
+        }
+        ui->serverLabel->setText("Server: " + deviceManager->mqttServerInfo->name + " (" +  host + ":" + QString::number(deviceManager->mqttServerInfo->port) + ")");
     } else {
         ui->userLabel->setText("User: -");
         ui->serverLabel->setText("Server: -");

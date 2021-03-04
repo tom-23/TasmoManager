@@ -29,10 +29,8 @@ void PreferencesDialog::setMQTTManager(MQTTServerManager *_serverManager) {
 
 void PreferencesDialog::on_addButton_clicked()
 {
-    MQTTServerInfo serverInfo;
     EditServerDialog *editServerDialog = new EditServerDialog(this);
     editServerDialog->setWindowModality(Qt::WindowModal);
-    editServerDialog->setMQTTServer(serverInfo);
     if (editServerDialog->exec() == 1) {
         serverManager->serverList->append(editServerDialog->serverInfo);
         serverManager->saveServerList();
@@ -41,102 +39,72 @@ void PreferencesDialog::on_addButton_clicked()
 }
 
 void PreferencesDialog::updateMQTTServerList() {
-    int currentIndex = ui->mqttServersList->currentRow();
-    bool currentItemPresent = ui->mqttServersList->currentItem();
-    updatingServerList = true;
+
+    int lastSelectedIndex = 0;
+    if (ui->mqttServersList->selectedItems().size() != 0) {
+        lastSelectedIndex = ui->mqttServersList->currentRow();
+    }
     ui->mqttServersList->clear();
     for (int i = 0; i < serverManager->serverList->size(); i++) {
         MQTTServerInfo info = serverManager->serverList->at(i);
-        ui->mqttServersList->addItem(info.name + " (" + info.ipAddress.toString() + ")");
+        QString user = "";
+        if (info.username != "") {
+            user =  info.username + "@";
+        }
+        QListWidgetItem *itemWidget = new QListWidgetItem(ui->mqttServersList);
+        itemWidget->setText(info.name + " (" + user + info.ipAddress.toString() + ")");
+        itemWidget->setSelected(false);
+        ui->mqttServersList->addItem(itemWidget);
     }
     if(ui->mqttServersList->count() != 0) {
-        if (currentItemPresent) {
-            if (ui->mqttServersList->count() < currentIndex) {
-                ui->mqttServersList->item(ui->mqttServersList->count())->setSelected(true);
-            } else {
-                ui->mqttServersList->item(currentIndex)->setSelected(true);
-            }
+        if (ui->mqttServersList->count() > lastSelectedIndex) {
+            ui->mqttServersList->setCurrentRow(lastSelectedIndex);
+        } else {
+            ui->mqttServersList->setCurrentRow(ui->mqttServersList->count() - 1);
         }
+
     }
-    updatingServerList = false;
 }
 
 void PreferencesDialog::on_removeButton_clicked()
 {
     if (ui->mqttServersList->selectedItems().size() != 0) {
         int itemIndex = ui->mqttServersList->currentRow();
-
         serverManager->serverList->removeAt(itemIndex);
         serverManager->saveServerList();
         updateMQTTServerList();
     }
 }
 
-void PreferencesDialog::on_mqttServersList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
-{
-    Q_UNUSED(current);
-    Q_UNUSED(previous);
-    if (!updatingServerList) {
-        if (serverManager->serverList->size() == ui->mqttServersList->count()) {
-            MQTTServerInfo info = serverManager->serverList->at(ui->mqttServersList->currentRow());
-            ui->serverName->setText(info.name);
-            ui->serverIP->setText(info.ipAddress.toString());
-            ui->serverPort->setValue(info.port);
-            ui->serverUsername->setText(info.username);
-            ui->serverPassword->setText(QString::fromUtf8(info.password));
-        }
-    }
-}
-
-void PreferencesDialog::on_saveChangesButton_clicked()
-{
-    if (ui->serverName->text() == ""
-            || ui->serverIP->text() == ""
-            || ui->serverUsername->text() == ""
-            || ui->serverPassword->text() == "") {
-        auto m = new QMessageBox(this);
-        m->setText("Please fill out all parameters.");
-        m->setIcon(QMessageBox::Warning);
-        m->setWindowModality(Qt::WindowModal);
-        m->setStandardButtons(QMessageBox::Ok);
-        m->exec();
-        return;
-    }
-
-    if (QHostAddress(ui->serverIP->text()).isNull()) {
-        auto m = new QMessageBox(this);
-        m->setText("IP Address is invalid.");
-        m->setIcon(QMessageBox::Warning);
-        m->setWindowModality(Qt::WindowModal);
-        m->setStandardButtons(QMessageBox::Ok);
-        m->exec();
-        return;
-    }
-
-    int currentIndex = ui->mqttServersList->currentRow();
-
-    MQTTServerInfo serverInfo;
-
-    serverInfo.name = ui->serverName->text();
-    serverInfo.ipAddress = QHostAddress(ui->serverIP->text());
-    serverInfo.port = ui->serverPort->value();
-    serverInfo.username = ui->serverUsername->text();
-    serverInfo.password = ui->serverPassword->text().toUtf8();
-
-    serverManager->serverList->removeAt(currentIndex);
-    serverManager->serverList->insert(currentIndex, serverInfo);
-
-    serverManager->saveServerList();
-    qDebug() << "Updated Server";
-    updateMQTTServerList();
-
-}
-
 void PreferencesDialog::goToAboutPage() {
     ui->listWidget->setCurrentRow(ui->listWidget->count() - 1);
+    Q_UNUSED(current);
+    Q_UNUSED(previous);
 }
 
 void PreferencesDialog::on_githubButton_clicked()
 {
     QDesktopServices::openUrl(QUrl("https://github.com/tom-23/TasmoManager"));
+}
+
+void PreferencesDialog::on_editButton_clicked()
+{
+    if (ui->mqttServersList->selectedItems().size() != 0) {
+        int itemIndex = ui->mqttServersList->currentRow();
+        EditServerDialog *editServerDialog = new EditServerDialog(this);
+        editServerDialog->setWindowModality(Qt::WindowModal);
+        editServerDialog->setMQTTServer(serverManager->serverList->at(itemIndex));
+        if (editServerDialog->exec() == 1) {
+            serverManager->serverList->removeAt(itemIndex);
+            serverManager->serverList->insert(itemIndex, editServerDialog->serverInfo);
+            serverManager->saveServerList();
+            updateMQTTServerList();
+        };
+    }
+}
+
+void PreferencesDialog::on_mqttServersList_itemDoubleClicked(QListWidgetItem *item)
+{
+    Q_UNUSED(item);
+    on_editButton_clicked();
 }

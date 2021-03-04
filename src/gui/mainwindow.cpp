@@ -72,6 +72,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     updateInfoText();
 
+    ui->deviceButton->setVisible(false);
     ui->firmwareButton->setVisible(false);
     ui->backupButton->setVisible(false);
 }

@@ -7,6 +7,9 @@ EditServerDialog::EditServerDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
+    MQTTServerInfo _serverInfo;
+    _serverInfo.port = 1883;
+    setMQTTServer(_serverInfo);
 }
 
 EditServerDialog::~EditServerDialog()
@@ -16,16 +19,19 @@ EditServerDialog::~EditServerDialog()
 
 void EditServerDialog::setMQTTServer(MQTTServerInfo _serverInfo) {
     serverInfo = _serverInfo;
+    ui->name->setText(serverInfo.name);
+    ui->host->setText(serverInfo.ipAddress.toString());
+    ui->port->setValue(serverInfo.port);
+    ui->username->setText(serverInfo.username);
+    ui->password->setText(serverInfo.password);
 }
 
 void EditServerDialog::on_saveChangesButton_clicked()
 {
     if (ui->name->text() == ""
-            || ui->host->text() == ""
-            || ui->username->text() == ""
-            || ui->password->text() == "") {
+            || ui->host->text() == "") {
         auto m = new QMessageBox(this);
-        m->setText("Please fill out all parameters.");
+        m->setText("Please fill out all required parameters.");
         m->setIcon(QMessageBox::Warning);
         m->setWindowModality(Qt::WindowModal);
         m->setStandardButtons(QMessageBox::Ok);

@@ -16,6 +16,11 @@ EditServerDialog::~EditServerDialog()
 
 void EditServerDialog::setMQTTServer(MQTTServerInfo _serverInfo) {
     serverInfo = _serverInfo;
+    ui->name->setText(serverInfo.name);
+    ui->host->setText(serverInfo.ipAddress.toString());
+    ui->port->setValue(serverInfo.port);
+    ui->username->setText(serverInfo.username);
+    ui->password->setText(serverInfo.password);
 }
 
 void EditServerDialog::on_saveChangesButton_clicked()

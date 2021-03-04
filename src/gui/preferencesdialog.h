@@ -29,13 +29,13 @@ private slots:
 
     void on_addButton_clicked();
 
+    void on_editButton_clicked();
+
     void on_removeButton_clicked();
 
-    void on_mqttServersList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
-
-    void on_saveChangesButton_clicked();
-
     void on_githubButton_clicked();
+
+    void on_mqttServersList_itemDoubleClicked(QListWidgetItem *item);
 
 private:
     Ui::PreferencesDialog *ui;
@@ -43,8 +43,6 @@ private:
     MQTTServerManager *serverManager;
 
     void updateMQTTServerList();
-
-    bool updatingServerList = false;
 };
 
 #endif // PREFERENCESDIALOG_H

@@ -20,7 +20,11 @@ EditServerDialog::~EditServerDialog()
 void EditServerDialog::setMQTTServer(MQTTServerInfo _serverInfo) {
     serverInfo = _serverInfo;
     ui->name->setText(serverInfo.name);
-    ui->host->setText(serverInfo.ipAddress.toString());
+    if (!serverInfo.ipAddress.isNull()) {
+        ui->host->setText(serverInfo.ipAddress.toString());
+    } else {
+        ui->host->setText(serverInfo.host);
+    }
     ui->port->setValue(serverInfo.port);
     ui->username->setText(serverInfo.username);
     ui->password->setText(serverInfo.password);
@@ -39,9 +43,9 @@ void EditServerDialog::on_saveChangesButton_clicked()
         return;
     }
 
-    if (QHostAddress(ui->host->text()).isNull()) {
+    if (ui->host->text() == "") {
         auto m = new QMessageBox(this);
-        m->setText("IP Address is invalid.");
+        m->setText("IP Address / Host is empty.");
         m->setIcon(QMessageBox::Warning);
         m->setWindowModality(Qt::WindowModal);
         m->setStandardButtons(QMessageBox::Ok);
@@ -50,7 +54,12 @@ void EditServerDialog::on_saveChangesButton_clicked()
     }
 
     serverInfo.name = ui->name->text();
-    serverInfo.ipAddress = QHostAddress(ui->host->text());
+    if (!QHostAddress(ui->host->text()).isNull()) {
+        serverInfo.ipAddress = QHostAddress(ui->host->text());
+    } else {
+        serverInfo.host = ui->host->text();
+    }
+
     serverInfo.port = ui->port->value();
     serverInfo.username = ui->username->text();
     serverInfo.password = ui->password->text().toUtf8();

@@ -19,10 +19,13 @@ void DeviceInfoWidget::setDevice(Device *_device) {
     if (device != nullptr) {
         ui->deviceName->setText(device->deviceInfo.name);
         lastDeviceName = device->deviceInfo.name;
+        deviceNameChanged = false;
         ui->deviceFriendlyName->setText(device->deviceInfo.friendlyName);
         lastDeviceFriendlyName = device->deviceInfo.friendlyName;
+        deviceNameChanged = false;
         ui->ipAddress->setText(device->deviceInfo.ipAddress.toString());
         ui->macAddress->setText(device->deviceInfo.macAddress);
+
         ui->saveButton->setVisible(false);
         ui->revertButton->setVisible(false);
         this->setVisible(true);
@@ -53,4 +56,9 @@ void DeviceInfoWidget::on_deviceFriendlyName_textChanged(const QString &arg1)
 void DeviceInfoWidget::updateButtonVisibility() {
     ui->saveButton->setVisible(deviceNameChanged || deviceFriendlyNameChanged);
     ui->revertButton->setVisible(deviceNameChanged || deviceFriendlyNameChanged);
+}
+
+void DeviceInfoWidget::on_revertButton_clicked()
+{
+
 }

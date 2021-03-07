@@ -7,19 +7,17 @@
 #include <QMovie>
 
 #include "app/device.h"
-#include "editserverdialog.h"
+#include "../editserverdialog.h"
 
-namespace Ui {
-class DeviceMQTTServersWidget;
-}
+namespace Ui { class MQTTConfigWidget; };
 
-class DeviceMQTTServersWidget : public QWidget
+class MQTTConfigWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit DeviceMQTTServersWidget(QWidget *parent = nullptr);
-    ~DeviceMQTTServersWidget();
+    explicit MQTTConfigWidget(QWidget *parent = nullptr);
+    ~MQTTConfigWidget();
 
     void setDevice(Device *device);
 
@@ -44,7 +42,7 @@ private slots:
     void on_saveButton_clicked();
 
 private:
-    Ui::DeviceMQTTServersWidget *ui;
+    Ui::MQTTConfigWidget *ui;
 
     Device *device;
 

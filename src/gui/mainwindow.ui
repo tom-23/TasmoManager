@@ -947,19 +947,19 @@ QTabWidget::pane {
   <customwidget>
    <class>DeviceColorWidget</class>
    <extends>QWidget</extends>
-   <header>gui/devicecolorwidget.h</header>
+   <header>gui/device_controls/devicecolorwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>DeviceInfoWidget</class>
    <extends>QWidget</extends>
-   <header>gui/deviceinfowidget.h</header>
+   <header>gui/device_controls/deviceinfowidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>DevicePowerWidget</class>
    <extends>QWidget</extends>
-   <header>gui/devicepowerwidget.h</header>
+   <header>gui/device_controls/devicepowerwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "mainwindow.h"
+#include "../mainwindow.h"
 
 namespace Ui {
 class DevicePowerWidget;

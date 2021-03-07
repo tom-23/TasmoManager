@@ -22,6 +22,7 @@
 
 QPushButton {
 	background-color: #203445;
+	text-transform: uppercase;
 }
 
 QPushButton:checked {

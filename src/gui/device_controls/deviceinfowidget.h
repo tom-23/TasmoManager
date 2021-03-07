@@ -2,7 +2,7 @@
 #define DEVICEINFOWIDGET_H
 
 #include <QWidget>
-#include "mainwindow.h"
+#include "../mainwindow.h"
 
 namespace Ui {
 class DeviceInfoWidget;

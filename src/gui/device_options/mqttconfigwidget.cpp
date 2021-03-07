@@ -1,9 +1,9 @@
-#include "devicemqttserverswidget.h"
-#include "ui_devicemqttserverswidget.h"
+#include "mqttconfigwidget.h"
+#include "ui_mqttconfigwidget.h"
 
-DeviceMQTTServersWidget::DeviceMQTTServersWidget(QWidget *parent) :
+MQTTConfigWidget::MQTTConfigWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::DeviceMQTTServersWidget)
+    ui(new Ui::MQTTConfigWidget)
 {
     ui->setupUi(this);
     ui->revertButton->setVisible(false);
@@ -17,12 +17,12 @@ DeviceMQTTServersWidget::DeviceMQTTServersWidget(QWidget *parent) :
     ui->fullTopic->addAction(ui->actionInsert_Topic);
 }
 
-DeviceMQTTServersWidget::~DeviceMQTTServersWidget()
+MQTTConfigWidget::~MQTTConfigWidget()
 {
     delete ui;
 }
 
-void DeviceMQTTServersWidget::setDevice(Device *_device) {
+void MQTTConfigWidget::setDevice(Device *_device) {
     device = _device;
     connect(device, &Device::recievedMQTTInfoUpdate, this, [=] () {
         commandCount = commandCount + 1;
@@ -39,7 +39,7 @@ void DeviceMQTTServersWidget::setDevice(Device *_device) {
     refreshInfo();
 }
 
-void DeviceMQTTServersWidget::refreshInfo() {
+void MQTTConfigWidget::refreshInfo() {
     if (this->isEnabled() == false) {
         ui->topic->setText(device->deviceInfo.mqttTopic);
         ui->fullTopic->setText(device->deviceInfo.mqttFullTopic);
@@ -61,7 +61,7 @@ void DeviceMQTTServersWidget::refreshInfo() {
     }
 }
 
-void DeviceMQTTServersWidget::on_editButton_clicked()
+void MQTTConfigWidget::on_editButton_clicked()
 {
     EditServerDialog *editServerDialog = new EditServerDialog(this);
     editServerDialog->setWindowModality(Qt::WindowModal);
@@ -81,53 +81,53 @@ void DeviceMQTTServersWidget::on_editButton_clicked()
 }
 
 
-void DeviceMQTTServersWidget::on_actionInsert_prefix_triggered()
+void MQTTConfigWidget::on_actionInsert_prefix_triggered()
 {
     ui->fullTopic->insert("%prefix%");
 }
 
-void DeviceMQTTServersWidget::on_actionInsert_Topic_triggered()
+void MQTTConfigWidget::on_actionInsert_Topic_triggered()
 {
     ui->fullTopic->insert("%topic%");
 }
 
-void DeviceMQTTServersWidget::valueChanged() {
+void MQTTConfigWidget::valueChanged() {
     ui->saveButton->setVisible(true);
     ui->revertButton->setVisible(true);
 }
 
-void DeviceMQTTServersWidget::on_revertButton_clicked()
+void MQTTConfigWidget::on_revertButton_clicked()
 {
     this->setEnabled(false);
     refreshInfo();
     this->setEnabled(true);
 }
 
-void DeviceMQTTServersWidget::on_serverList_currentTextChanged(const QString &arg1)
+void MQTTConfigWidget::on_serverList_currentTextChanged(const QString &arg1)
 {
     Q_UNUSED(arg1);
     valueChanged();
 }
 
-void DeviceMQTTServersWidget::on_clientName_textChanged(const QString &arg1)
+void MQTTConfigWidget::on_clientName_textChanged(const QString &arg1)
 {
     Q_UNUSED(arg1);
     valueChanged();
 }
 
-void DeviceMQTTServersWidget::on_topic_textChanged(const QString &arg1)
+void MQTTConfigWidget::on_topic_textChanged(const QString &arg1)
 {
     Q_UNUSED(arg1);
     valueChanged();
 }
 
-void DeviceMQTTServersWidget::on_fullTopic_textChanged(const QString &arg1)
+void MQTTConfigWidget::on_fullTopic_textChanged(const QString &arg1)
 {
     Q_UNUSED(arg1);
     valueChanged();
 }
 
-void DeviceMQTTServersWidget::on_saveButton_clicked()
+void MQTTConfigWidget::on_saveButton_clicked()
 {
     device->deviceInfo.mqttTopic = ui->topic->text();
     device->deviceInfo.mqttFullTopic = ui->fullTopic->text();

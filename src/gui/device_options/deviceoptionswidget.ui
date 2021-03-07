@@ -224,7 +224,7 @@ QScrollArea {
        <string>General</string>
       </property>
       <property name="icon">
-       <iconset resource="../../resources/resources.qrc">
+       <iconset resource="../../../resources/resources.qrc">
         <normaloff>:/24/assets/24_gear_square.svg</normaloff>:/24/assets/24_gear_square.svg</iconset>
       </property>
      </item>
@@ -233,7 +233,7 @@ QScrollArea {
        <string>Buttons / Switches</string>
       </property>
       <property name="icon">
-       <iconset resource="../../resources/resources.qrc">
+       <iconset resource="../../../resources/resources.qrc">
         <normaloff>:/24/assets/24_button_square.svg</normaloff>:/24/assets/24_button_square.svg</iconset>
       </property>
      </item>
@@ -242,7 +242,7 @@ QScrollArea {
        <string>Lights</string>
       </property>
       <property name="icon">
-       <iconset resource="../../resources/resources.qrc">
+       <iconset resource="../../../resources/resources.qrc">
         <normaloff>:/24/assets/24_lighting_square.svg</normaloff>:/24/assets/24_lighting_square.svg</iconset>
       </property>
      </item>
@@ -251,7 +251,7 @@ QScrollArea {
        <string>Temperature</string>
       </property>
       <property name="icon">
-       <iconset resource="../../resources/resources.qrc">
+       <iconset resource="../../../resources/resources.qrc">
         <normaloff>:/24/assets/24_temperature_square.svg</normaloff>:/24/assets/24_temperature_square.svg</iconset>
       </property>
      </item>
@@ -260,7 +260,7 @@ QScrollArea {
        <string>WIFI</string>
       </property>
       <property name="icon">
-       <iconset resource="../../resources/resources.qrc">
+       <iconset resource="../../../resources/resources.qrc">
         <normaloff>:/24/assets/24_wifi_square.svg</normaloff>:/24/assets/24_wifi_square.svg</iconset>
       </property>
      </item>
@@ -269,7 +269,7 @@ QScrollArea {
        <string>MQTT Servers</string>
       </property>
       <property name="icon">
-       <iconset resource="../../resources/resources.qrc">
+       <iconset resource="../../../resources/resources.qrc">
         <normaloff>:/24/assets/24_servers_square.svg</normaloff>:/24/assets/24_servers_square.svg</iconset>
       </property>
      </item>
@@ -278,7 +278,7 @@ QScrollArea {
        <string>IR and RF</string>
       </property>
       <property name="icon">
-       <iconset resource="../../resources/resources.qrc">
+       <iconset resource="../../../resources/resources.qrc">
         <normaloff>:/24/assets/24_radio_square.svg</normaloff>:/24/assets/24_radio_square.svg</iconset>
       </property>
      </item>
@@ -287,7 +287,7 @@ QScrollArea {
        <string>Stats</string>
       </property>
       <property name="icon">
-       <iconset resource="../../resources/resources.qrc">
+       <iconset resource="../../../resources/resources.qrc">
         <normaloff>:/24/assets/24_stats_square.svg</normaloff>:/24/assets/24_stats_square.svg</iconset>
       </property>
      </item>
@@ -296,7 +296,7 @@ QScrollArea {
        <string>Misc</string>
       </property>
       <property name="icon">
-       <iconset resource="../../resources/resources.qrc">
+       <iconset resource="../../../resources/resources.qrc">
         <normaloff>:/24/assets/24_misc_square.svg</normaloff>:/24/assets/24_misc_square.svg</iconset>
       </property>
      </item>
@@ -305,7 +305,7 @@ QScrollArea {
        <string>Info</string>
       </property>
       <property name="icon">
-       <iconset resource="../../resources/resources.qrc">
+       <iconset resource="../../../resources/resources.qrc">
         <normaloff>:/24/assets/24_about_square.svg</normaloff>:/24/assets/24_about_square.svg</iconset>
       </property>
      </item>
@@ -370,8 +370,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>480</width>
-               <height>402</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <property name="autoFillBackground">
@@ -453,8 +453,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>480</width>
-               <height>402</height>
+               <width>100</width>
+               <height>60</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -552,8 +552,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>480</width>
-               <height>402</height>
+               <width>100</width>
+               <height>60</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -651,8 +651,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>480</width>
-               <height>402</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -734,8 +734,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>480</width>
-               <height>402</height>
+               <width>100</width>
+               <height>65</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_16">
@@ -861,7 +861,7 @@ QScrollArea {
                <number>10</number>
               </property>
               <item>
-               <widget class="DeviceMQTTServersWidget" name="mqttWidget" native="true"/>
+               <widget class="MQTTConfigWidget" name="mqttWidget" native="true"/>
               </item>
               <item>
                <widget class="QWidget" name="mqttSetOptions" native="true">
@@ -930,8 +930,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>480</width>
-               <height>402</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_25">
@@ -1023,8 +1023,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>480</width>
-               <height>402</height>
+               <width>100</width>
+               <height>60</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -1224,42 +1224,42 @@ image: url(:/16/assets/16_refresh.svg);</string>
   <customwidget>
    <class>WifiNetworksWidget</class>
    <extends>QWidget</extends>
-   <header>gui/wifinetworkswidget.h</header>
+   <header>gui/device_options/wifinetworkswidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>DeviceColorWidget</class>
    <extends>QWidget</extends>
-   <header>gui/devicecolorwidget.h</header>
+   <header>gui/device_controls/devicecolorwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>DeviceInfoWidget</class>
    <extends>QWidget</extends>
-   <header>gui/deviceinfowidget.h</header>
+   <header>gui/device_controls/deviceinfowidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>DevicePowerWidget</class>
    <extends>QWidget</extends>
-   <header>gui/devicepowerwidget.h</header>
+   <header>gui/device_controls/devicepowerwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>FullInfoWidget</class>
    <extends>QWidget</extends>
-   <header>gui/fullinfowidget.h</header>
+   <header>gui/device_options/fullinfowidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>DeviceMQTTServersWidget</class>
+   <class>MQTTConfigWidget</class>
    <extends>QWidget</extends>
-   <header>gui/devicemqttserverswidget.h</header>
+   <header>gui/device_options/mqttconfigwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../resources/resources.qrc"/>
+  <include location="../../../resources/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

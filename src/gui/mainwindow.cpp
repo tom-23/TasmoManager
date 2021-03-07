@@ -74,6 +74,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->firmwareButton->setVisible(false);
     ui->backupButton->setVisible(false);
+    this->showMaximized();
 }
 
 MainWindow::~MainWindow()

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>700</width>
-    <height>400</height>
+    <height>460</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -103,33 +103,68 @@ QScrollArea {
     background-color: rgb(66, 66, 66);
 } 
 
+#generalSetOptions {
+    border-top: 1px Solid #0C0C0C;
+} 
+
 #buttonsContents {
     background-color: rgb(66, 66, 66);
 }
+
+#buttonsSetOptions {
+    border-top: 1px Solid #0C0C0C;
+} 
+
 
 #lightsContents {
     background-color: rgb(66, 66, 66);
 }
 
+#lightsSetOptions {
+    border-top: 1px Solid #0C0C0C;
+} 
+
+
 #temperatureContents {
     background-color: rgb(66, 66, 66);
 }
+
+#temperatureSetOptions {
+    border-top: 1px Solid #0C0C0C;
+} 
+
 
 #wifiContents {
     background-color: rgb(66, 66, 66);
 }
 
+#wifiSetOptions {
+    border-top: 1px Solid #0C0C0C;
+} 
+
 #mqttContents {
     background-color: rgb(66, 66, 66);
 }
+
+#mqttSetOptions {
+    border-top: 1px Solid #0C0C0C;
+} 
 
 #miscContents {
     background-color: rgb(66, 66, 66);
 }
 
+#miscSetOptions {
+    border-top: 1px Solid #0C0C0C;
+} 
+
 #irRfContents {
     background-color: rgb(66, 66, 66);
 }
+
+#irRfSetOptions {
+    border-top: 1px Solid #0C0C0C;
+} 
 
 #infoContents {
     background-color: rgb(66, 66, 66);
@@ -297,7 +332,7 @@ QScrollArea {
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>4</number>
+         <number>5</number>
         </property>
         <widget class="QWidget" name="generalPage">
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -335,8 +370,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>480</width>
+               <height>402</height>
               </rect>
              </property>
              <property name="autoFillBackground">
@@ -368,7 +403,7 @@ QScrollArea {
                   <number>0</number>
                  </property>
                  <property name="topMargin">
-                  <number>0</number>
+                  <number>10</number>
                  </property>
                  <property name="rightMargin">
                   <number>0</number>
@@ -418,8 +453,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>50</height>
+               <width>480</width>
+               <height>402</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -451,7 +486,7 @@ QScrollArea {
                   <number>0</number>
                  </property>
                  <property name="topMargin">
-                  <number>0</number>
+                  <number>10</number>
                  </property>
                  <property name="rightMargin">
                   <number>0</number>
@@ -517,8 +552,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>50</height>
+               <width>480</width>
+               <height>402</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -550,7 +585,7 @@ QScrollArea {
                   <number>0</number>
                  </property>
                  <property name="topMargin">
-                  <number>0</number>
+                  <number>10</number>
                  </property>
                  <property name="rightMargin">
                   <number>0</number>
@@ -616,8 +651,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>480</width>
+               <height>402</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -646,7 +681,7 @@ QScrollArea {
                   <number>0</number>
                  </property>
                  <property name="topMargin">
-                  <number>0</number>
+                  <number>10</number>
                  </property>
                  <property name="rightMargin">
                   <number>0</number>
@@ -700,12 +735,12 @@ QScrollArea {
                <x>0</x>
                <y>0</y>
                <width>480</width>
-               <height>342</height>
+               <height>402</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_16">
               <property name="spacing">
-               <number>5</number>
+               <number>10</number>
               </property>
               <property name="leftMargin">
                <number>10</number>
@@ -732,11 +767,14 @@ QScrollArea {
               <item>
                <widget class="QWidget" name="wifiSetOptions" native="true">
                 <layout class="QVBoxLayout" name="verticalLayout_12">
+                 <property name="spacing">
+                  <number>10</number>
+                 </property>
                  <property name="leftMargin">
                   <number>0</number>
                  </property>
                  <property name="topMargin">
-                  <number>0</number>
+                  <number>10</number>
                  </property>
                  <property name="rightMargin">
                   <number>0</number>
@@ -802,8 +840,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>50</height>
+               <width>480</width>
+               <height>402</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -823,7 +861,7 @@ QScrollArea {
                <number>10</number>
               </property>
               <item>
-               <widget class="DeviceMQTTServersWidget" name="widget" native="true"/>
+               <widget class="DeviceMQTTServersWidget" name="mqttWidget" native="true"/>
               </item>
               <item>
                <widget class="QWidget" name="mqttSetOptions" native="true">
@@ -835,7 +873,7 @@ QScrollArea {
                   <number>0</number>
                  </property>
                  <property name="topMargin">
-                  <number>0</number>
+                  <number>10</number>
                  </property>
                  <property name="rightMargin">
                   <number>0</number>
@@ -892,8 +930,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>480</width>
+               <height>402</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_25">
@@ -922,7 +960,7 @@ QScrollArea {
                   <number>0</number>
                  </property>
                  <property name="topMargin">
-                  <number>0</number>
+                  <number>10</number>
                  </property>
                  <property name="rightMargin">
                   <number>0</number>
@@ -985,8 +1023,8 @@ QScrollArea {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>50</height>
+               <width>480</width>
+               <height>402</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -1018,7 +1056,7 @@ QScrollArea {
                   <number>0</number>
                  </property>
                  <property name="topMargin">
-                  <number>0</number>
+                  <number>10</number>
                  </property>
                  <property name="rightMargin">
                   <number>0</number>

@@ -39,6 +39,10 @@ void DevicePowerWidget::setDevice(Device *_device) {
 }
 
 void DevicePowerWidget::updateUI() {
+    qDebug() << "updating power";
+    if (!device) {
+        return;
+    }
     updatingUI = true;
 
     for (int i = 0; i < device->deviceInfo.capabilities.power.size(); i++) {

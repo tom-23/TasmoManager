@@ -79,9 +79,10 @@ struct DeviceInfo {
 
     QString moduleTemplate;
 
-    MQTTServerInfo *mqttServer;
+    MQTTServerInfo *mqttServer = new MQTTServerInfo;
     QString mqttTopic;
     QString mqttFullTopic;
+    QString mqttClient;
 
     QUrl OTAUrl;
     int bootCount;
@@ -93,6 +94,7 @@ struct DeviceInfo {
     QString hardware;
 
     QString hostName;
+    bool useStaticIP;
     QHostAddress ipAddress;
     QHostAddress subnetMask;
     QHostAddress gateway;
@@ -116,6 +118,12 @@ struct DeviceInfo {
     int colorTemp;
 
     QList<SetOption*> *setOptions;
+
+    int activeAP;
+    QString ap1SSID;
+    QString ap2SSID;
+    QString ap1Password;
+    QString ap2Password;
 };
 
 Q_DECLARE_METATYPE(DeviceInfo)
@@ -157,6 +165,12 @@ public:
     void getSetOptions(QList<SetOption *> *setOptionList);
     void saveSetOptions(QList<SetOption *> *setOptionList);
 
+    void getWifiNetworkSettings();
+    void setWifiNetworkSettings();
+
+    void getMQTTSettings();
+    void setMQTTSettings();
+
     QString statTopic;
     QString cmndTopic;
     QString teleTopic;
@@ -194,9 +208,13 @@ signals:
     void recievedLogMessage(QString message);
     void recievedInfoUpdate();
     void recievedStateUpdate();
+    void recievedWifiInfoUpdate();
+    void recievedMQTTInfoUpdate();
 
     void setOptionValueUpdate(SetOption *setOption);
     void getSetOptionsDone();
+
+
 };
 
 #endif // DEVICE_H

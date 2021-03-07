@@ -219,17 +219,19 @@ void MainWindow::on_deviceInfoUpdate(DeviceInfo deviceInfo) {
             }
 
             if (!(deviceInfo.status == DeviceStatus::Online)) {
-                if (deviceOptionsWidget) {
+                if (deviceOptionsWidget != NULL) {
                     if (deviceOptionsWidget->isVisible()) {
                         if (deviceOptionsWidget->deviceInfoMac == deviceInfoMac) {
                             deviceOptionsWidget->close();
+                            delete deviceOptionsWidget;
+                            deviceOptionsWidget = NULL;
                             auto m = new QMessageBox(this);
-                            m->setText("Device is restarting");
+                            m->setText("Device is offline");
                             m->setInformativeText("'" + deviceInfo.name + "' is restarting. Please wait...");
                             m->setIcon(QMessageBox::Information);
                             m->setWindowModality(Qt::WindowModal);
                             m->setStandardButtons(QMessageBox::Ok);
-                            m->exec();
+                            m->show();
                         }
                     }
                 }

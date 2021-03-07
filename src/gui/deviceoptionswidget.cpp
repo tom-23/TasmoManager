@@ -39,8 +39,10 @@ bool DeviceOptionsWidget::updateCurrentInfo() {
     case 3:
     break;
     case 4:
+        ui->wifiNetworksWidget->setDevice(device);
     break;
     case 5:
+        ui->mqttWidget->setDevice(device);
     break;
     case 6:
     break;

@@ -2,7 +2,8 @@
 
 Device::Device(QObject *parent) : QObject(parent)
 {
-
+    deviceInfo.mqttServer->currentlyConnected = false;
+    deviceInfo.mqttServer->name = "device";
 }
 
 void Device::getDeviceInfo(QString fullTopic, int delay) {
@@ -190,6 +191,80 @@ void Device::saveSetOptions(QList<SetOption *> *setOptionList) {
     deviceManager->mqttClient->publish(message);
 }
 
+void Device::getWifiNetworkSettings() {
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "Backlog");
+    QString backlog = "AP; Ssid; IPAddress1; IPAddress2; IPAddress3; IPAddress4";
+    message.setPayload(backlog.toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
+void Device::setWifiNetworkSettings() {
+
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "Backlog");
+
+    QString backlog = "";
+    backlog = backlog + "AP " + QString::number(deviceInfo.activeAP) + "; ";
+    backlog = backlog + "Ssid1 " + deviceInfo.ap1SSID + "; ";
+    backlog = backlog + "Ssid2 " + deviceInfo.ap2SSID + "; ";
+
+    if (deviceInfo.ap1Password != "") {
+        backlog = backlog + "Password1 " + deviceInfo.ap1Password + "; ";
+
+    }
+
+    if (deviceInfo.ap2Password != "") {
+        backlog = backlog + "Password2 " + deviceInfo.ap2Password + "; ";
+    }
+
+    if (deviceInfo.useStaticIP) {
+        backlog = backlog + "IPAddress1 " + deviceInfo.ipAddress.toString() + "; ";
+        backlog = backlog + "IPAddress2 " + deviceInfo.gateway.toString() + "; ";
+        backlog = backlog + "IPAddress3 " + deviceInfo.subnetMask.toString() + "; ";
+        backlog = backlog + "IPAddress4 " + deviceInfo.dnsServer.toString() + "; ";
+    } else {
+        backlog = backlog + "IPAddress1 0.0.0.0; ";
+    }
+    backlog = backlog + "restart 1";
+
+    message.setPayload(backlog.toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
+void Device::getMQTTSettings() {
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "Backlog");
+    QString backlog = "FullTopic; MqttClient; MqttHost; MqttUser; MqttPort; MqttPassword; Topic";
+    message.setPayload(backlog.toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
+void Device::setMQTTSettings() {
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "Backlog");
+
+    QString backlog = "";
+    backlog = backlog + "FullTopic " + deviceInfo.mqttFullTopic + "; ";
+    backlog = backlog + "Topic " + deviceInfo.mqttTopic + "; ";
+    backlog = backlog + "MqttClient " + deviceInfo.mqttClient + "; ";
+    QString host;
+    if (!deviceInfo.mqttServer->ipAddress.isNull()) {
+        host = deviceInfo.mqttServer->ipAddress.toString();
+    } else {
+        host = deviceInfo.mqttServer->host;
+    }
+    backlog = backlog + "MqttHost " + host + "; ";
+    backlog = backlog + "MqttPort " + QString::number(deviceInfo.mqttServer->port) + "; ";
+    backlog = backlog + "MqttUser " + deviceInfo.mqttServer->username + "; ";
+    if (!(deviceInfo.mqttServer->password == "****")) {
+        backlog = backlog + "MqttPassword " + deviceInfo.mqttServer->password + "; ";
+    }
+
+    message.setPayload(backlog.toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
 void Device::on_Message(QMQTT::Message message) {
 
     QStringList topicSplit = message.topic().split("/");
@@ -326,6 +401,106 @@ void Device::on_Message(QMQTT::Message message) {
         if (!rootObject.value("Restart").isUndefined()) {
             deviceInfo.status = Restarting;
             emit deviceManager->device_InfoUpdate(deviceInfo);
+        }
+
+        if (!rootObject.value("Ap").isUndefined()) {
+            QJsonObject ap = rootObject.value("Ap").toObject();
+            int activeAP = 0;
+            if (!ap.value("1").isUndefined()) {
+                activeAP = 1;
+            }
+            if (!ap.value("2").isUndefined()) {
+                activeAP = 2;
+            }
+            deviceInfo.activeAP = activeAP;
+            emit recievedWifiInfoUpdate();
+        }
+
+        if (!rootObject.value("SSId1").isUndefined()) {
+            deviceInfo.ap1SSID = rootObject.value("SSId1").toString();
+            emit recievedWifiInfoUpdate();
+        }
+
+        if (!rootObject.value("SSId2").isUndefined()) {
+            deviceInfo.ap2SSID = rootObject.value("SSId2").toString();
+            emit recievedWifiInfoUpdate();
+        }
+
+        if (!rootObject.value("IPAddress1").isUndefined()) {
+            QString ipAddress = rootObject.value("IPAddress1").toString().toUpper();
+            deviceInfo.useStaticIP = !ipAddress.contains("(IP UNSET)");
+            QStringList ipAddressSplit = ipAddress.replace("(IP UNSET)", "").split(" ");
+            if (deviceInfo.useStaticIP) {
+                deviceInfo.ipAddress = QHostAddress(ipAddressSplit[1]);
+            } else {
+                deviceInfo.ipAddress = QHostAddress(ipAddress);
+            }
+
+            emit recievedWifiInfoUpdate();
+        }
+
+        if (!rootObject.value("IPAddress2").isUndefined()) {
+            QString gatewayAddress = rootObject.value("IPAddress2").toString();
+            deviceInfo.gateway = QHostAddress(gatewayAddress);
+            emit recievedWifiInfoUpdate();
+        }
+
+        if (!rootObject.value("IPAddress3").isUndefined()) {
+            QString subnetAddress = rootObject.value("IPAddress3").toString();
+            deviceInfo.subnetMask = QHostAddress(subnetAddress);
+            emit recievedWifiInfoUpdate();
+        }
+
+        if (!rootObject.value("IPAddress4").isUndefined()) {
+            QString dnsAddress = rootObject.value("IPAddress4").toString();
+            deviceInfo.dnsServer = QHostAddress(dnsAddress);
+            emit recievedWifiInfoUpdate();
+        }
+
+        if (!rootObject.value("MqttClient").isUndefined()) {
+            QString mqttClient = rootObject.value("MqttClient").toString();
+            deviceInfo.mqttClient = mqttClient;
+            emit recievedMQTTInfoUpdate();
+        }
+
+        if (!rootObject.value("MqttHost").isUndefined()) {
+            QString mqttHost = rootObject.value("MqttHost").toString();
+            if (QHostAddress(mqttHost).isNull()) {
+                deviceInfo.mqttServer->host = mqttHost;
+            } else {
+                deviceInfo.mqttServer->ipAddress = QHostAddress(mqttHost);
+            }
+            emit recievedMQTTInfoUpdate();
+        }
+
+        if (!rootObject.value("MqttUser").isUndefined()) {
+            QString mqttUser = rootObject.value("MqttUser").toString();
+            deviceInfo.mqttServer->username = mqttUser;
+            emit recievedMQTTInfoUpdate();
+        }
+
+        if (!rootObject.value("MqttPort").isUndefined()) {
+            int mqttPort = rootObject.value("MqttPort").toInt();
+            deviceInfo.mqttServer->port = mqttPort;
+            emit recievedMQTTInfoUpdate();
+        }
+
+        if (!rootObject.value("MqttPassword").isUndefined()) {
+            QString mqttPassword = rootObject.value("MqttPassword").toString();
+            deviceInfo.mqttServer->password = mqttPassword.toUtf8();
+            emit recievedMQTTInfoUpdate();
+        }
+
+        if (!rootObject.value("Topic").isUndefined()) {
+            QString mqttTopic = rootObject.value("Topic").toString();
+            deviceInfo.mqttTopic = mqttTopic;
+            emit recievedMQTTInfoUpdate();
+        }
+
+        if (!rootObject.value("FullTopic").isUndefined()) {
+            QString mqttFullTopic = rootObject.value("FullTopic").toString();
+            deviceInfo.mqttFullTopic = mqttFullTopic;
+            emit recievedMQTTInfoUpdate();
         }
 
         for (int i = 0; i < deviceInfo.setOptions->size(); i++) {

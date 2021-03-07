@@ -31,12 +31,16 @@ void EditServerDialog::setMQTTServer(MQTTServerInfo *_serverInfo) {
     }
     serverInfo = _serverInfo;
     ui->name->setText(serverInfo->name);
-    if (!serverInfo.ipAddress.isNull()) {
-        ui->host->setText(serverInfo.ipAddress.toString());
+    if (!serverInfo->ipAddress.isNull()) {
+        ui->host->setText(serverInfo->ipAddress.toString());
     } else {
-        ui->host->setText(serverInfo.host);
+        ui->host->setText(serverInfo->host);
     }
+    ui->port->setValue(serverInfo->port);
+    ui->username->setText(serverInfo->username);
+    ui->password->setText(serverInfo->password);
 }
+
 
 void EditServerDialog::on_saveChangesButton_clicked()
 {
@@ -63,9 +67,9 @@ void EditServerDialog::on_saveChangesButton_clicked()
 
     serverInfo->name = ui->name->text();
     if (!QHostAddress(ui->host->text()).isNull()) {
-        serverInfo.ipAddress = QHostAddress(ui->host->text());
+        serverInfo->ipAddress = QHostAddress(ui->host->text());
     } else {
-        serverInfo.host = ui->host->text();
+        serverInfo->host = ui->host->text();
     }
 
 

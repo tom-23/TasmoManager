@@ -62,12 +62,12 @@ void PreferencesDialog::updateMQTTServerList() {
         }
         QListWidgetItem *itemWidget = new QListWidgetItem(ui->mqttServersList);
         QString host;
-        if (!info.ipAddress.isNull()) {
-            host = info.ipAddress.toString();
+        if (!info->ipAddress.isNull()) {
+            host = info->ipAddress.toString();
         } else {
-            host = info.host;
+            host = info->host;
         }
-        itemWidget->setText(info.name + " (" + user + host + ":" + QString::number(info.port) + ")");
+        itemWidget->setText(info->name + " (" + user + host + ":" + QString::number(info->port) + ")");
         itemWidget->setSelected(false);
         ui->mqttServersList->addItem(itemWidget);
     }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>488</width>
-    <height>148</height>
+    <height>156</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,9 +15,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">#centralWidget {
-	background-color: #252525;
-	border: 1px Solid #0C0C0C;
-	border-radius: 5px;
+
 }
 
 #editButton {
@@ -60,16 +58,16 @@ padding: 4px 2px;
        <number>10</number>
       </property>
       <property name="leftMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <item>
        <layout class="QFormLayout" name="formLayout_2">
@@ -82,25 +80,22 @@ padding: 4px 2px;
         <property name="verticalSpacing">
          <number>5</number>
         </property>
-        <item row="1" column="0">
+        <item row="2" column="0">
          <widget class="QLabel" name="label_2">
           <property name="text">
            <string>Topic:</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
+        <item row="2" column="1">
          <widget class="QLineEdit" name="topic"/>
         </item>
-        <item row="2" column="0">
+        <item row="3" column="0">
          <widget class="QLabel" name="label_3">
           <property name="text">
            <string>Full Topic:</string>
           </property>
          </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLineEdit" name="fullTopic"/>
         </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label">
@@ -118,7 +113,7 @@ padding: 4px 2px;
            <number>0</number>
           </property>
           <item>
-           <widget class="QComboBox" name="comboBox">
+           <widget class="QComboBox" name="serverList">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -136,16 +131,52 @@ padding: 4px 2px;
           </item>
          </layout>
         </item>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="fullTopic">
+          <property name="contextMenuPolicy">
+           <enum>Qt::ActionsContextMenu</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Client Name:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="clientName"/>
+        </item>
        </layout>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <property name="spacing">
-         <number>10</number>
+         <number>5</number>
         </property>
         <property name="topMargin">
          <number>0</number>
         </property>
+        <item>
+         <widget class="QLabel" name="spinner">
+          <property name="minimumSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
         <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
@@ -160,14 +191,14 @@ padding: 4px 2px;
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="revertButton">
+         <widget class="QPushButton" name="saveButton">
           <property name="text">
            <string/>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="saveButton">
+         <widget class="QPushButton" name="revertButton">
           <property name="text">
            <string/>
           </property>
@@ -179,6 +210,34 @@ padding: 4px 2px;
     </widget>
    </item>
   </layout>
+  <action name="actionInsert_prefix">
+   <property name="text">
+    <string>Insert %prefix%</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionInsert_Topic">
+   <property name="text">
+    <string>Insert %topic%</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

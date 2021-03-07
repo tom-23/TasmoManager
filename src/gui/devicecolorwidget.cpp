@@ -80,6 +80,9 @@ void DeviceColorWidget::updateColor() {
 
 void DeviceColorWidget::updateUI() {
 
+    if (!device) {
+        return;
+    }
     // Only show ui objects which can be controlled.
 
     bool displayWidget = device->deviceInfo.capabilities.colorTemp

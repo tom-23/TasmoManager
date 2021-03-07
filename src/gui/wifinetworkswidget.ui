@@ -7,29 +7,38 @@
     <x>0</x>
     <y>0</y>
     <width>360</width>
-    <height>326</height>
+    <height>348</height>
    </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <property name="styleSheet">
    <string notr="true">#centralWidget {
-	background-color: #252525;
-	border: 1px Solid #0C0C0C;
-	border-radius: 5px;
+	
 }
-</string>
+
+#revertButton {
+	background-color: #FF9400;
+	image: url(:/16/assets/16_revert.svg);
+	padding: 4px 2px;
+}
+
+#saveButton {
+	background-color: #47c266;
+	image: url(:/16/assets/16_tick.svg);
+	padding: 4px 2px;
+}
+
+#spinnerContainer {
+	background-color: rgb(66, 66, 66);
+	border: 1px Solid #0C0C0C;
+	border-radius: 3px;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_7">
    <property name="spacing">
-    <number>10</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -50,16 +59,16 @@
        <number>10</number>
       </property>
       <property name="leftMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <item>
        <layout class="QFormLayout" name="formLayout_3">
@@ -113,7 +122,7 @@
          </sizepolicy>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
@@ -148,9 +157,6 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="ap1SSID"/>
-          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_8">
             <property name="text">
@@ -160,6 +166,9 @@
           </item>
           <item row="1" column="1">
            <widget class="QLineEdit" name="ap1Password"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="ap1SSID"/>
           </item>
          </layout>
         </widget>
@@ -222,7 +231,7 @@
          <number>10</number>
         </property>
         <property name="verticalSpacing">
-         <number>5</number>
+         <number>0</number>
         </property>
         <property name="topMargin">
          <number>0</number>
@@ -323,21 +332,64 @@
         </layout>
        </widget>
       </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>5</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="spinner">
+          <property name="minimumSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="saveButton">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="revertButton">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
      </layout>
     </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>10</width>
-       <height>10</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>

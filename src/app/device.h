@@ -172,6 +172,7 @@ public:
     void setMQTTSettings();
 
     void setOTAUrl();
+    void startFirmwareUpgrade();
 
     QString statTopic;
     QString cmndTopic;

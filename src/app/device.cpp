@@ -266,10 +266,16 @@ void Device::setMQTTSettings() {
 }
 
 void Device::setOTAUrl() {
-
     QMQTT::Message message;
     message.setTopic(cmndTopic + "OtaUrl");
     message.setPayload(deviceInfo.OTAUrl.toString().toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
+void Device::startFirmwareUpgrade() {
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "Upgrade");
+    message.setPayload("1");
     deviceManager->mqttClient->publish(message);
 }
 

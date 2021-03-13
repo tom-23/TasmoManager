@@ -65,6 +65,9 @@ public:
 
     void loadSetOptionsSchema();
 
+    const QUrl mainStableOTA = QUrl("http://ota.tasmota.com/tasmota/release/tasmota.bin");
+    const QUrl mainDevOTA = QUrl("http://ota.tasmota.com/tasmota/tasmota.bin");
+
 private:
 
     QList<QHostAddress> getIPAddresses(QNetworkAddressEntry networkAddress);

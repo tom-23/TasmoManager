@@ -14,6 +14,8 @@
 #include <QFile>
 #include <QMessageBox>
 
+#include "version.h"
+
 #include <qmqtt.h>
 
 #include "mqttserver.h"

@@ -16,6 +16,8 @@ void DeviceManager::connect(MQTTServerInfo *serverInfo) {
     } else {
         mqttClient->setHostName(mqttServerInfo->host);
     }
+    mqttClient->setCleanSession(true);
+    mqttClient->setClientId(("TasmoManager_" + QString(TASMOMANAGER_VERSION)).toUtf8());
     mqttClient->setPort(mqttServerInfo->port);
     mqttClient->setUsername(mqttServerInfo->username);
     mqttClient->setPassword(mqttServerInfo->password);

@@ -171,6 +171,8 @@ public:
     void getMQTTSettings();
     void setMQTTSettings();
 
+    void setOTAUrl();
+
     QString statTopic;
     QString cmndTopic;
     QString teleTopic;

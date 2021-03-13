@@ -13,10 +13,10 @@ DeviceOptionsWidget::DeviceOptionsWidget(QWidget *parent) :
     ui->generalSetOptions->setVisible(false);
     ui->buttonsSetOptions->setVisible(false);
     ui->lightsSetOptions->setVisible(false);
-    ui->temperatureSetOptions->setVisible(false);
+    ui->temperatureSetOptions->setVisible(true);
     ui->wifiSetOptions->setVisible(false);
     ui->mqttSetOptions->setVisible(false);
-    ui->irRfSetOptions->setVisible(false);
+    ui->irRfSetOptions->setVisible(true);
     ui->miscSetOptions->setVisible(false);
 }
 
@@ -37,6 +37,8 @@ bool DeviceOptionsWidget::updateCurrentInfo() {
         ui->lightsWidget->setDevice(device);
     break;
     case 3:
+        ui->spinner->setVisible(true);
+        device->getSetOptions(temperatureSetOptions);
     break;
     case 4:
         ui->wifiNetworksWidget->setDevice(device);
@@ -45,6 +47,8 @@ bool DeviceOptionsWidget::updateCurrentInfo() {
         ui->mqttWidget->setDevice(device);
     break;
     case 6:
+        ui->spinner->setVisible(true);
+        device->getSetOptions(irRfSetOptions);
     break;
     case 7:
     break;
@@ -85,7 +89,7 @@ bool DeviceOptionsWidget::updateCurrentSetOptions() {
             device->getSetOptions(lightingSetOptions);
         break;
         case 3:
-            device->getSetOptions(temperatureSetOptions);
+
         break;
         case 4:
             device->getSetOptions(wifiSetOptions);
@@ -94,7 +98,7 @@ bool DeviceOptionsWidget::updateCurrentSetOptions() {
             device->getSetOptions(mqttSetOptions);
         break;
         case 6:
-            device->getSetOptions(irRfSetOptions);
+
         break;
 
         case 7:
@@ -127,7 +131,7 @@ void DeviceOptionsWidget::on_showSetOptionsButton_toggled(bool checked)
     ui->generalSetOptions->setVisible(checked);
     ui->buttonsSetOptions->setVisible(checked);
     ui->lightsSetOptions->setVisible(checked);
-    ui->temperatureSetOptions->setVisible(checked);
+
     ui->wifiSetOptions->setVisible(checked);
     ui->mqttSetOptions->setVisible(checked);
     ui->irRfSetOptions->setVisible(checked);

@@ -40,16 +40,16 @@ MainWindow::MainWindow(QWidget *parent)
     connect(deviceManager, &DeviceManager::mqtt_onError, this, [=] (QMQTT::ClientError error) {
 
         // Only show message box is we are sure MQTT is disconnected.
-        if (deviceManager->mqttClient->connectionState() != QMQTT::ConnectionState::STATE_CONNECTED) {
-
             errorList->append(error);
             if (!errorCollectionTimer->isActive()) {
                 errorCollectionTimer->start(500);
             }
-        }
     });
 
     connect(errorCollectionTimer, &QTimer::timeout, this, [=] () {
+        if (deviceOptionsWidget != nullptr) {
+            deviceOptionsWidget->reject();
+        }
         auto m = new QMessageBox(this);
         m->setIcon(QMessageBox::Warning);
         m->setWindowModality(Qt::WindowModal);
@@ -72,7 +72,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     updateInfoText();
 
-    ui->firmwareButton->setVisible(false);
     ui->backupButton->setVisible(false);
     this->showMaximized();
 }
@@ -106,7 +105,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::on_actiontest_triggered()
 {
     SetupDeviceDialog *setupDeviceDialog = new SetupDeviceDialog(this, deviceManager, serverManager);
-    setupDeviceDialog->show();
+    setupDeviceDialog->exec();
 }
 
 void MainWindow::on_actionPreferences_triggered()
@@ -314,7 +313,7 @@ void MainWindow::updateInfoText() {
         ui->connectButton->setText("Disconnect");
         ui->statusLabel->setText("Status: Connected");
 
-        ui->actiontest->setEnabled(true);
+        ui->menuDevices->setEnabled(true);
         ui->refreshButton->setEnabled(true);
 
     } else if (deviceManager->connectionStatus == Connecting) {
@@ -337,7 +336,7 @@ void MainWindow::updateInfoText() {
         ui->deviceInfoWidget->setVisible(false);
         ui->devicePowerWidget->setVisible(false);
 
-        ui->actiontest->setEnabled(false);
+        ui->menuDevices->setEnabled(false);
 
         ui->deviceActionsContainer->setEnabled(false);
         ui->refreshButton->setEnabled(false);
@@ -395,4 +394,11 @@ void MainWindow::on_deviceList_itemDoubleClicked(QTreeWidgetItem *item, int colu
     if (selectedDevice->deviceInfo.status == DeviceStatus::Online) {
         on_deviceButton_clicked();
     }
+}
+
+
+void MainWindow::on_firmwareButton_clicked()
+{
+    UpdateDeviceDialog *updateDeviceDialog = new UpdateDeviceDialog(this, deviceManager);
+    updateDeviceDialog->exec();
 }

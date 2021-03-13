@@ -5,12 +5,14 @@ file(GLOB tasmomanager_SOURCES
     gui/*.cpp
     gui/device_controls/*.cpp
     gui/device_options/*.cpp
+    gui/wizards/*.cpp
     )
 
 file(GLOB tasmomanager_FORMS
     gui/*.ui
     gui/device_controls/*.ui
     gui/device_options/*.ui
+    gui/wizards/*.ui
     )
 
 set(tasmomanager_RESOURCES ../resources/resources.qrc)

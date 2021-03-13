@@ -8,7 +8,8 @@
 #include <QProgressDialog>
 #include <QCloseEvent>
 
-#include "setupdevicedialog.h"
+#include "wizards/setupdevicedialog.h"
+#include "wizards/updatedevicedialog.h"
 #include "preferencesdialog.h"
 #include "terminaldialog.h"
 #include "selectserverdialog.h"
@@ -72,6 +73,8 @@ private slots:
     void on_wifiButton_clicked();
 
     void on_deviceList_itemDoubleClicked(QTreeWidgetItem *item, int column);
+
+    void on_firmwareButton_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -558,7 +558,7 @@ QTabWidget::pane {
           <item>
            <widget class="QToolButton" name="firmwareButton">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -879,6 +879,9 @@ QTabWidget::pane {
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionConnect"/>
+    <addaction name="actionRefresh_device_List"/>
+    <addaction name="separator"/>
     <addaction name="actionPreferences"/>
     <addaction name="actionAbout"/>
    </widget>
@@ -894,6 +897,14 @@ QTabWidget::pane {
     <property name="title">
      <string>Devices</string>
     </property>
+    <addaction name="actionDevice_Options"/>
+    <addaction name="actionMQTT_OPtions"/>
+    <addaction name="actionWIFI_Options"/>
+    <addaction name="separator"/>
+    <addaction name="actionRestart_device"/>
+    <addaction name="actionTerminal"/>
+    <addaction name="actionFirmware_Upadte"/>
+    <addaction name="separator"/>
     <addaction name="actiontest"/>
    </widget>
    <addaction name="menuFile"/>
@@ -942,6 +953,58 @@ QTabWidget::pane {
     <string>Ctrl+N</string>
    </property>
   </action>
+  <action name="actionDevice_Options">
+   <property name="text">
+    <string>Device Options</string>
+   </property>
+  </action>
+  <action name="actionMQTT_OPtions">
+   <property name="text">
+    <string>MQTT Options</string>
+   </property>
+  </action>
+  <action name="actionWIFI_Options">
+   <property name="text">
+    <string>WIFI Options</string>
+   </property>
+  </action>
+  <action name="actionRestart_device">
+   <property name="text">
+    <string>Restart Device</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+R</string>
+   </property>
+  </action>
+  <action name="actionTerminal">
+   <property name="text">
+    <string>Terminal</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+T</string>
+   </property>
+  </action>
+  <action name="actionFirmware_Upadte">
+   <property name="text">
+    <string>Firmware Update</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+F</string>
+   </property>
+  </action>
+  <action name="actionConnect">
+   <property name="text">
+    <string>Connect...</string>
+   </property>
+  </action>
+  <action name="actionRefresh_device_List">
+   <property name="text">
+    <string>Refresh Device List</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -966,5 +1029,118 @@ QTabWidget::pane {
  <resources>
   <include location="../../resources/resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionDevice_Options</sender>
+   <signal>triggered()</signal>
+   <receiver>deviceButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>245</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionMQTT_OPtions</sender>
+   <signal>triggered()</signal>
+   <receiver>mqttButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>303</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionWIFI_Options</sender>
+   <signal>triggered()</signal>
+   <receiver>wifiButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>362</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRefresh_device_List</sender>
+   <signal>triggered()</signal>
+   <receiver>refreshButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>90</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRestart_device</sender>
+   <signal>triggered()</signal>
+   <receiver>restartButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>421</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionTerminal</sender>
+   <signal>triggered()</signal>
+   <receiver>terminalButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>486</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFirmware_Upadte</sender>
+   <signal>triggered()</signal>
+   <receiver>firmwareButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>556</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

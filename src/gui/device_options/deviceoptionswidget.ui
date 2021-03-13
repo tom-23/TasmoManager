@@ -129,11 +129,6 @@ QScrollArea {
     background-color: rgb(66, 66, 66);
 }
 
-#temperatureSetOptions {
-    border-top: 1px Solid #0C0C0C;
-} 
-
-
 #wifiContents {
     background-color: rgb(66, 66, 66);
 }

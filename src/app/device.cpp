@@ -265,6 +265,14 @@ void Device::setMQTTSettings() {
     deviceManager->mqttClient->publish(message);
 }
 
+void Device::setOTAUrl() {
+
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "OtaUrl");
+    message.setPayload(deviceInfo.OTAUrl.toString().toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
 void Device::on_Message(QMQTT::Message message) {
 
     QStringList topicSplit = message.topic().split("/");

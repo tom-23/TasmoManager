@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SetupDeviceDialog</class>
- <widget class="QDialog" name="SetupDeviceDialog">
+ <class>UpdateDeviceDialog</class>
+ <widget class="QDialog" name="UpdateDeviceDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,19 +17,14 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Setup a new device</string>
+   <string>Update Devices</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">* {
-	font: &quot;Helvetica&quot;;
-	color: white;
-}
-
-QMessageBox {
+   <string notr="true">QMessageBox {
 	background-color: rgb(37, 37, 37);
 }
 
-#SetupDeviceDialog {
+#UpdateDeviceDialog {
 	background-color: rgb(37, 37, 37);
 	font-weight: 600;
 	
@@ -100,7 +95,7 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="welcomePage">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -158,14 +153,14 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
 font-weight: 900;</string>
          </property>
          <property name="text">
-          <string>Setup a Device</string>
+          <string>Update Devices</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>This wizard will guide you through setting up your tasmota device.  Press next to continue setup.</string>
+          <string>This wizard will guide you through updating up your tasmota device(s).  Press next to continue.</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -187,7 +182,7 @@ font-weight: 900;</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="selectDevicePage">
+     <widget class="QWidget" name="selectDevicesPage">
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <property name="spacing">
         <number>20</number>
@@ -224,14 +219,14 @@ font-weight: 900;</string>
 font-weight: 900;</string>
          </property>
          <property name="text">
-          <string>Select a device</string>
+          <string>Select device(s)</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_4">
          <property name="text">
-          <string>If your device does not show up,  it may not be connected to a wifi network. </string>
+          <string>Please select device(s) you would like to update</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -239,7 +234,7 @@ font-weight: 900;</string>
         </widget>
        </item>
        <item>
-        <widget class="QListWidget" name="discoveredDeviceList">
+        <widget class="QListWidget" name="deviceList">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -255,7 +250,7 @@ font-weight: 900;</string>
 color: rgb(145, 145, 145);</string>
          </property>
          <property name="text">
-          <string>Scanning IP 1 of 254...</string>
+          <string>(Only online devices are visible)</string>
          </property>
         </widget>
        </item>
@@ -274,7 +269,7 @@ color: rgb(145, 145, 145);</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="configureDeviceInfo">
+     <widget class="QWidget" name="updateMethodPage">
       <layout class="QVBoxLayout" name="verticalLayout_9">
        <property name="spacing">
         <number>20</number>
@@ -311,14 +306,14 @@ color: rgb(145, 145, 145);</string>
 font-weight: 900;</string>
          </property>
          <property name="text">
-          <string>Configure device info</string>
+          <string>Update Method</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_13">
          <property name="text">
-          <string>Enter the name,  friendly name and template of the device.  (Leave blank to use defaults)</string>
+          <string>Choose a method to update the selected devices:</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -326,28 +321,56 @@ font-weight: 900;</string>
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="deviceName">
-         <property name="text">
-          <string/>
+        <layout class="QVBoxLayout" name="verticalLayout_11">
+         <property name="spacing">
+          <number>10</number>
          </property>
-         <property name="placeholderText">
-          <string>Device Name</string>
+         <property name="topMargin">
+          <number>0</number>
          </property>
-        </widget>
+         <item>
+          <widget class="QRadioButton" name="radioButton">
+           <property name="text">
+            <string>Using ota.tasmota.com
+(Tasmota's Official OTA Server,  Reccomended)</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="comboBox">
+           <item>
+            <property name="text">
+             <string>Release</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Development</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="QLineEdit" name="deviceFriendlyName">
-         <property name="placeholderText">
-          <string>Friendly Name</string>
+        <layout class="QVBoxLayout" name="verticalLayout_10">
+         <property name="spacing">
+          <number>10</number>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="deviceTemplate">
-         <property name="placeholderText">
-          <string>Template</string>
+         <property name="topMargin">
+          <number>0</number>
          </property>
-        </widget>
+         <item>
+          <widget class="QRadioButton" name="radioButton_2">
+           <property name="text">
+            <string>Using custom OTA URL:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit"/>
+         </item>
+        </layout>
        </item>
        <item>
         <spacer name="verticalSpacer_13">
@@ -401,70 +424,23 @@ font-weight: 900;</string>
 font-weight: 900;</string>
          </property>
          <property name="text">
-          <string>Configure MQTT</string>
+          <string>Caution</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_6">
          <property name="text">
-          <string>Select a server and configure the topic and full topic values.</string>
+          <string>The first rule of upgrading: If it ain't broke, don't fix it!
+
+In other words, ensure that there is a good reason to mess with a working installation (e.g., a need to use a new feature or address a found problem fixed in the current version).
+
+Any time you upgrade it is highly recommended to back up your device settings. That is easily done from the webUI using Configuration - Backup Config.</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
          </property>
         </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="label_14">
-           <property name="text">
-            <string>MQTT Server:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="mqttServerBox">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_5">
-         <property name="spacing">
-          <number>10</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLineEdit" name="topic">
-           <property name="placeholderText">
-            <string>Topic</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="fulltopic">
-           <property name="placeholderText">
-            <string>Full Topic</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </item>
        <item>
         <spacer name="verticalSpacer_5">
@@ -537,10 +513,26 @@ font-weight: 900;</string>
 font-weight: 900;</string>
          </property>
          <property name="text">
-          <string>Waiting for device...</string>
+          <string>Updating devices...</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QListWidget" name="deviceList_2">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>100</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -551,6 +543,13 @@ font-weight: 900;</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QProgressBar" name="progressBar">
+         <property name="value">
+          <number>24</number>
          </property>
         </widget>
        </item>

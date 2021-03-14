@@ -56,6 +56,11 @@ void DeviceManager::on_mqttMessage(QMQTT::Message message) {
     // Handle Discovery
     if (topic.startsWith(discoveryTopic)) {
         QStringList subtopics = (topic.replace(discoveryTopic + "/", "")).split("/");
+        // If a device gets removed, don't try adding it as the topic doesn't exist anymore
+        qDebug() << subtopics;
+        if (subtopics.size() == 1) {
+            return;
+        }
         if (subtopics[1] == "config") {
 
             QJsonDocument jsonDoc = QJsonDocument::fromJson(message.payload());

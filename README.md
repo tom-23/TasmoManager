@@ -6,7 +6,7 @@
 
 A beginner friendly desktop UI for Tasmota flashed devices.
 
-![Alt text](resources/screenshots/MainWindow.png?raw=true "TasmoManager Screenshot")
+![Screenshot](resources/screenshots/MainWindow.png?raw=true "TasmoManager Screenshot")
 
 ## Features
 
@@ -19,3 +19,7 @@ A beginner friendly desktop UI for Tasmota flashed devices.
 * Device Renaming
 * Integrated Console / Terminal
 * Multiple MQTT Servers
+
+## Adding Unconfigured Device:
+
+![Alt text](resources/animated/adding_unconfigured_device.gif?raw=true "TasmoManager Screenshot")

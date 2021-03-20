@@ -88,6 +88,7 @@ struct DeviceInfo {
     int bootCount;
 
     QString firmwareVersion;
+    bool minimalFirmware = false;
     QString coreSDKVersion;
     QString buildDateAndTime;
     int cpuFreq;

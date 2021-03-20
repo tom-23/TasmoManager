@@ -4,6 +4,10 @@
         <file>assets/64_bulb_tick.svg</file>
         <file>assets/64_bulb.svg</file>
         <file>assets/64_tasmota.svg</file>
+        <file>assets/64_update.svg</file>
+        <file>assets/64_tick.svg</file>
+        <file>assets/64_cross.svg</file>
+        <file>assets/64_add.svg</file>
     </qresource>
     <qresource prefix="/24">
         <file>assets/24_bulb_square.svg</file>

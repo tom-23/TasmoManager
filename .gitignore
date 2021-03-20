@@ -73,3 +73,9 @@ Thumbs.db
 
 # CMake User Files
 CMakeLists.txt.user
+
+# CLion Files
+*.idea/
+build/
+cmake-build-debug/
+cmake-build-release/

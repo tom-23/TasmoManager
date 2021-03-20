@@ -315,6 +315,7 @@ void MainWindow::updateInfoText() {
 
         ui->menuDevices->setEnabled(true);
         ui->refreshButton->setEnabled(true);
+        ui->deviceToolsContainer->setEnabled(true);
 
     } else if (deviceManager->connectionStatus == Connecting) {
 
@@ -339,6 +340,7 @@ void MainWindow::updateInfoText() {
         ui->menuDevices->setEnabled(false);
 
         ui->deviceActionsContainer->setEnabled(false);
+        ui->deviceToolsContainer->setEnabled(false);
         ui->refreshButton->setEnabled(false);
     }
 

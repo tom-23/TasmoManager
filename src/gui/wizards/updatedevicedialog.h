@@ -2,6 +2,7 @@
 #define UPDATEDEVICEDIALOG_H
 
 #include <QDialog>
+#include <QListWidgetItem>
 #include "app/devicemanager.h"
 
 namespace Ui {
@@ -16,9 +17,21 @@ public:
     explicit UpdateDeviceDialog(QWidget *parent = nullptr, DeviceManager *_deviceManager = nullptr);
     ~UpdateDeviceDialog();
 
+private slots:
+    void on_cancelButton_clicked();
+
+    void on_nextButton_clicked();
+
+    void on_stackedWidget_currentChanged(int arg1);
+
+    void on_deviceList_itemChanged(QListWidgetItem *item);
+
+
 private:
     Ui::UpdateDeviceDialog *ui;
     DeviceManager *deviceManager;
+    QList<Device *> *updateDeviceList = new QList<Device *>;
+
 };
 
 #endif // UPDATEDEVICEDIALOG_H

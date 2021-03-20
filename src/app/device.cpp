@@ -322,6 +322,7 @@ void Device::on_Message(QMQTT::Message message) {
         jsonDoc = QJsonDocument::fromJson(message.payload());
         QJsonObject status2Object = jsonDoc.object().value("StatusFWR").toObject();
         deviceInfo.firmwareVersion = status2Object.value("Version").toString();
+        deviceInfo.minimalFirmware = status2Object.value("Version").toString().toUpper().contains("MINIMAL");
         deviceInfo.coreSDKVersion = status2Object.value("Core").toString() + " / " + status2Object.value("SDK").toString();
         deviceInfo.buildDateAndTime = status2Object.value("BuildDateTime").toString();
         deviceInfo.cpuFreq = status2Object.value("CpuFrequency").toInt();

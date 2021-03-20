@@ -50,6 +50,7 @@ void MQTTServerManager::saveServerList() {
             server.insert("ipAddress", serverInfo->ipAddress.toString());
             server.insert("name", serverInfo->name);
             server.insert("host", serverInfo->host);
+            server.insert("username", serverInfo->username);
             server.insert("password", QString::fromUtf8(serverInfo->password));
             server.insert("port", serverInfo->port);
 

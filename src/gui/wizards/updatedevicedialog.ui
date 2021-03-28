@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>370</width>
-    <height>553</height>
+    <height>500</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -107,7 +107,7 @@ width: 15px;
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="welcomePage">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -161,7 +161,7 @@ width: 15px;
        <item>
         <widget class="QLabel" name="label">
          <property name="styleSheet">
-          <string notr="true">font-size: 30pt;
+          <string notr="true">font-size: 30px;
 font-weight: 900;</string>
          </property>
          <property name="text">
@@ -227,7 +227,7 @@ font-weight: 900;</string>
        <item>
         <widget class="QLabel" name="label_3">
          <property name="styleSheet">
-          <string notr="true">font-size: 30pt;
+          <string notr="true">font-size: 30px;
 font-weight: 900;</string>
          </property>
          <property name="text">
@@ -314,7 +314,7 @@ color: rgb(145, 145, 145);</string>
        <item>
         <widget class="QLabel" name="label_12">
          <property name="styleSheet">
-          <string notr="true">font-size: 30pt;
+          <string notr="true">font-size: 30px;
 font-weight: 900;</string>
          </property>
          <property name="text">
@@ -439,7 +439,7 @@ font-weight: 900;</string>
        <item>
         <widget class="QLabel" name="label_5">
          <property name="styleSheet">
-          <string notr="true">font-size: 30pt;
+          <string notr="true">font-size: 30px;
 font-weight: 900;</string>
          </property>
          <property name="text">
@@ -528,7 +528,7 @@ Any time you upgrade it is highly recommended to back up your device settings. T
        <item>
         <widget class="QLabel" name="label_7">
          <property name="styleSheet">
-          <string notr="true">font-size: 30pt;
+          <string notr="true">font-size: 30px;
 font-weight: 900;</string>
          </property>
          <property name="text">
@@ -642,11 +642,11 @@ font-weight: 900;</string>
        <item>
         <widget class="QLabel" name="label_8">
          <property name="styleSheet">
-          <string notr="true">font-size: 30pt;
+          <string notr="true">font-size: 30px;
 font-weight: 900;</string>
          </property>
          <property name="text">
-          <string>Device setup complete!</string>
+          <string>Device update complete!</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -656,7 +656,7 @@ font-weight: 900;</string>
        <item>
         <widget class="QLabel" name="label_9">
          <property name="text">
-          <string>You're device has been identified and MQTT has been connected. You should see it appear in the device list.</string>
+          <string>The selected devices have finished updating.</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -730,18 +730,18 @@ font-weight: 900;</string>
        <item>
         <widget class="QLabel" name="label_11">
          <property name="styleSheet">
-          <string notr="true">font-size: 30pt;
+          <string notr="true">font-size: 30px;
 font-weight: 900;</string>
          </property>
          <property name="text">
-          <string>Device setup failed</string>
+          <string>Device update failed</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_10">
          <property name="text">
-          <string>It seems the device didn't connect to the MQTT server in time.  Please try again.</string>
+          <string>Some devices have failed to update.  Please make sure they are still plugged in and are connected to wifi.</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -829,12 +829,12 @@ font-weight: 900;</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>30</x>
-     <y>249</y>
+     <x>50</x>
+     <y>51</y>
     </hint>
     <hint type="destinationlabel">
-     <x>74</x>
-     <y>285</y>
+     <x>96</x>
+     <y>57</y>
     </hint>
    </hints>
   </connection>
@@ -845,12 +845,12 @@ font-weight: 900;</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>120</x>
-     <y>325</y>
+     <x>118</x>
+     <y>61</y>
     </hint>
     <hint type="destinationlabel">
-     <x>146</x>
-     <y>345</y>
+     <x>118</x>
+     <y>67</y>
     </hint>
    </hints>
   </connection>

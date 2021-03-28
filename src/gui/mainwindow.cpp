@@ -206,16 +206,18 @@ void MainWindow::on_deviceInfoUpdate(DeviceInfo deviceInfo) {
                 item->setText(5, "Updating...");
             }
 
-            if (selectedDevice->deviceInfo.status == DeviceStatus::Online) {
-                ui->deviceInfoWidget->setDevice(selectedDevice);
-                ui->devicePowerWidget->setDevice(selectedDevice);
-                ui->deviceColorWidget->setDevice(selectedDevice);
-                ui->deviceActionsContainer->setEnabled(true);
-            } else {
-                ui->deviceInfoWidget->setDevice(nullptr);
-                ui->devicePowerWidget->setDevice(nullptr);
-                ui->deviceColorWidget->setDevice(nullptr);
-                ui->deviceActionsContainer->setEnabled(false);
+            if (selectedDevice != nullptr) {
+                if (selectedDevice->deviceInfo.status == DeviceStatus::Online) {
+                    ui->deviceInfoWidget->setDevice(selectedDevice);
+                    ui->devicePowerWidget->setDevice(selectedDevice);
+                    ui->deviceColorWidget->setDevice(selectedDevice);
+                    ui->deviceActionsContainer->setEnabled(true);
+                } else {
+                    ui->deviceInfoWidget->setDevice(nullptr);
+                    ui->devicePowerWidget->setDevice(nullptr);
+                    ui->deviceColorWidget->setDevice(nullptr);
+                    ui->deviceActionsContainer->setEnabled(false);
+                }
             }
 
             if (!(deviceInfo.status == DeviceStatus::Online)) {

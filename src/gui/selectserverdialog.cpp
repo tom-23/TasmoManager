@@ -18,13 +18,17 @@ void SelectServerDialog::setMQTTServerManager(MQTTServerManager *_serverManager)
     serverManager = _serverManager;
     for (int i = 0; i < serverManager->serverList->size(); ++i) {
         MQTTServerInfo *info = serverManager->serverList->at(i);
-        QString host;
+        QString host = "";
+        QString user = "";
         if (!info->ipAddress.isNull()) {
             host = info->ipAddress.toString();
         } else {
             host = info->host;
         }
-        ui->serverComboBox->addItem(info->name + " (" + host + ":" + QString::number(info->port) + ")");
+        if (info->username != "") {
+            user = info->username + "@";
+        }
+        ui->serverComboBox->addItem(info->name + " (" + user + host + ":" + QString::number(info->port) + ")");
     }
     ui->serverComboBox->setCurrentIndex(0);
 }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>370</width>
-    <height>553</height>
+    <height>500</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -100,7 +100,7 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="welcomePage">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -154,11 +154,14 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
        <item>
         <widget class="QLabel" name="label">
          <property name="styleSheet">
-          <string notr="true">font-size: 30pt;
+          <string notr="true">font-size: 30px;
 font-weight: 900;</string>
          </property>
          <property name="text">
           <string>Setup a Device</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -220,11 +223,14 @@ font-weight: 900;</string>
        <item>
         <widget class="QLabel" name="label_3">
          <property name="styleSheet">
-          <string notr="true">font-size: 30pt;
+          <string notr="true">font-size: 30px;
 font-weight: 900;</string>
          </property>
          <property name="text">
           <string>Select a device</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -307,11 +313,14 @@ color: rgb(145, 145, 145);</string>
        <item>
         <widget class="QLabel" name="label_12">
          <property name="styleSheet">
-          <string notr="true">font-size: 30pt;
+          <string notr="true">font-size: 30px;
 font-weight: 900;</string>
          </property>
          <property name="text">
           <string>Configure device info</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -397,11 +406,14 @@ font-weight: 900;</string>
        <item>
         <widget class="QLabel" name="label_5">
          <property name="styleSheet">
-          <string notr="true">font-size: 30pt;
+          <string notr="true">font-size: 30px;
 font-weight: 900;</string>
          </property>
          <property name="text">
           <string>Configure MQTT</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -424,6 +436,9 @@ font-weight: 900;</string>
           <widget class="QLabel" name="label_14">
            <property name="text">
             <string>MQTT Server:</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -533,7 +548,7 @@ font-weight: 900;</string>
        <item>
         <widget class="QLabel" name="label_7">
          <property name="styleSheet">
-          <string notr="true">font-size: 30pt;
+          <string notr="true">font-size: 30px;
 font-weight: 900;</string>
          </property>
          <property name="text">
@@ -628,7 +643,7 @@ font-weight: 900;</string>
        <item>
         <widget class="QLabel" name="label_8">
          <property name="styleSheet">
-          <string notr="true">font-size: 30pt;
+          <string notr="true">font-size: 30px;
 font-weight: 900;</string>
          </property>
          <property name="text">
@@ -716,11 +731,14 @@ font-weight: 900;</string>
        <item>
         <widget class="QLabel" name="label_11">
          <property name="styleSheet">
-          <string notr="true">font-size: 30pt;
+          <string notr="true">font-size: 30px;
 font-weight: 900;</string>
          </property>
          <property name="text">
           <string>Device setup failed</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>

@@ -84,7 +84,7 @@ private:
     PreferencesDialog *preferencesDialog;
     DeviceOptionsWidget *deviceOptionsWidget = nullptr;
 
-    Device *selectedDevice;
+    Device *selectedDevice = nullptr;
 
 };
 #endif // MAINWINDOW_H

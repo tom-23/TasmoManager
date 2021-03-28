@@ -57,6 +57,9 @@ for:
     - bash scripts/macOS/after_build.sh
   artifacts:
     - path: build/*.dmg
+      name: DragAndDrop Installer
+    - path: build/*.pkg
+      name: Package Installer
 
 
 # Upload all packages to GitHub, but only if the push was tagged

@@ -1176,7 +1176,23 @@ QTabWidget::pane {
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>556</x>
+     <x>660</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionConnect</sender>
+   <signal>triggered()</signal>
+   <receiver>connectButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>28</x>
      <y>53</y>
     </hint>
    </hints>

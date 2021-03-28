@@ -1,5 +1,7 @@
 source scripts/macOS/env.sh
 
+export outputName=
+
 if test -d build/TasmoManager.app; then
     export PATH=${CMAKE_PREFIX_PATH}/bin:${PATH}
     cd build
@@ -15,8 +17,9 @@ if test -d build/TasmoManager.app; then
     --hide-extension "TasmoManager.app" \
     --app-drop-link 368 88 \
     --skip-jenkins \
-    "TasmoManager.dmg" \
+    "${APP}.dmg" \
     "TasmoManager.app"
+    pkgbuild --install-location /Applications --component TasmoManager.app ${APP}.pkg
 else
     true
 fi

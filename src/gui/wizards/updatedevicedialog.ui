@@ -24,6 +24,14 @@
 	background-color: rgb(37, 37, 37);
 }
 
+#gZIPButton {
+	background-color: rgba(31, 163, 236, 50);
+}
+
+#gZIPButton:checked {
+	background-color: #1fa3ec;
+}
+
 #UpdateDeviceDialog {
 	background-color: rgb(37, 37, 37);
 	font-weight: 600;
@@ -107,7 +115,7 @@ width: 15px;
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="welcomePage">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -247,10 +255,16 @@ font-weight: 900;</string>
        </item>
        <item>
         <widget class="QListWidget" name="deviceList">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>225</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>100</height>
+           <height>225</height>
           </size>
          </property>
         </widget>
@@ -263,6 +277,17 @@ color: rgb(145, 145, 145);</string>
          </property>
          <property name="text">
           <string>(Only online devices are visible)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="scanStatusLabel_2">
+         <property name="styleSheet">
+          <string notr="true">font-size: 11px;
+color: rgb(145, 145, 145);</string>
+         </property>
+         <property name="text">
+          <string>TIP: Press cmd + a or ctrl + a to check / uncheck all devices</string>
          </property>
         </widget>
        </item>
@@ -341,10 +366,10 @@ font-weight: 900;</string>
           <number>0</number>
          </property>
          <item>
-          <widget class="QRadioButton" name="radioButton">
+          <widget class="QRadioButton" name="prodOTAUrl">
            <property name="text">
             <string>Using ota.tasmota.com
-(Tasmota's Official OTA Server,  Reccomended)</string>
+(Tasmota OTA Server,  Reccomended)</string>
            </property>
            <property name="checked">
             <bool>true</bool>
@@ -352,7 +377,7 @@ font-weight: 900;</string>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="comboBox">
+          <widget class="QComboBox" name="prodOTAVer">
            <item>
             <property name="text">
              <string>Release</string>
@@ -365,6 +390,39 @@ font-weight: 900;</string>
            </item>
           </widget>
          </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="spacing">
+            <number>5</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QComboBox" name="prodOTAFlavour">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="gZIPButton">
+             <property name="text">
+              <string>GZip</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
         </layout>
        </item>
        <item>
@@ -376,14 +434,14 @@ font-weight: 900;</string>
           <number>0</number>
          </property>
          <item>
-          <widget class="QRadioButton" name="radioButton_2">
+          <widget class="QRadioButton" name="customOTARadio">
            <property name="text">
             <string>Using custom OTA URL:</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit">
+          <widget class="QLineEdit" name="customOTAUrl">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -406,7 +464,7 @@ font-weight: 900;</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="configureMQTTPage">
+     <widget class="QWidget" name="cautionPage">
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <property name="spacing">
         <number>20</number>
@@ -541,15 +599,54 @@ font-weight: 900;</string>
        </item>
        <item>
         <widget class="QListWidget" name="updateList">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>225</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>100</height>
+           <height>225</height>
           </size>
          </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::NoSelection</enum>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>8</width>
+           <height>8</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>Test</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../../resources/resources.qrc">
+            <normaloff>:/16/assets/16_restarting.svg</normaloff>:/16/assets/16_restarting.svg</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Test</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../../resources/resources.qrc">
+            <normaloff>:/16/assets/16_updating.svg</normaloff>:/16/assets/16_updating.svg</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Test</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../../resources/resources.qrc">
+            <normaloff>:/16/assets/16_online.svg</normaloff>:/16/assets/16_online.svg</iconset>
+          </property>
+         </item>
         </widget>
        </item>
        <item>
@@ -672,7 +769,7 @@ font-weight: 900;</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page">
+     <widget class="QWidget" name="errorPage">
       <layout class="QVBoxLayout" name="verticalLayout_8">
        <property name="spacing">
         <number>20</number>
@@ -813,38 +910,51 @@ font-weight: 900;</string>
     </layout>
    </item>
   </layout>
+  <action name="actionSelect_Deselect_All">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Select / Deselect All</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../resources/resources.qrc"/>
+ </resources>
  <connections>
   <connection>
-   <sender>radioButton</sender>
+   <sender>prodOTAUrl</sender>
    <signal>toggled(bool)</signal>
-   <receiver>comboBox</receiver>
+   <receiver>prodOTAVer</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>50</x>
-     <y>51</y>
+     <x>70</x>
+     <y>244</y>
     </hint>
     <hint type="destinationlabel">
-     <x>96</x>
-     <y>57</y>
+     <x>118</x>
+     <y>276</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_2</sender>
+   <sender>customOTARadio</sender>
    <signal>toggled(bool)</signal>
-   <receiver>lineEdit</receiver>
+   <receiver>customOTAUrl</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>118</x>
-     <y>61</y>
+     <x>138</x>
+     <y>351</y>
     </hint>
     <hint type="destinationlabel">
-     <x>118</x>
-     <y>67</y>
+     <x>140</x>
+     <y>383</y>
     </hint>
    </hints>
   </connection>

@@ -272,6 +272,17 @@ void Device::setOTAUrl() {
     deviceManager->mqttClient->publish(message);
 }
 
+void Device::setOTAUrlAndUpgrade() {
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "Backlog");
+
+    QString backlog = "";
+    backlog = backlog + "OtaUrl " + deviceInfo.OTAUrl.toString() + "; ";
+    backlog = backlog + "Upgrade 1; ";
+    message.setPayload(backlog.toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
 void Device::startFirmwareUpgrade() {
     QMQTT::Message message;
     message.setTopic(cmndTopic + "Upgrade");
@@ -293,6 +304,25 @@ void Device::on_Message(QMQTT::Message message) {
         } else if (message.payload() == "Offline") {
             deviceInfo.status = Offline;
         }
+        emit recievedInfoUpdate();
+        emit deviceManager->device_InfoUpdate(deviceInfo);
+    }
+
+    if (endTopic == "UPGRADE") {
+        jsonDoc = QJsonDocument::fromJson(message.payload());
+        if (jsonDoc.object().value("Upgrade").toString().contains("Successful")) {
+            deviceInfo.updateStep = deviceInfo.updateStep + 1;
+        } else {
+            deviceInfo.updateError = jsonDoc.object().value("Upgrade").toString();
+        }
+        emit recievedInfoUpdate();
+        emit deviceManager->device_InfoUpdate(deviceInfo);
+    }
+    if (endTopic == "INFO1") {
+        jsonDoc = QJsonDocument::fromJson(message.payload());
+        deviceInfo.firmwareVersion = jsonDoc.object().value("Version").toString();
+        deviceInfo.minimalFirmware = (jsonDoc.object().value("Version").toString().toLower().contains("(minimal)") == true);
+
         emit recievedInfoUpdate();
         emit deviceManager->device_InfoUpdate(deviceInfo);
     }

@@ -85,9 +85,13 @@ struct DeviceInfo {
     QString mqttClient;
 
     QUrl OTAUrl;
+    int updateStep = 0;
+    QString updateError = "";
+
     int bootCount;
 
     QString firmwareVersion;
+    QString oldFirmwareVerson;
     bool minimalFirmware = false;
     QString coreSDKVersion;
     QString buildDateAndTime;
@@ -173,6 +177,7 @@ public:
     void setMQTTSettings();
 
     void setOTAUrl();
+    void setOTAUrlAndUpgrade();
     void startFirmwareUpgrade();
 
     QString statTopic;

@@ -3,6 +3,9 @@
 
 #include <QDialog>
 #include <QListWidgetItem>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QMovie>
 #include "app/devicemanager.h"
 
 namespace Ui {
@@ -26,11 +29,28 @@ private slots:
 
     void on_deviceList_itemChanged(QListWidgetItem *item);
 
+    void on_deviceUpdate(DeviceInfo deviceInfo);
+
+
+
+    void on_doneButton_clicked();
+
+    void on_actionSelect_Deselect_All_toggled(bool arg1);
 
 private:
     Ui::UpdateDeviceDialog *ui;
     DeviceManager *deviceManager;
+
+    int updatePos;
+    int updatePosMax;
+
+    QUrl OTAUrl;
+
     QList<Device *> *updateDeviceList = new QList<Device *>;
+
+    void updateProgressBar();
+
+    bool errorsEncountered = false;
 
 };
 

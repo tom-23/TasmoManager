@@ -78,4 +78,7 @@
     <qresource prefix="/schema">
         <file>setoptions.schema.json</file>
     </qresource>
+    <qresource prefix="/data">
+        <file>tasmota-releases.json</file>
+    </qresource>
 </RCC>

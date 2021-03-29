@@ -23,6 +23,7 @@ void PreferencesManager::loadPreferences() {
         useAutomaticDeviceScanning = root.value("useAutomaticDeviceScannig").toBool();
         firstScanIP = QHostAddress(root.value("lastScanIP").toString());
         lastScanIP = QHostAddress(root.value("firstScanIP").toString());
+        versionChannel = root.value("versionChannel").toInt();
     } else {
         qDebug() << "[Prefs Man] Could not load preferences file.";
     }
@@ -39,7 +40,7 @@ void PreferencesManager::savePreferences() {
         root.insert("useAutomaticDeviceScannig", useAutomaticDeviceScanning);
         root.insert("firstScanIP", firstScanIP.toString());
         root.insert("lastScanIP", lastScanIP.toString());
-
+        root.insert("versionChannel", versionChannel);
         jsonDoc.setObject(root);
 
         file.resize(0);

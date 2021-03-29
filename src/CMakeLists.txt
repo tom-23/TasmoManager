@@ -2,6 +2,7 @@
 file(GLOB tasmomanager_SOURCES
     main.cpp
     app/*.cpp
+    misc/*.cpp
     gui/*.cpp
     gui/device_controls/*.cpp
     gui/device_options/*.cpp
@@ -14,6 +15,11 @@ file(GLOB tasmomanager_FORMS
     gui/device_options/*.ui
     gui/wizards/*.ui
     )
+
+file(GLOB semver
+    ../lib/semver.c/semver.c)
+
+include_directories("../lib/semver.c")
 
 set(tasmomanager_RESOURCES ../resources/resources.qrc)
 
@@ -38,6 +44,7 @@ set(tasmomanager_COMPILE
     ${tasmomanager_SOURCES}
     ${tasmomanager_FORMS_HEADERS}
     ${tasmomanager_RESOURCES_RCC}
+    ${semver}
     )
 
 if (NOT tasmomanager_version)

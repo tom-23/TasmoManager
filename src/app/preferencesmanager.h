@@ -23,6 +23,7 @@ public:
     bool useAutomaticDeviceScanning = true;
     QHostAddress firstScanIP;
     QHostAddress lastScanIP;
+    int versionChannel = 0;
 
     void loadPreferences();
     void savePreferences();

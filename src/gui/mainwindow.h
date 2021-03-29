@@ -15,6 +15,7 @@
 #include "selectserverdialog.h"
 #include "device_options/deviceoptionswidget.h"
 
+
 #include "app/devicemanager.h"
 #include "app/mqttservermanager.h"
 #include "app/preferencesmanager.h"

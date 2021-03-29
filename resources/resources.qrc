@@ -21,6 +21,7 @@
         <file>assets/24_temperature_square.svg</file>
         <file>assets/24_button_square.svg</file>
         <file>assets/24_radio_square.svg</file>
+        <file>assets/24_swupdate_square.svg</file>
     </qresource>
     <qresource prefix="/32">
         <file>assets/32_disconnect.svg</file>

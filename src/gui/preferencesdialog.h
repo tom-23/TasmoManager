@@ -3,10 +3,12 @@
 
 #include <QDialog>
 #include <QListWidgetItem>
+#include <QProgressBar>
 #include "mainwindow.h"
 #include "editserverdialog.h"
 #include "version.h"
 #include "app/preferencesmanager.h"
+#include "misc/softwareupdate.h"
 
 namespace Ui {
 class PreferencesDialog;
@@ -53,6 +55,10 @@ private slots:
 
     void on_manualButton_toggled(bool checked);
 
+    void on_beginSoftwareUpdateButton_clicked();
+
+    void on_softwareUpdateChannel_currentIndexChanged(int index);
+
 private:
     Ui::PreferencesDialog *ui;
 
@@ -65,6 +71,10 @@ private:
     bool lastIPChanged;
 
     void updateIPsChanged();
+
+    SoftwareUpdate *softwareUpdate = new SoftwareUpdate();
+
+    void checkForSoftwareUpdates();
 };
 
 #endif // PREFERENCESDIALOG_H

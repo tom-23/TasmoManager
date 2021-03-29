@@ -19,7 +19,11 @@ if test -d build/TasmoManager.app; then
     --skip-jenkins \
     "${APP}.dmg" \
     "TasmoManager.app"
-    pkgbuild --install-location /Applications --component TasmoManager.app ${APP}.pkg
+    pkgbuild --root "TasmoManager.app" \
+         --install-location "/Applications/TasmoManager.app" \
+         --identifier "com.tombutcher.tasmomanager.pkg" \
+         --version ${APP_VERSION} \
+         ${APP}.pkg
 else
     true
 fi

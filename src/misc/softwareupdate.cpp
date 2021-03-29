@@ -47,8 +47,7 @@ void SoftwareUpdate::beginSoftwareUpdate(Update *update) {
 void SoftwareUpdate::netManagerFinished(QNetworkReply *reply) {
     QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
     semver_t current = {};
-
-    QString currentVersion = "v1.0.0-alpha.3";
+    QString currentVersion = TASMOMANAGER_VERSION;
     if (currentVersion.startsWith("v")) {
         currentVersion.remove(0, 1);
     }

@@ -67,7 +67,6 @@ elseif(APPLE)
         "\\3" CPACK_PACKAGE_VERSION_PATCH
         "${tasmomanager_version}"
         )
-
     set(MACOSX_BUNDLE_BUNDLE_NAME "${TASMOMANAGER_EXECUTABLE_NAME}")
     set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.tombutcher.tasmomanager")
     set(MACOSX_BUNDLE_INFO_STRING "A beginner friendly desktop UI for Tasmota flashed devices.")

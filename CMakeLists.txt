@@ -1,3 +1,5 @@
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OSX deployment version")
+
 project(tasmomanager)
 
 if (APPLE)

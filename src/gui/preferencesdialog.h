@@ -60,6 +60,8 @@ private slots:
 
     void on_softwareUpdateChannel_currentIndexChanged(int index);
 
+    void on_showOfflineDevices_currentIndexChanged(int index);
+
 private:
     Ui::PreferencesDialog *ui;
 

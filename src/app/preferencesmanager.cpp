@@ -20,10 +20,11 @@ void PreferencesManager::loadPreferences() {
         QJsonDocument jsonDoc = QJsonDocument::fromJson(file.readAll());
         QJsonObject root = jsonDoc.object();
         backupLocation = root.value("backupLocation").toString();
-        useAutomaticDeviceScanning = root.value("useAutomaticDeviceScannig").toBool();
+        useAutomaticDeviceScanning = root.value("useAutomaticDeviceScanning").toBool();
         firstScanIP = QHostAddress(root.value("lastScanIP").toString());
         lastScanIP = QHostAddress(root.value("firstScanIP").toString());
         versionChannel = root.value("versionChannel").toInt();
+        showOfflineDevices = root.value("showOfflineDevices").toBool();
     } else {
         qDebug() << "[Prefs Man] Could not load preferences file.";
     }
@@ -41,6 +42,7 @@ void PreferencesManager::savePreferences() {
         root.insert("firstScanIP", firstScanIP.toString());
         root.insert("lastScanIP", lastScanIP.toString());
         root.insert("versionChannel", versionChannel);
+        root.insert("showOfflineDevices", showOfflineDevices);
         jsonDoc.setObject(root);
 
         file.resize(0);

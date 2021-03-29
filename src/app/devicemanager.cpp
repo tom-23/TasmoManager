@@ -77,6 +77,7 @@ void DeviceManager::on_mqttMessage(QMQTT::Message message) {
             if (device == nullptr) {
                 device = new Device(this);
                 device->deviceManager = this;
+
                 device->deviceInfo.setOptions = new QList<SetOption*>;
                 for (int i = 0; i < setOptionsList->size(); i++) {
                     SetOption setOption = setOptionsList->at(i);
@@ -84,7 +85,7 @@ void DeviceManager::on_mqttMessage(QMQTT::Message message) {
                     deviceSetOption->device = device;
                     device->deviceInfo.setOptions->append(deviceSetOption);
                 }
-                device->deviceInfo.name = "Tasmota Device";
+                device->deviceInfo.name = jsonDoc.object().value("dn").toString();
                 device->deviceInfo.ipAddress = QHostAddress(ipAddress);
                 device->deviceInfo.macAddress = macAddress;
                 deviceList->append(device);
@@ -112,7 +113,7 @@ void DeviceManager::on_mqttMessage(QMQTT::Message message) {
 Device* DeviceManager::getDeviceByMAC(QString mac) {
     mac = mac.replace(":", "");
     for (int i = 0; i < deviceList->size(); i++) {
-        if (deviceList->at(i)->deviceInfo.macAddress.replace(":", "") == mac) {
+        if (deviceList->at(i)->deviceInfo.macAddress.replace(":", "").toUpper() == mac.toUpper()) {
             return deviceList->at(i);
         }
     }

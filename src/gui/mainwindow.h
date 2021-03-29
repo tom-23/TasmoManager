@@ -81,11 +81,14 @@ private:
     Ui::MainWindow *ui;
 
     void updateInfoText();
+    void updateWidgetDevices(Device *device);
 
     PreferencesDialog *preferencesDialog;
     DeviceOptionsWidget *deviceOptionsWidget = nullptr;
 
     Device *selectedDevice = nullptr;
+
+    void updatePrefs();
 
 };
 #endif // MAINWINDOW_H

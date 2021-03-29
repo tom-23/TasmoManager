@@ -77,6 +77,7 @@ void PreferencesDialog::setPreferencesManager(PreferencesManager *_preferencesMa
     ui->automaticButton->setChecked(preferencesManager->useAutomaticDeviceScanning);
     ui->manualButton->setChecked(!preferencesManager->useAutomaticDeviceScanning);
     ui->softwareUpdateChannel->setCurrentIndex(preferencesManager->versionChannel);
+    ui->showOfflineDevices->setCurrentIndex(preferencesManager->showOfflineDevices ? 0 : 1);
     checkForSoftwareUpdates();
 }
 
@@ -272,4 +273,10 @@ void PreferencesDialog::on_softwareUpdateChannel_currentIndexChanged(int index)
     preferencesManager->versionChannel = index;
     preferencesManager->savePreferences();
     checkForSoftwareUpdates();
+}
+
+void PreferencesDialog::on_showOfflineDevices_currentIndexChanged(int index)
+{
+    preferencesManager->showOfflineDevices = (index == 0);
+    preferencesManager->savePreferences();
 }

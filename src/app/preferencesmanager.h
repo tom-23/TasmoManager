@@ -21,6 +21,7 @@ public:
     // Preference Values
     QString backupLocation = "";
     bool useAutomaticDeviceScanning = true;
+    bool showOfflineDevices = true;
     QHostAddress firstScanIP;
     QHostAddress lastScanIP;
     int versionChannel = 0;

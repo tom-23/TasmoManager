@@ -40,10 +40,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(deviceManager, &DeviceManager::mqtt_onError, this, [=] (QMQTT::ClientError error) {
 
         // Only show message box is we are sure MQTT is disconnected.
-            errorList->append(error);
+
             if (!errorCollectionTimer->isActive()) {
+                errorList->clear();
                 errorCollectionTimer->start(500);
             }
+            errorList->append(error);
     });
 
     connect(errorCollectionTimer, &QTimer::timeout, this, [=] () {
@@ -114,7 +116,8 @@ void MainWindow::on_actionPreferences_triggered()
     preferencesDialog->setWindowModality(Qt::WindowModal);
     preferencesDialog->setMQTTManager(serverManager);
     preferencesDialog->setPreferencesManager(preferencesManager);
-    preferencesDialog->show();
+    preferencesDialog->exec();
+    updatePrefs();
 }
 
 void MainWindow::on_connectButton_clicked()
@@ -145,6 +148,7 @@ void MainWindow::on_deviceDiscovered(DeviceInfo deviceInfo) {
     item->setText(2, "");
     item->setText(3, deviceInfo.macAddress);
     item->setText(4, "Offline");
+    item->setHidden(!preferencesManager->showOfflineDevices);
     ui->deviceList->addTopLevelItem(item);
     if (ui->deviceList->selectedItems().size() == 0) {
         ui->deviceList->topLevelItem(0)->setSelected(true);
@@ -194,6 +198,7 @@ void MainWindow::on_deviceInfoUpdate(DeviceInfo deviceInfo) {
                 offlineIcon.addFile(":/16/assets/16_offline.svg");
                 item->setIcon(5, offlineIcon);
                 item->setText(5, "Offline");
+                item->setHidden(!preferencesManager->showOfflineDevices);
             } else if (deviceInfo.status == DeviceStatus::Restarting) {
                 QIcon restartingIcon;
                 restartingIcon.addFile(":/16/assets/16_restarting.svg");
@@ -252,28 +257,29 @@ void MainWindow::on_terminalButton_clicked()
 
 void MainWindow::on_deviceList_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
-    Q_UNUSED(current);
     Q_UNUSED(previous);
-    if (current) {
-        selectedDevice = deviceManager->getDeviceByMAC(current->text(3));
-        if (selectedDevice->deviceInfo.status == DeviceStatus::Online) {
-            ui->deviceInfoWidget->setDevice(selectedDevice);
-            ui->devicePowerWidget->setDevice(selectedDevice);
-            ui->deviceColorWidget->setDevice(selectedDevice);
-            ui->deviceActionsContainer->setEnabled(true);
-        } else {
-            ui->deviceInfoWidget->setDevice(nullptr);
-            ui->devicePowerWidget->setDevice(nullptr);
-            ui->deviceColorWidget->setDevice(nullptr);
-            ui->deviceActionsContainer->setEnabled(false);
-        }
-
-    } else {
-        ui->deviceInfoWidget->setDevice(nullptr);
-        ui->devicePowerWidget->setDevice(nullptr);
-        ui->deviceColorWidget->setDevice(nullptr);
-        ui->deviceActionsContainer->setEnabled(false);
+    if (current == nullptr) {
+        updateWidgetDevices(nullptr);
+        return;
     }
+    selectedDevice = deviceManager->getDeviceByMAC(current->text(3));
+    if (selectedDevice == nullptr) {
+        updateWidgetDevices(nullptr);
+        return;
+    }
+
+    if (selectedDevice->deviceInfo.status == DeviceStatus::Online) {
+        updateWidgetDevices(selectedDevice);
+    } else {
+        updateWidgetDevices(nullptr);
+    }
+}
+
+void MainWindow::updateWidgetDevices(Device *device) {
+    ui->deviceInfoWidget->setDevice(device);
+    ui->devicePowerWidget->setDevice(device);
+    ui->deviceColorWidget->setDevice(device);
+    ui->deviceActionsContainer->setEnabled((device != nullptr));
 }
 
 void MainWindow::on_webUIButton_clicked()
@@ -400,9 +406,17 @@ void MainWindow::on_deviceList_itemDoubleClicked(QTreeWidgetItem *item, int colu
     }
 }
 
-
 void MainWindow::on_firmwareButton_clicked()
 {
     UpdateDeviceDialog *updateDeviceDialog = new UpdateDeviceDialog(this, deviceManager);
     updateDeviceDialog->exec();
+}
+
+void MainWindow::updatePrefs() {
+    for (int i = 0; i < ui->deviceList->topLevelItemCount(); i++) {
+        QTreeWidgetItem *item = ui->deviceList->topLevelItem(i);
+        if (item->text(5) == "Offline") {
+            item->setHidden(!preferencesManager->showOfflineDevices);
+        }
+    }
 }

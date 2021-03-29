@@ -29,6 +29,7 @@ OPTION(WITH_PLUGINS "Compile plugins" ON)
 set(CMAKE_AUTOMOC ON)
 
 find_package(Qt5Widgets 5.8.0 REQUIRED)
+set(OPENSSL_MSVC_STATIC_RT TRUE)
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
 list(APPEND tasmomanager_LIBRARIES Qt5::Widgets OpenSSL::SSL OpenSSL::Crypto)

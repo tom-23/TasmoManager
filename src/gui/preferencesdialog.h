@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QListWidgetItem>
 #include <QProgressBar>
+#include <QTextEdit>
 #include "mainwindow.h"
 #include "editserverdialog.h"
 #include "version.h"

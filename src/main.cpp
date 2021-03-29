@@ -6,10 +6,9 @@
 
 int main(int argc, char *argv[])
 {
-
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication a(argc, argv);
     a.setAttribute(Qt::AA_UseHighDpiPixmaps);
-    a.setAttribute(Qt::AA_EnableHighDpiScaling);
     a.setApplicationName("TasmoManager");
     a.setOrganizationName("TasmoManager");
 

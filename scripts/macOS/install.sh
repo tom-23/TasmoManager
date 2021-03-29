@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 source scripts/macOS/env.sh
 brew update
-brew install create-dmg
+brew install create-dmg openssl
 git submodule update --init --recursive
 cd lib/qmqtt
 mkdir build

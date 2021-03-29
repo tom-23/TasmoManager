@@ -29,7 +29,8 @@ OPTION(WITH_PLUGINS "Compile plugins" ON)
 set(CMAKE_AUTOMOC ON)
 
 find_package(Qt5Widgets 5.8.0 REQUIRED)
-list(APPEND tasmomanager_LIBRARIES Qt5::Widgets)
+find_package(OpenSSL REQUIRED)
+list(APPEND tasmomanager_LIBRARIES Qt5::Widgets OpenSSL::SSL)
 
 # Be more strict while compiling debugging version
 if(CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")

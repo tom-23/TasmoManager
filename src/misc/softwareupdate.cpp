@@ -21,7 +21,7 @@ void SoftwareUpdate::beginSoftwareUpdate(Update *update) {
     networkManager = new QNetworkAccessManager();
     connect(networkManager, &QNetworkAccessManager::finished, this, [=] () {});
     QNetworkRequest request;
-
+    request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
     request.setUrl(update->downloadPath);
     networkReply = networkManager->get(request);
     connect(networkReply, &QNetworkReply::downloadProgress, this, [=] (qint64 ist, qint64 max) {
@@ -33,6 +33,7 @@ void SoftwareUpdate::beginSoftwareUpdate(Update *update) {
         if (file.open(QIODevice::ReadWrite)) {
             file.resize(0);
             file.write(reply->readAll());
+            file.close();
         } else {
             emit on_softwareUpdateProgress(0, 0, 0, "ERROR WRITING TO FILE");
             emit on_softwareUpdateError();

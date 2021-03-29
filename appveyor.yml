@@ -68,7 +68,7 @@ deploy:
   tag: $(APPVEYOR_REPO_TAG_NAME)
   auth_token:
     secure: kOuvS5K+YgF6WCqkdU9EXV3eVDUhmnb7jSqY4WoZIrqFRMup7+NFR51LOaZSvOpm
-  artifact: /.*\.dmg/, /.*\.exe/
+  artifact: /.*\.dmg/, /.*\.exe/, /.*\.pkg/
   prerelease: true
   force_update: true
   on:

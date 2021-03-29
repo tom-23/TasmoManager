@@ -769,12 +769,12 @@ background-color: #47c266;</string>
               </item>
               <item>
                <property name="text">
-                <string>Alpha</string>
+                <string>Beta</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Beta</string>
+                <string>Alpha</string>
                </property>
               </item>
              </widget>

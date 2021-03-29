@@ -130,6 +130,10 @@ QMessageBox {
 	min-width: 500px;
 }
 
+QProgressDialog {
+	background-color: rgb(37, 37, 37);
+}
+
 QMenu {
 	background-color: rgb(66, 66, 66);
 	border: 1px Solid #0C0C0C;

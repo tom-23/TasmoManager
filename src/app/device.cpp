@@ -444,6 +444,9 @@ void Device::on_Message(QMQTT::Message message) {
         if (!rootObject.value("IPAddress1").isUndefined()) {
             QString ipAddress = rootObject.value("IPAddress1").toString().toUpper();
             deviceInfo.useStaticIP = !ipAddress.contains("(IP UNSET)");
+            if (deviceInfo.useStaticIP) {
+                deviceInfo.useStaticIP = !ipAddress.contains("0.0.0.0");
+            }
             QStringList ipAddressSplit = ipAddress.replace("(IP UNSET)", "").split(" ");
             if (deviceInfo.useStaticIP) {
                 deviceInfo.ipAddress = QHostAddress(ipAddressSplit[1]);

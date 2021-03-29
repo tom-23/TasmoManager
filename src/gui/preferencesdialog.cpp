@@ -28,7 +28,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
                                     "\">" + softwareUpdate->latestUpdate->author + "</a>");
         ui->authorUsername->setTextFormat(Qt::RichText);
         ui->authorUsername->setTextInteractionFlags(Qt::TextBrowserInteraction);
-        ui->changelog->setText(softwareUpdate->latestUpdate->changelog);
+        ui->changelog->setMarkdown(softwareUpdate->latestUpdate->changelog);
         ui->softwareUpdateWidget->setVisible(true);
     });
 

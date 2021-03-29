@@ -215,7 +215,7 @@ QComboBox::drop-down {border-width: 0px; } QComboBox::down-arrow {image: url(noi
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>3</number>
+         <number>4</number>
         </property>
         <widget class="QWidget" name="generalPage">
          <layout class="QFormLayout" name="formLayout_3">
@@ -629,7 +629,7 @@ background-color: #47c266;</string>
                 <number>0</number>
                </property>
                <property name="bottomMargin">
-                <number>0</number>
+                <number>10</number>
                </property>
                <item row="0" column="0">
                 <widget class="QLabel" name="label_4">
@@ -640,6 +640,12 @@ background-color: #47c266;</string>
                </item>
                <item row="0" column="1">
                 <widget class="QLabel" name="newVersionLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
@@ -652,15 +658,14 @@ background-color: #47c266;</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_6">
-                 <property name="text">
-                  <string>Changelog:</string>
-                 </property>
-                </widget>
-               </item>
                <item row="1" column="1">
                 <widget class="QLabel" name="authorUsername">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
@@ -669,7 +674,20 @@ background-color: #47c266;</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="1">
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_10">
+               <property name="leftMargin">
+                <number>10</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>10</number>
+               </property>
+               <item>
                 <widget class="QTextEdit" name="changelog">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -680,7 +698,7 @@ background-color: #47c266;</string>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>100</height>
+                   <height>200</height>
                   </size>
                  </property>
                 </widget>
@@ -836,7 +854,7 @@ background-color: #47c266;</string>
             <item>
              <widget class="QLabel" name="label">
               <property name="styleSheet">
-               <string notr="true">font-size: 30pt;
+               <string notr="true">font-size: 30px;
 font-weight: 900;</string>
               </property>
               <property name="text">

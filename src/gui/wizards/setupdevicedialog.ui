@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>370</width>
-    <height>500</height>
+    <height>553</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -100,7 +100,7 @@ QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noim
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>6</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="welcomePage">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -257,7 +257,7 @@ font-weight: 900;</string>
        <item>
         <widget class="QLabel" name="scanStatusLabel">
          <property name="styleSheet">
-          <string notr="true">font-size: 11pt;
+          <string notr="true">font-size: 11px;
 color: rgb(145, 145, 145);</string>
          </property>
          <property name="text">

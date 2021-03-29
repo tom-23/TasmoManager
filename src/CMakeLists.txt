@@ -91,6 +91,15 @@ foreach (tasmomanager_qt_module ${tasmomanager_qt_modules})
     list(APPEND tasmomanager_LIBRARIES Qt5::${tasmomanager_qt_module})
 endforeach()
 
+# OpenSSL
+
+set(OPENSSL_MSVC_STATIC_RT TRUE)
+set(OPENSSL_USE_STATIC_LIBS TRUE)
+find_package(OpenSSL REQUIRED)
+
+set(OPENSSL_LIBRARIES ${OPENSSL_SSL_LIBRARIES} ${OPENSSL_CRYPTO_LIBRARIES} )
+list(APPEND tasmomanager_LIBRARIES ${OPENSSL_LIBRARIES})
+
 # macros definitions for preprocessor and moc
 set_target_properties(${TASMOMANAGER_EXECUTABLE_NAME} PROPERTIES COMPILE_DEFINITIONS "${tasmomanager_DEFINITIONS}")
 

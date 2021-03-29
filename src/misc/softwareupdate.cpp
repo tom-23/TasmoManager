@@ -47,7 +47,8 @@ void SoftwareUpdate::beginSoftwareUpdate(Update *update) {
 void SoftwareUpdate::netManagerFinished(QNetworkReply *reply) {
     QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
     semver_t current = {};
-    QString currentVersion = TASMOMANAGER_VERSION;
+
+    QString currentVersion = "v1.0.0-alpha.3";
     if (currentVersion.startsWith("v")) {
         currentVersion.remove(0, 1);
     }
@@ -166,7 +167,17 @@ void SoftwareUpdate::installPackage(QString packagePath) {
     } else if (packagePath.endsWith(".exe")) {
         QStringList processArguments;
         processArguments << "/NOCANCEL" << "/NORESTART" << "/FORCECLOSEAPPLICATIONS" << "/RESTARTAPPLICATIONS" << "/SUPPRESSMSGBOXES" << "/SILENT";
-        process->startDetached(packagePath, processArguments);
+        //process->startDetached(packagePath, processArguments);
+        process->start(packagePath, processArguments);
+        connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+            [=](int exitCode, QProcess::ExitStatus exitStatus){
+            Q_UNUSED(exitStatus);
+            qDebug() << "[S/W Update] Finished install with exit code" << exitCode;
+            if (exitCode != 0) {
+                qDebug() << "[S/W Update] An error occoured whilst trying to install the app package.";
+                emit on_softwareUpdateError();
+            }
+        });
     } else {
         qDebug() << "[S/W Update] Looks like the app package isn't an installer";
         delete process;

@@ -131,18 +131,21 @@ void WifiNetworksWidget::on_dnsServer_textChanged(const QString &arg1)
 
 void WifiNetworksWidget::on_saveButton_clicked()
 {
-    if (QHostAddress(ui->ipAddress->text()).isNull()
-            || QHostAddress(ui->gateway->text()).isNull()
-            || QHostAddress(ui->subnetMask->text()).isNull()
-            || QHostAddress(ui->dnsServer->text()).isNull()) {
-        auto m = new QMessageBox(this);
-        m->setText("One or more IP addresses are invalid");
-        m->setIcon(QMessageBox::Warning);
-        m->setWindowModality(Qt::WindowModal);
-        m->setStandardButtons(QMessageBox::Ok);
-        m->exec();
-        return;
+    if ((ui->staticIP->currentIndex() == 1)) {
+        if (QHostAddress(ui->ipAddress->text()).isNull()
+                || QHostAddress(ui->gateway->text()).isNull()
+                || QHostAddress(ui->subnetMask->text()).isNull()
+                || QHostAddress(ui->dnsServer->text()).isNull()) {
+            auto m = new QMessageBox(this);
+            m->setText("One or more IP addresses are invalid");
+            m->setIcon(QMessageBox::Warning);
+            m->setWindowModality(Qt::WindowModal);
+            m->setStandardButtons(QMessageBox::Ok);
+            m->exec();
+            return;
+        }
     }
+
     device->deviceInfo.activeAP = ui->currentAP->currentIndex() + 1;
     device->deviceInfo.ap1SSID = ui->ap1SSID->text();
     device->deviceInfo.ap1Password = ui->ap1Password->text();

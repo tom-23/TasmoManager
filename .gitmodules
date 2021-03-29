@@ -6,4 +6,4 @@
 	url = https://github.com/iltommi/macdeployqtfix.git
 [submodule "lib/semver.c"]
 	path = lib/semver.c
-	url = https://github.com/h2non/semver.c.git
+	url = https://github.com/h2non/semver.c

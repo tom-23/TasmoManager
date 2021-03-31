@@ -14,6 +14,17 @@ MainWindow::MainWindow(QWidget *parent)
     preferencesManager = new PreferencesManager(this);
     preferencesManager->loadPreferences();
 
+    ui->actionDeviceName->setChecked(preferencesManager->visibleColumns->DeviceName);
+    ui->actionFriendlyName->setChecked(preferencesManager->visibleColumns->FriendlyName);
+    ui->actionIP_Address->setChecked(preferencesManager->visibleColumns->IPAddress);
+    ui->actionWIFI_Strengt->setChecked(preferencesManager->visibleColumns->WIFIStrength);
+    ui->actionMAC_Address->setChecked(preferencesManager->visibleColumns->MACAddress);
+    ui->actionFirmware_Version->setChecked(preferencesManager->visibleColumns->FirmwareVersion);
+    ui->actionModule->setChecked(preferencesManager->visibleColumns->Module);
+    ui->actionStatus->setChecked(preferencesManager->visibleColumns->Status);
+
+
+
     connect(deviceManager, &DeviceManager::device_Discovered, this, &MainWindow::on_deviceDiscovered);
     connect(deviceManager, &DeviceManager::device_InfoUpdate, this, &MainWindow::on_deviceInfoUpdate);
 
@@ -102,6 +113,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
             }
         }
     }
+    preferencesManager->savePreferences();
 }
 
 void MainWindow::on_actiontest_triggered()
@@ -144,10 +156,13 @@ void MainWindow::on_connectButton_clicked()
 void MainWindow::on_deviceDiscovered(DeviceInfo deviceInfo) {
     QTreeWidgetItem *item = new QTreeWidgetItem();
     item->setText(0, deviceInfo.name);
-    item->setText(1, deviceInfo.ipAddress.toString());
-    item->setText(2, "");
-    item->setText(3, deviceInfo.macAddress);
-    item->setText(4, "Offline");
+    item->setText(1, deviceInfo.friendlyName);
+    item->setText(2, deviceInfo.ipAddress.toString());
+    item->setText(3, "");
+    item->setText(4, deviceInfo.macAddress);
+    item->setText(5, "");
+    item->setText(6, deviceInfo.module);
+    item->setText(7, "Offline");
     item->setHidden(!preferencesManager->showOfflineDevices);
     ui->deviceList->addTopLevelItem(item);
     if (ui->deviceList->selectedItems().size() == 0) {
@@ -158,14 +173,15 @@ void MainWindow::on_deviceDiscovered(DeviceInfo deviceInfo) {
 void MainWindow::on_deviceInfoUpdate(DeviceInfo deviceInfo) {
     for (int i = 0; i < ui->deviceList->topLevelItemCount(); i++) {
         QTreeWidgetItem *item = ui->deviceList->topLevelItem(i);
-        QString itemMac = item->text(3);
+        QString itemMac = item->text(4);
         itemMac.replace(":", "");
 
         QString deviceInfoMac = deviceInfo.macAddress;
         deviceInfoMac.replace(":", "");
         if (deviceInfoMac == itemMac) {
             item->setText(0, deviceInfo.name);
-            item->setText(1, deviceInfo.ipAddress.toString());
+            item->setText(1, deviceInfo.friendlyName);
+            item->setText(2, deviceInfo.ipAddress.toString());
 
             QIcon icon;
             int rssi = deviceInfo.wifiRSSI;
@@ -179,36 +195,40 @@ void MainWindow::on_deviceInfoUpdate(DeviceInfo deviceInfo) {
             }
 
             if (rssi != 0) {
-                item->setIcon(2, icon);
-                item->setText(2, QString::number(deviceInfo.wifiRSSI) + "% (" + QString::number(deviceInfo.wifiSignal) + " dBm)");
+                item->setIcon(3, icon);
+                item->setText(3, QString::number(deviceInfo.wifiRSSI) + "% (" + QString::number(deviceInfo.wifiSignal) + " dBm)");
             } else {
-                item->setText(2, "n/a");
+                item->setText(3, "n/a");
             }
 
-            item->setText(3, deviceInfo.macAddress);
-            item->setText(4, deviceInfo.firmwareVersion);
+            item->setText(4, deviceInfo.macAddress);
+            item->setText(5, deviceInfo.firmwareVersion);
+            item->setText(6, deviceInfo.module);
+
+            item->setHidden(false);
 
             if (deviceInfo.status == DeviceStatus::Online) {
                 QIcon onlineIcon;
                 onlineIcon.addFile(":/16/assets/16_online.svg");
-                item->setIcon(5, onlineIcon);
-                item->setText(5, "Online");
+                item->setIcon(7, onlineIcon);
+                item->setText(7, "Online");
+
             } else if (deviceInfo.status == DeviceStatus::Offline) {
                 QIcon offlineIcon;
                 offlineIcon.addFile(":/16/assets/16_offline.svg");
-                item->setIcon(5, offlineIcon);
-                item->setText(5, "Offline");
+                item->setIcon(7, offlineIcon);
+                item->setText(7, "Offline");
                 item->setHidden(!preferencesManager->showOfflineDevices);
             } else if (deviceInfo.status == DeviceStatus::Restarting) {
                 QIcon restartingIcon;
                 restartingIcon.addFile(":/16/assets/16_restarting.svg");
-                item->setIcon(5, restartingIcon);
-                item->setText(5, "Restarting...");
+                item->setIcon(7, restartingIcon);
+                item->setText(7, "Restarting...");
             } else if (deviceInfo.status == DeviceStatus::Updating) {
                 QIcon updatingIcon;
                 updatingIcon.addFile(":/16/assets/16_updating.svg");
-                item->setIcon(5, updatingIcon);
-                item->setText(5, "Updating...");
+                item->setIcon(7, updatingIcon);
+                item->setText(7, "Updating...");
             }
 
             if (selectedDevice != nullptr) {
@@ -420,3 +440,53 @@ void MainWindow::updatePrefs() {
         }
     }
 }
+
+void MainWindow::on_actionDeviceName_toggled(bool arg1)
+{
+    ui->deviceList->setColumnHidden(0, !arg1);
+    preferencesManager->visibleColumns->DeviceName = arg1;
+}
+
+void MainWindow::on_actionFriendlyName_toggled(bool arg1)
+{
+    ui->deviceList->setColumnHidden(1, !arg1);
+    preferencesManager->visibleColumns->FriendlyName = arg1;
+}
+
+void MainWindow::on_actionIP_Address_toggled(bool arg1)
+{
+    ui->deviceList->setColumnHidden(2, !arg1);
+    preferencesManager->visibleColumns->IPAddress = arg1;
+}
+
+void MainWindow::on_actionWIFI_Strengt_toggled(bool arg1)
+{
+    ui->deviceList->setColumnHidden(3, !arg1);
+    preferencesManager->visibleColumns->WIFIStrength = arg1;
+}
+
+void MainWindow::on_actionMAC_Address_toggled(bool arg1)
+{
+    ui->deviceList->setColumnHidden(4, !arg1);
+    preferencesManager->visibleColumns->MACAddress = arg1;
+}
+
+void MainWindow::on_actionFirmware_Version_toggled(bool arg1)
+{
+    ui->deviceList->setColumnHidden(5, !arg1);
+    preferencesManager->visibleColumns->FirmwareVersion = arg1;
+}
+
+void MainWindow::on_actionModule_toggled(bool arg1)
+{
+    ui->deviceList->setColumnHidden(6, !arg1);
+    preferencesManager->visibleColumns->Module = arg1;
+}
+
+void MainWindow::on_actionStatus_toggled(bool arg1)
+{
+    ui->deviceList->setColumnHidden(7, !arg1);
+    preferencesManager->visibleColumns->Status = arg1;
+}
+
+

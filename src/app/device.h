@@ -77,6 +77,7 @@ struct DeviceInfo {
     QString name;
     QString friendlyName;
 
+    QString module;
     QString moduleTemplate;
 
     MQTTServerInfo *mqttServer = new MQTTServerInfo;

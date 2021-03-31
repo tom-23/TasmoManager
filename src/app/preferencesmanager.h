@@ -10,6 +10,17 @@
 #include <QDir>
 #include <QHostAddress>
 
+struct VisibleColumns {
+    bool DeviceName = true;
+    bool FriendlyName = false;
+    bool IPAddress = true;
+    bool WIFIStrength = true;
+    bool MACAddress = true;
+    bool FirmwareVersion = true;
+    bool Module = false;
+    bool Status = true;
+};
+
 
 class PreferencesManager : public QObject
 {
@@ -25,6 +36,8 @@ public:
     QHostAddress firstScanIP;
     QHostAddress lastScanIP;
     int versionChannel = 0;
+
+    VisibleColumns *visibleColumns = new VisibleColumns();
 
     void loadPreferences();
     void savePreferences();

@@ -88,6 +88,8 @@ void DeviceManager::on_mqttMessage(QMQTT::Message message) {
                 device->deviceInfo.name = jsonDoc.object().value("dn").toString();
                 device->deviceInfo.ipAddress = QHostAddress(ipAddress);
                 device->deviceInfo.macAddress = macAddress;
+                device->deviceInfo.module = jsonDoc.object().value("md").toString();
+                device->deviceInfo.friendlyName = jsonDoc.object().value("fn").toArray().at(0).toString();
                 deviceList->append(device);
                 emit device_Discovered(device->deviceInfo);
                 qDebug() << "[Device Manager] Adding device:" << macAddress;

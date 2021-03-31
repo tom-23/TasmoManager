@@ -25,6 +25,17 @@ void PreferencesManager::loadPreferences() {
         lastScanIP = QHostAddress(root.value("firstScanIP").toString());
         versionChannel = root.value("versionChannel").toInt();
         showOfflineDevices = root.value("showOfflineDevices").toBool();
+
+        QJsonObject visibleColumnsObj = root.value("visibleColumns").toObject();
+        visibleColumns->DeviceName = visibleColumnsObj.value("deviceName").toBool(true);
+        visibleColumns->FriendlyName = visibleColumnsObj.value("friendlyName").toBool();
+        visibleColumns->IPAddress = visibleColumnsObj.value("ipAddress").toBool(true);
+        visibleColumns->WIFIStrength = visibleColumnsObj.value("wifiStrength").toBool(true);
+        visibleColumns->MACAddress = visibleColumnsObj.value("macAddress").toBool(true);
+        visibleColumns->FirmwareVersion = visibleColumnsObj.value("firmwareVersion").toBool(true);
+        visibleColumns->Module = visibleColumnsObj.value("module").toBool();
+        visibleColumns->Status = visibleColumnsObj.value("status").toBool(true);
+
     } else {
         qDebug() << "[Prefs Man] Could not load preferences file.";
     }
@@ -43,6 +54,19 @@ void PreferencesManager::savePreferences() {
         root.insert("lastScanIP", lastScanIP.toString());
         root.insert("versionChannel", versionChannel);
         root.insert("showOfflineDevices", showOfflineDevices);
+
+        QJsonObject visibleColumnsObj;
+        visibleColumnsObj.insert("deviceName", visibleColumns->DeviceName);
+        visibleColumnsObj.insert("friendlyName", visibleColumns->FriendlyName);
+        visibleColumnsObj.insert("ipAddress", visibleColumns->IPAddress);
+        visibleColumnsObj.insert("wifiStrength", visibleColumns->WIFIStrength);
+        visibleColumnsObj.insert("macAddress", visibleColumns->MACAddress);
+        visibleColumnsObj.insert("firmwareVersion", visibleColumns->FirmwareVersion);
+        visibleColumnsObj.insert("module", visibleColumns->Module);
+        visibleColumnsObj.insert("status", visibleColumns->Status);
+
+        root.insert("visibleColumns", visibleColumnsObj);
+
         jsonDoc.setObject(root);
 
         file.resize(0);

@@ -802,6 +802,11 @@ QTabWidget::pane {
         </column>
         <column>
          <property name="text">
+          <string>Friendly Name</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
           <string>IP Address</string>
          </property>
         </column>
@@ -818,6 +823,11 @@ QTabWidget::pane {
         <column>
          <property name="text">
           <string>Firmware Version</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Module</string>
          </property>
         </column>
         <column>
@@ -953,8 +963,25 @@ QTabWidget::pane {
     <addaction name="separator"/>
     <addaction name="actiontest"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionDeviceName"/>
+    <addaction name="actionFriendlyName"/>
+    <addaction name="actionIP_Address"/>
+    <addaction name="actionWIFI_Strengt"/>
+    <addaction name="actionMAC_Address"/>
+    <addaction name="actionFirmware_Version"/>
+    <addaction name="actionModule"/>
+    <addaction name="actionStatus"/>
+    <addaction name="separator"/>
+    <addaction name="actionSidebar"/>
+    <addaction name="actionToolBar"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuView"/>
    <addaction name="menuDevices"/>
   </widget>
   <action name="actionPreferences">
@@ -1049,6 +1076,122 @@ QTabWidget::pane {
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionDeviceName">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Device Name</string>
+   </property>
+  </action>
+  <action name="actionFriendlyName">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Friendly Name</string>
+   </property>
+  </action>
+  <action name="actionIP_Address">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>IP Address</string>
+   </property>
+  </action>
+  <action name="actionWIFI_Strengt">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>WIFI Strength</string>
+   </property>
+  </action>
+  <action name="actionMAC_Address">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>MAC Address</string>
+   </property>
+  </action>
+  <action name="actionFirmware_Version">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Firmware Version</string>
+   </property>
+  </action>
+  <action name="actionStatus">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Status</string>
+   </property>
+  </action>
+  <action name="actionModule">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Module</string>
+   </property>
+  </action>
+  <action name="actionSidebar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Sidebar</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionToolBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Toolbar</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+T</string>
    </property>
   </action>
  </widget>
@@ -1200,6 +1343,38 @@ QTabWidget::pane {
     </hint>
     <hint type="destinationlabel">
      <x>28</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSidebar</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>sideBarContainer</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>768</x>
+     <y>291</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionToolBar</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>toolBar</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>449</x>
      <y>53</y>
     </hint>
    </hints>

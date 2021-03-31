@@ -77,6 +77,22 @@ private slots:
 
     void on_firmwareButton_clicked();
 
+    void on_actionDeviceName_toggled(bool arg1);
+
+    void on_actionFriendlyName_toggled(bool arg1);
+
+    void on_actionIP_Address_toggled(bool arg1);
+
+    void on_actionWIFI_Strengt_toggled(bool arg1);
+
+    void on_actionMAC_Address_toggled(bool arg1);
+
+    void on_actionFirmware_Version_toggled(bool arg1);
+
+    void on_actionStatus_toggled(bool arg1);
+
+    void on_actionModule_toggled(bool arg1);
+
 private:
     Ui::MainWindow *ui;
 

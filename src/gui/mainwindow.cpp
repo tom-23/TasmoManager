@@ -282,7 +282,7 @@ void MainWindow::on_deviceList_currentItemChanged(QTreeWidgetItem *current, QTre
         updateWidgetDevices(nullptr);
         return;
     }
-    selectedDevice = deviceManager->getDeviceByMAC(current->text(3));
+    selectedDevice = deviceManager->getDeviceByMAC(current->text(4));
     if (selectedDevice == nullptr) {
         updateWidgetDevices(nullptr);
         return;

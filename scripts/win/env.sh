@@ -1,6 +1,8 @@
 #!/usr/bin/bash
 set -exu
 
+export QTDIR="C:\Qt\5.15\msvc2019_64"
+
 export CMAKE_GENERATOR="Visual Studio 16 2019"
 export CMAKE_GENERATOR_ARCH="x64"
 

@@ -14,6 +14,13 @@ MainWindow::MainWindow(QWidget *parent)
     preferencesManager = new PreferencesManager(this);
     preferencesManager->loadPreferences();
 
+    sysTrayIcon = new QSystemTrayIcon();
+    QThread *notificationThread = new QThread();
+    sysTrayIcon->moveToThread(notificationThread);
+    sysTrayIcon->setIcon(QIcon(":/24/assets/24_swupdate_square.svg"));
+    sysTrayIcon->setToolTip( tr( "Bubble Message" ) );
+    sysTrayIcon->show();
+
     ui->actionDeviceName->setChecked(preferencesManager->visibleColumns->DeviceName);
     ui->actionFriendlyName->setChecked(preferencesManager->visibleColumns->FriendlyName);
     ui->actionIP_Address->setChecked(preferencesManager->visibleColumns->IPAddress);
@@ -86,7 +93,33 @@ MainWindow::MainWindow(QWidget *parent)
     updateInfoText();
 
     ui->backupButton->setVisible(false);
+
+    QTimer *getUpdatesTimeout = new QTimer(this);
+    connect(getUpdatesTimeout, &QTimer::timeout, this, [=] () {
+        if (softwareUpdate->latestUpdate == nullptr) {
+            softwareUpdate->latestUpdate = new Update();
+            softwareUpdate->latestUpdate->version = "v1.0.0-alpha.9";
+            QIcon icon(":/24/assets/24_swupdate_square.svg");
+            connect(sysTrayIcon, &QSystemTrayIcon::messageClicked, this, [=] () {
+                on_actionPreferences_triggered();
+                preferencesDialog->goToAboutPage();
+            });
+            qDebug() << "Message boxx shown!";
+            sysTrayIcon->showMessage(softwareUpdate->latestUpdate->version + " is avalible!",
+                                    "A new version of TasmoManager can be installed.", icon);
+            qApp->processEvents();
+
+        }
+    });
+
+    softwareUpdate->getSoftwareUpdates();
+
+    getUpdatesTimeout->setSingleShot(true);
+    getUpdatesTimeout->start(10000);
+
     this->showMaximized();
+
+
 }
 
 MainWindow::~MainWindow()
@@ -143,14 +176,15 @@ void MainWindow::on_connectButton_clicked()
         selectServerDialog->setMQTTServerManager(serverManager);
         selectServerDialog->setWindowModality(Qt::WindowModal);
         if (selectServerDialog->exec() == 1) {
-
             deviceManager->connect(selectServerDialog->selectedServer);
             updateInfoText();
         }
+
     } else {
         deviceManager->disconnect();
         updateInfoText();
     }
+    qApp->processEvents(QEventLoop::AllEvents);
 }
 
 void MainWindow::on_deviceDiscovered(DeviceInfo deviceInfo) {
@@ -172,13 +206,12 @@ void MainWindow::on_deviceDiscovered(DeviceInfo deviceInfo) {
 
 void MainWindow::on_deviceInfoUpdate(DeviceInfo deviceInfo) {
     for (int i = 0; i < ui->deviceList->topLevelItemCount(); i++) {
+
         QTreeWidgetItem *item = ui->deviceList->topLevelItem(i);
         QString itemMac = item->text(4);
-        itemMac.replace(":", "");
-
         QString deviceInfoMac = deviceInfo.macAddress;
-        deviceInfoMac.replace(":", "");
-        if (deviceInfoMac == itemMac) {
+
+        if (deviceManager->compaireMAC(deviceInfoMac, itemMac)) {
             item->setText(0, deviceInfo.name);
             item->setText(1, deviceInfo.friendlyName);
             item->setText(2, deviceInfo.ipAddress.toString());
@@ -489,4 +522,15 @@ void MainWindow::on_actionStatus_toggled(bool arg1)
     preferencesManager->visibleColumns->Status = arg1;
 }
 
-
+void MainWindow::checkForUpdates() {
+    if (preferencesManager->versionChannel == 0) {
+        softwareUpdate->versionChannel = Stable;
+    }
+    if (preferencesManager->versionChannel == 1) {
+        softwareUpdate->versionChannel = Beta;
+    }
+    if (preferencesManager->versionChannel == 2) {
+        softwareUpdate->versionChannel = Alpha;
+    }
+    softwareUpdate->getSoftwareUpdates();
+}

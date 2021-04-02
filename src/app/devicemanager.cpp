@@ -93,7 +93,7 @@ void DeviceManager::on_mqttMessage(QMQTT::Message message) {
                 deviceList->append(device);
                 emit device_Discovered(device->deviceInfo);
                 qDebug() << "[Device Manager] Adding device:" << macAddress;
-                if (macAddress == setupNewDeviceMac) {
+                if (compaireMAC(macAddress, setupNewDeviceMac)) {
                     stepIndex = stepIndex + 1;
                     setupNewDeviceMac = "";
                     emit setupNewDevices_Progress(stepIndex, 3, "Device has connected to mqtt...");
@@ -113,14 +113,19 @@ void DeviceManager::on_mqttMessage(QMQTT::Message message) {
 }
 
 Device* DeviceManager::getDeviceByMAC(QString mac) {
-    mac = mac.replace(":", "");
     for (int i = 0; i < deviceList->size(); i++) {
-        if (deviceList->at(i)->deviceInfo.macAddress.replace(":", "").toUpper() == mac.toUpper()) {
+        if (compaireMAC(deviceList->at(i)->deviceInfo.macAddress, mac)) {
             return deviceList->at(i);
         }
     }
     qDebug() << "[Device Manager] Device doesn't exist";
     return nullptr;
+}
+
+bool DeviceManager::compaireMAC(QString firstMAC, QString secondMAC) {
+    firstMAC = firstMAC.replace(":", "").toUpper();
+    secondMAC = secondMAC.replace(":", "").toUpper();
+    return (firstMAC == secondMAC);
 }
 
 void DeviceManager::refreshDevices() {

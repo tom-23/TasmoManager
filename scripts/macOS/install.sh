@@ -6,7 +6,9 @@ git submodule update --init --recursive
 cd lib/qmqtt
 mkdir build
 cd build
-qmake ..
-make -j4
-sudo make install
+cmake 
+cmake .. -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH" \
+cmake --build .
+cmake --install .
 cd ../../..

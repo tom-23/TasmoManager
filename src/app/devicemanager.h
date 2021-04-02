@@ -60,6 +60,7 @@ public:
     QString discoveryTopic = "tasmota/discovery";
 
     Device* getDeviceByMAC(QString mac);
+    bool compaireMAC(QString firstMAC, QString secondMAC);
 
     ConnectionStatus connectionStatus;
 

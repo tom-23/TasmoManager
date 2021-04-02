@@ -7,6 +7,7 @@
 #include <QTreeWidgetItem>
 #include <QProgressDialog>
 #include <QCloseEvent>
+#include <QSystemTrayIcon>
 
 #include "wizards/setupdevicedialog.h"
 #include "wizards/updatedevicedialog.h"
@@ -14,6 +15,7 @@
 #include "terminaldialog.h"
 #include "selectserverdialog.h"
 #include "device_options/deviceoptionswidget.h"
+#include "misc/softwareupdate.h"
 
 
 #include "app/devicemanager.h"
@@ -105,6 +107,12 @@ private:
     Device *selectedDevice = nullptr;
 
     void updatePrefs();
+
+    void checkForUpdates();
+
+    QSystemTrayIcon *sysTrayIcon;
+
+    SoftwareUpdate *softwareUpdate = new SoftwareUpdate(this);
 
 };
 #endif // MAINWINDOW_H

@@ -11,7 +11,8 @@ cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release \
     -G "$CMAKE_GENERATOR" -A "$CMAKE_GENERATOR_ARCH" \
     -DCMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH" \
-    -DOPENSSL_ROOT_DIR="C:\OpenSSL-v111-Win64" \
+    -DOPENSSL_ROOT_DIR="C:\OpenSSL-v111-Win64"
+    
 cmake --build .
 cmake --install .
 cd ../../..

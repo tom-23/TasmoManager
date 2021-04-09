@@ -79,6 +79,8 @@ elseif(APPLE)
     set(tasmomanager_COMPILE ${tasmomanager_COMPILE} "${CMAKE_CURRENT_SOURCE_DIR}/../resources/appicon.icns")
 
     add_executable(${TASMOMANAGER_EXECUTABLE_NAME} MACOSX_BUNDLE ${tasmomanager_COMPILE})
+elseif(NOT APPLE AND NOT WIN32)
+    add_executable(${TASMOMANAGER_EXECUTABLE_NAME} ${tasmomanager_COMPILE})
 endif()
 
 add_dependencies(${TASMOMANAGER_EXECUTABLE_NAME} generate_version_header)

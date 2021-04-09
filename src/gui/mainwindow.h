@@ -110,8 +110,6 @@ private:
 
     void checkForUpdates();
 
-    QSystemTrayIcon *sysTrayIcon;
-
     SoftwareUpdate *softwareUpdate = new SoftwareUpdate(this);
 
 };

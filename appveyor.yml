@@ -23,6 +23,15 @@ for:
     - ps: $env:Path = "C:\Program Files\Git\bin;$env:Path"
     - set QTDIR=C:\Qt\5.15\msvc2019_64
     - set PATH=%PATH%;%QTDIR%\bin
+    - git submodule update --init --recursive
+    - cd lib/qmqtt
+    - md build
+    - cd build
+    - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+    - qmake ..
+    - nmake
+    - nmake install
+    - cd ..\..\..
     - bash scripts/win/install.sh
   before_build:
     - bash scripts/win/before_build.sh

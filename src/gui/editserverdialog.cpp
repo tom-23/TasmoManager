@@ -71,6 +71,7 @@ void EditServerDialog::on_saveChangesButton_clicked()
     } else {
         serverInfo->host = ui->host->text();
     }
+    serverInfo->port = ui->port->value();
     serverInfo->username = ui->username->text();
     serverInfo->password = ui->password->text().toUtf8();
 

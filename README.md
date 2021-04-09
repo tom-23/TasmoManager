@@ -29,7 +29,7 @@ A beginner friendly desktop UI for Tasmota flashed devices.
 
 ## Getting Started / Installation
 
-Head over to the releases section of this repo and download the .exe, .pkg or .dmg for your system and install!
+Head [here](https://github.com/tom-23/TasmoManager/releases) and click on Assets under the latest version to find installer packages for your system. (.exe for windows and .pkg or .dmg for macOS)
 For a more indepth guide to getting started, head over to the Wiki.
 
 ## Found a Bug?

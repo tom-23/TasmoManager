@@ -18,7 +18,7 @@ void Device::getDeviceInfo(QString fullTopic, int delay) {
         qDebug() << "[Device] Subscribing to STAT topic...";
         qDebug() << "[Device] TOPIC:" << statTopic + "#";
         qDebug() << "[Device] Subscribing to TELE topic...";
-        qDebug() << "[Device] TOPIC:" << statTopic + "#";
+        qDebug() << "[Device] TOPIC:" << teleTopic + "#";
         deviceManager->mqttClient->subscribe((statTopic + "#").toUtf8());
         deviceManager->mqttClient->subscribe((teleTopic + "#").toUtf8());
     }

@@ -21,8 +21,8 @@ if test -d build/TasmoManager.app; then
     pkgbuild --root "TasmoManager.app" \
          --install-location "/Applications/TasmoManager.app" \
          --identifier "com.tombutcher.tasmomanager.pkg" \
-         --version ${APP_VERSION} \
-         ${APP}.pkg
+         --version "${APP_VERSION}" \
+         "${APP}.pkg"
 else
     true
 fi

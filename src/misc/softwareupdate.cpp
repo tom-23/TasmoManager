@@ -2,7 +2,7 @@
 
 SoftwareUpdate::SoftwareUpdate(QObject *parent) : QObject(parent)
 {
-
+    networkManager = new QNetworkAccessManager();
 }
 
 void SoftwareUpdate::getSoftwareUpdates() {

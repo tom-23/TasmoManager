@@ -6,7 +6,7 @@
 ![GitHub commits since latest release (by SemVer including pre-releases)](https://img.shields.io/github/commits-since/tom-23/tasmomanager/latest?include_prereleases)
 ![GitHub last commit](https://img.shields.io/github/last-commit/tom-23/tasmomanager)
 
-A beginner friendly desktop UI for Tasmota flashed devices.
+A beginner friendly desktop UI for Tasmota flashed devices for Windows and macOS (Linux cominng soon!).
 
 ![TasmoManager Screenshot](resources/screenshots/MainWindow.png?raw=true "TasmoManager Screenshot")
 
@@ -32,6 +32,6 @@ A beginner friendly desktop UI for Tasmota flashed devices.
 Head [here](https://github.com/tom-23/TasmoManager/releases) and click on Assets under the latest version to find installer packages for your system. (.exe for windows and .pkg or .dmg for macOS)
 For a more indepth guide to getting started, head over to the Wiki.
 
-## Found a Bug?
+## Found a Bug
 
 Submit it [here](https://github.com/tom-23/TasmoManager/issues) and i'll do my best to get it sorted!

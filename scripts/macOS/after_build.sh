@@ -5,7 +5,7 @@ if test -d build/TasmoManager.app; then
     export PATH=${CMAKE_PREFIX_PATH}/bin:${PATH}
     cd build
     macdeployqt TasmoManager.app -always-overwrite -verbose=1
-    python ../lib/macdeployqtfix/macdeployqtfix.py --quiet TasmoManager.app/Contents/MacOS/TasmoManager ${CMAKE_PREFIX_PATH}
+    python ../lib/macdeployqtfix/macdeployqtfix.py --quiet "TasmoManager.app/Contents/MacOS/TasmoManager ${CMAKE_PREFIX_PATH}"
     create-dmg --volname TasmoManager \
     --volicon "../resources/appicon.icns" \
     --background "../shared/dmgbackground.png" \

@@ -12,20 +12,20 @@ A beginner friendly desktop UI for Tasmota flashed devices.
 
 ## Features
 
-* Native Tasmota device discovery (via tasmota/discovery topic)
-* Fast and Responsive UI
-* Device setup wizard
-* HSV Color and CCT control
-* Indervidual PWM Channel Control (Up to 5 channels)
-* Power Control (Up to 6 buttons)
-* Device Renaming
-* Integrated Console / Terminal
-* Multiple MQTT Servers
-* Device SetOptions Config
-* Device MQTT Config
-* Device WIFI Config
-* Multi device upgrading
-* Very easy installation + updating
+-   Native Tasmota device discovery (via tasmota/discovery topic)
+-   Fast and Responsive UI
+-   Device setup wizard
+-   HSV Color and CCT control
+-   Indervidual PWM Channel Control (Up to 5 channels)
+-   Power Control (Up to 6 buttons)
+-   Device Renaming
+-   Integrated Console / Terminal
+-   Multiple MQTT Servers
+-   Device SetOptions Config
+-   Device MQTT Config
+-   Device WIFI Config
+-   Multi device upgrading
+-   Very easy installation + updating
 
 ## Getting Started / Installation
 

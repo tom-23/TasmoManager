@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 source scripts/macOS/env.sh
 brew update
 brew install create-dmg openssl

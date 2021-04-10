@@ -1,3 +1,4 @@
+#!/bin/bash
 source scripts/macOS/env.sh
 
 if test -d build/TasmoManager.app; then

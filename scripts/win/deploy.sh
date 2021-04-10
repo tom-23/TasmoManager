@@ -1,3 +1,4 @@
+#!/usr/bin/bash
 export QTDIR="C:\Qt\5.15\msvc2019_64"
 
 "$QTDIR/bin/windeployqt" --help

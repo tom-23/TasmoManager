@@ -1,5 +1,6 @@
 #!/bin/bash
 source scripts/linux/env.sh
+sudo apt install mesa-common-dev libglu1-mesa-dev
 sudo snap install cqtdeployer
 git submodule update --init --recursive
 cd lib/qmqtt

@@ -25,7 +25,7 @@ cp -v "$Source/README.md" "$Destination"
     "$Executable"
 
 # Create and upload portable zip file.
-7z a "$APP.zip" -r "$Destination"
+7z a "windows-$APP-portable.zip" -r "$Destination"
 appveyor PushArtifact "windows-$APP-portable.zip" -DeploymentName "TasmoManager Portable"
 
 choco install -y InnoSetup

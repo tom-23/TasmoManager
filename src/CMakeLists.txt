@@ -167,6 +167,6 @@ endif()
 
 if (UNIX AND NOT APPLE)
     install(DIRECTORY "${CMAKE_BINARY_DIR}/Distro/" DESTINATION "/opt/${CMAKE_PROJECT_NAME}")
-    execute_process(COMMAND ln -s /opt/tasmomanager/bin/tasmomanager ${CMAKE_BINARY_DIR}/tasmomanager)
-    install(FILES ${CMAKE_BINARY_DIR}/tasmomanager DESTINATION usr/bin/tasmomanager)
+    execute_process(COMMAND ln -s /opt/tasmomanager/bin/tasmomanager ${CMAKE_CURRENT_SOURCE_DIR}/tasmomanager)
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/tasmomanager DESTINATION usr/bin)
 endif()

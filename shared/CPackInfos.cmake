@@ -25,10 +25,9 @@ if (UNIX)
         DESTINATION share/icons/hicolor/48x48/apps
     )
     install(
-        FILES shared/tasmomanagere.svg
+        FILES shared/tasmomanager.svg
         DESTINATION share/icons/hicolor/scalable/apps
     )
-
 endif()
 message(STATUS "Package: ${CPACK_GENERATOR}")
 message(STATUS "Architecture: ${CPACK_ARCH}")

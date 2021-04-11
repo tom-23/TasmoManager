@@ -13,9 +13,16 @@
 #include <QStandardPaths>
 #include <QApplication>
 #include <QProcess>
+#include <QInputDialog>
 #include "version.h"
 
 #include <semver.h>
+
+enum LinuxPackageManager {
+    apt,
+    rpm
+
+};
 
 enum VersionType {
     Stable,
@@ -47,12 +54,18 @@ public:
 
     VersionType versionChannel = Stable;
 
+    QString sudoPassword;
+
 private:
     QNetworkAccessManager *networkManager;
     QNetworkReply *networkReply;
     QUrl updateURL = QUrl("https://api.github.com/repos/tom-23/tasmomanager/releases");
     void netManagerFinished(QNetworkReply *reply);
     void installPackage(QString packagePath);
+
+    LinuxPackageManager getLinuxPackageManager();
+
+
 signals:
 
     void on_getUpdatesFinised();

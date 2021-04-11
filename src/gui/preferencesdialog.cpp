@@ -234,6 +234,16 @@ void PreferencesDialog::on_beginSoftwareUpdateButton_clicked()
     ui->closeButton->setEnabled(false);
     ui->listWidget->setEnabled(false);
 
+#ifdef __linux__
+    bool ok;
+    QString sudoPassword = QInputDialog::getText(this, tr("Enter the sudo password"),
+                                                 tr("sudo Passoword:"), QLineEdit::Password,
+                                                 "", &ok);
+    if (!ok) {
+        return;
+    }
+#endif
+
     QProgressDialog *progressDialog = new QProgressDialog(this);
     progressDialog->setMinimumDuration(0);
     progressDialog->setWindowModality(Qt::WindowModal);

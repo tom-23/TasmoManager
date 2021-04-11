@@ -95,6 +95,8 @@ private slots:
 
     void on_actionModule_toggled(bool arg1);
 
+    void on_actionDocumentation_triggered();
+
 private:
     Ui::MainWindow *ui;
 

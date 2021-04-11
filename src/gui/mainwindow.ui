@@ -1031,10 +1031,17 @@ QTabWidget::pane {
     <addaction name="actionSidebar"/>
     <addaction name="actionToolBar"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionDocumentation"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
    <addaction name="menuDevices"/>
+   <addaction name="menuHelp"/>
   </widget>
   <action name="actionPreferences">
    <property name="text">
@@ -1244,6 +1251,11 @@ QTabWidget::pane {
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+T</string>
+   </property>
+  </action>
+  <action name="actionDocumentation">
+   <property name="text">
+    <string>Documentation</string>
    </property>
   </action>
  </widget>

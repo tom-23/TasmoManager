@@ -16,13 +16,13 @@ if test -d build/TasmoManager.app; then
     --hide-extension "TasmoManager.app" \
     --app-drop-link 368 88 \
     --skip-jenkins \
-    "${APP}.dmg" \
+    "macOS-${APP}-diskimage.dmg" \
     "TasmoManager.app"
     pkgbuild --root "TasmoManager.app" \
          --install-location "/Applications/TasmoManager.app" \
          --identifier "com.tombutcher.tasmomanager.pkg" \
          --version "${APP_VERSION}" \
-         "${APP}.pkg"
+         "macOS${APP}-installer.pkg"
 else
     true
 fi

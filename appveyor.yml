@@ -61,6 +61,21 @@ for:
     - path: build/*.pkg
       name: Package Installer
 
+# Build Linux packages
+- matrix:
+    only: 
+      - image: Ubuntu
+  install:
+    - bash scripts/linux/install.sh
+  before_build:
+    - bash scripts/linux/before_build.sh
+  build_script:
+    - bash scripts/linux/build.sh
+  after_build:
+    - bash scripts/linux/after_build.sh
+  artifacts:
+    - path: build/*.7z
+      name: Installer package
 
 # Upload all packages to GitHub, but only if the push was tagged
 deploy:
@@ -68,7 +83,7 @@ deploy:
   tag: $(APPVEYOR_REPO_TAG_NAME)
   auth_token:
     secure: kOuvS5K+YgF6WCqkdU9EXV3eVDUhmnb7jSqY4WoZIrqFRMup7+NFR51LOaZSvOpm
-  artifact: /.*\.dmg/, /.*\.exe/, /.*\.pkg/
+  artifact: /.*\.dmg/, /.*\.exe/, /.*\.pkg/, /.*\-installer.zip/
   prerelease: true
   force_update: true
   on:

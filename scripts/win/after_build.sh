@@ -26,7 +26,7 @@ cp -v "$Source/README.md" "$Destination"
 
 # Create and upload portable zip file.
 7z a "$APP.zip" -r "$Destination"
-appveyor PushArtifact "$APP.zip" -DeploymentName "TasmoManager Portable"
+appveyor PushArtifact "windows-$APP-portable.zip" -DeploymentName "TasmoManager Portable"
 
 choco install -y InnoSetup
 cmd " /c C:/ProgramData/chocolatey/bin/ISCC.exe /O$APPVEYOR_BUILD_FOLDER /DAppVersion=$APP_VERSION /DRoot=$Destination /DSource=$Source $Source/Shared/tasmomanager.iss"

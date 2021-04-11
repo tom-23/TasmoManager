@@ -42,7 +42,7 @@ for:
     - bash scripts/win/after_build.sh
   artifacts:
     - path: 'tasmomanager-*-setup.exe'
-      name: TasmoManager Windows Installer
+      name: Windows Installer
 
 # Build MacOS packages
 - matrix:
@@ -75,8 +75,10 @@ for:
   after_build:
     - bash scripts/linux/after_build.sh
   artifacts:
-    - path: build/*.7z
-      name: Installer package
+    - path: build/packages/*.deb
+      name: Debian Package
+    - path: build/packages/*.rpm
+      name: RPM Package
 
 # Upload all packages to GitHub, but only if the push was tagged
 deploy:
@@ -84,7 +86,7 @@ deploy:
   tag: $(APPVEYOR_REPO_TAG_NAME)
   auth_token:
     secure: kOuvS5K+YgF6WCqkdU9EXV3eVDUhmnb7jSqY4WoZIrqFRMup7+NFR51LOaZSvOpm
-  artifact: /.*\.dmg/, /.*\.exe/, /.*\.pkg/, /.*\.run/
+  artifact: /.*\.dmg/, /.*\.exe/, /.*\.pkg/, /.*\.deb/, /.*\.rpm/
   prerelease: true
   force_update: true
   on:

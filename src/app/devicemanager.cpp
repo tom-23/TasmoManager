@@ -3,6 +3,7 @@
 DeviceManager::DeviceManager(QObject *parent) : QObject(parent)
 {
     deviceList = new QList<Device*>;
+    setOptionsList = new QList<SetOption>;
     mqttClient = new QMQTT::Client();
     connectionStatus = Disconnected;
 }
@@ -15,10 +16,13 @@ void DeviceManager::connect(MQTTServerInfo *serverInfo) {
     } else {
         mqttClient->setHostName(mqttServerInfo->host);
     }
+    mqttClient->setCleanSession(true);
+    mqttClient->setClientId(("TasmoManager_" + QString(TASMOMANAGER_VERSION)).toUtf8());
     mqttClient->setPort(mqttServerInfo->port);
     mqttClient->setUsername(mqttServerInfo->username);
     mqttClient->setPassword(mqttServerInfo->password);
     connectionStatus = Connecting;
+    mqttServerInfo->currentlyConnected = true;
     mqttClient->connectToHost();
 
     QObject::connect(mqttClient, &QMQTT::Client::received, this, &DeviceManager::on_mqttMessage);
@@ -30,6 +34,7 @@ void DeviceManager::connect(MQTTServerInfo *serverInfo) {
 
     QObject::connect(mqttClient, &QMQTT::Client::error, this, [=] (QMQTT::ClientError clientError) {
         connectionStatus = Disconnected;
+        mqttServerInfo->currentlyConnected = false;
         emit mqtt_onError(clientError);
         qDebug() << "[MQTT Status] Got a connection error!";
         qDebug() << clientError;
@@ -39,6 +44,7 @@ void DeviceManager::connect(MQTTServerInfo *serverInfo) {
 void DeviceManager::disconnect() {
     qDebug() << "[MQTT Status] Disconnected from MQTT Broker";
     mqttClient->disconnectFromHost();
+    mqttServerInfo->currentlyConnected = false;
     connectionStatus = Disconnected;
     deviceList->clear();
 }
@@ -50,6 +56,11 @@ void DeviceManager::on_mqttMessage(QMQTT::Message message) {
     // Handle Discovery
     if (topic.startsWith(discoveryTopic)) {
         QStringList subtopics = (topic.replace(discoveryTopic + "/", "")).split("/");
+        // If a device gets removed, don't try adding it as the topic doesn't exist anymore
+        qDebug() << subtopics;
+        if (subtopics.size() == 1) {
+            return;
+        }
         if (subtopics[1] == "config") {
 
             QJsonDocument jsonDoc = QJsonDocument::fromJson(message.payload());
@@ -66,13 +77,23 @@ void DeviceManager::on_mqttMessage(QMQTT::Message message) {
             if (device == nullptr) {
                 device = new Device(this);
                 device->deviceManager = this;
-                device->deviceInfo.name = "Tasmota Device";
+
+                device->deviceInfo.setOptions = new QList<SetOption*>;
+                for (int i = 0; i < setOptionsList->size(); i++) {
+                    SetOption setOption = setOptionsList->at(i);
+                    SetOption *deviceSetOption = new SetOption(setOption);
+                    deviceSetOption->device = device;
+                    device->deviceInfo.setOptions->append(deviceSetOption);
+                }
+                device->deviceInfo.name = jsonDoc.object().value("dn").toString();
                 device->deviceInfo.ipAddress = QHostAddress(ipAddress);
                 device->deviceInfo.macAddress = macAddress;
+                device->deviceInfo.module = jsonDoc.object().value("md").toString();
+                device->deviceInfo.friendlyName = jsonDoc.object().value("fn").toArray().at(0).toString();
                 deviceList->append(device);
                 emit device_Discovered(device->deviceInfo);
                 qDebug() << "[Device Manager] Adding device:" << macAddress;
-                if (macAddress == setupNewDeviceMac) {
+                if (compaireMAC(macAddress, setupNewDeviceMac)) {
                     stepIndex = stepIndex + 1;
                     setupNewDeviceMac = "";
                     emit setupNewDevices_Progress(stepIndex, 3, "Device has connected to mqtt...");
@@ -92,14 +113,19 @@ void DeviceManager::on_mqttMessage(QMQTT::Message message) {
 }
 
 Device* DeviceManager::getDeviceByMAC(QString mac) {
-    mac = mac.replace(":", "");
     for (int i = 0; i < deviceList->size(); i++) {
-        if (deviceList->at(i)->deviceInfo.macAddress.replace(":", "") == mac) {
+        if (compaireMAC(deviceList->at(i)->deviceInfo.macAddress, mac)) {
             return deviceList->at(i);
         }
     }
     qDebug() << "[Device Manager] Device doesn't exist";
     return nullptr;
+}
+
+bool DeviceManager::compaireMAC(QString firstMAC, QString secondMAC) {
+    firstMAC = firstMAC.replace(":", "").toUpper();
+    secondMAC = secondMAC.replace(":", "").toUpper();
+    return (firstMAC == secondMAC);
 }
 
 void DeviceManager::refreshDevices() {
@@ -169,10 +195,10 @@ void DeviceManager::setupNewDevice(DeviceInfo baseInfo, DeviceInfo newInfo) {
     QUrl url("http://" + baseInfo.ipAddress.toString() + "/cm");
     QUrlQuery urlQuery;
 
-    QString query = "Backlog MqttHost " + newInfo.mqttServer.ipAddress.toString() +
-            "; MqttUser " + newInfo.mqttServer.username +
-            "; MqttPassword " + newInfo.mqttServer.password +
-            "; MqttPort " + QString::number(newInfo.mqttServer.port) +
+    QString query = "Backlog MqttHost " + newInfo.mqttServer->ipAddress.toString() +
+            "; MqttUser " + newInfo.mqttServer->username +
+            "; MqttPassword " + newInfo.mqttServer->password +
+            "; MqttPort " + QString::number(newInfo.mqttServer->port) +
             "; MqttTopic " + newInfo.mqttTopic +
             "/; MqttFullTopic " + newInfo.mqttFullTopic +
             "; SetOption19 0";
@@ -269,4 +295,78 @@ QList<QNetworkAddressEntry> DeviceManager::getActiveAddresses() {
       }
     }
     return possibleInterfaceMatches;
+}
+
+void DeviceManager::loadSetOptionsSchema() {
+    qDebug() << "[Device Manager] Loading set options schema...";
+    QFile file(":/schema/setoptions.schema.json");
+    if (file.open(QFile::ReadOnly)) {
+        QJsonDocument document = QJsonDocument::fromJson(file.readAll());
+        QJsonArray setOptions = document.object().value("setOptions").toArray();
+
+        for (int i = 0; i < setOptions.size(); i++) {
+            QJsonObject setOptionObject = setOptions.at(i).toObject();
+            SetOption setOption;
+            setOption.number = setOptionObject.value("number").toInt();
+            setOption.name = setOptionObject.value("name").toString();
+            setOption.typeName = setOptionObject.value("type").toString().toUpper();
+            if (setOption.typeName == "ENUM") {
+                QJsonArray valuesObject = setOptionObject.value("values").toArray();
+                for (int v = 0; v < valuesObject.size(); v++) {
+                    setOption.values.append(valuesObject.at(v).toString());
+                }
+            } else if (setOption.typeName == "INTEGER") {
+                setOption.valueMin = setOptionObject.value("min").toInt();
+                setOption.valueMax = setOptionObject.value("max").toInt();
+            }
+            if (!setOptionObject.value("info").isUndefined()) {
+                setOption.info = setOptionObject.value("info").toString();
+            }
+            if (!setOptionObject.value("info1").isUndefined()) {
+                setOption.info1 = setOptionObject.value("info1").toString();
+            }
+            if (!setOptionObject.value("info2").isUndefined()) {
+                setOption.info2 = setOptionObject.value("info2").toString();
+            }
+            if (!setOptionObject.value("info3").isUndefined()) {
+                setOption.info3 = setOptionObject.value("info3").toString();
+            }
+            if (!setOptionObject.value("info4").isUndefined()) {
+                setOption.info4 = setOptionObject.value("info4").toString();
+            }
+            if (!setOptionObject.value("info5").isUndefined()) {
+                setOption.info5 = setOptionObject.value("info5").toString();
+            }
+            if (!setOptionObject.value("info6").isUndefined()) {
+                setOption.info6 = setOptionObject.value("info6").toString();
+            }
+            if (!setOptionObject.value("warning").isUndefined()) {
+                setOption.warning = setOptionObject.value("warning").toString();
+            }
+            if (!setOptionObject.value("link1").isUndefined()) {
+                setOption.link = QUrl(setOptionObject.value("link").toString());
+            }
+            if (!setOptionObject.value("link2").isUndefined()) {
+                setOption.link1 = QUrl(setOptionObject.value("link1").toString());
+            }
+            if (!setOptionObject.value("requiresRestart").isUndefined()) {
+                setOption.restartRequired = setOptionObject.value("requiresRestart").toBool();
+            }
+            QString categoryString = setOptionObject.value("category").toString().toUpper();
+            SetOptionCategory category = SetOptionCategory::Misc;
+            if (categoryString == "GENERAL") { category = SetOptionCategory::General; };
+            if (categoryString == "BUTTONS") { category = SetOptionCategory::Buttons; };
+            if (categoryString == "LIGHTING") { category = SetOptionCategory::Lighting; };
+            if (categoryString == "TEMPERATURE") { category = SetOptionCategory::Temperature; };
+            if (categoryString == "MQTT") { category = SetOptionCategory::MQTT; };
+            if (categoryString == "WIFI") { category = SetOptionCategory::WIFI; };
+            if (categoryString == "MISC") { category = SetOptionCategory::Misc; };
+            if (categoryString == "IRRF") { category = SetOptionCategory::IrRf; };
+            setOption.category = category;
+            setOptionsList->append(setOption);
+        }
+
+    } else {
+        emit schemeLoadFailed();
+    }
 }

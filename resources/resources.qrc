@@ -3,6 +3,11 @@
         <file>assets/64_bulb_cross.svg</file>
         <file>assets/64_bulb_tick.svg</file>
         <file>assets/64_bulb.svg</file>
+        <file>assets/64_tasmota.svg</file>
+        <file>assets/64_update.svg</file>
+        <file>assets/64_tick.svg</file>
+        <file>assets/64_cross.svg</file>
+        <file>assets/64_add.svg</file>
     </qresource>
     <qresource prefix="/24">
         <file>assets/24_bulb_square.svg</file>
@@ -15,6 +20,8 @@
         <file>assets/24_stats_square.svg</file>
         <file>assets/24_temperature_square.svg</file>
         <file>assets/24_button_square.svg</file>
+        <file>assets/24_radio_square.svg</file>
+        <file>assets/24_swupdate_square.svg</file>
     </qresource>
     <qresource prefix="/32">
         <file>assets/32_disconnect.svg</file>
@@ -30,6 +37,7 @@
         <file>assets/32_firmware.svg</file>
         <file>assets/32_mqtt.svg</file>
         <file>assets/32_restart.svg</file>
+        <file>assets/32_wifi.svg</file>
     </qresource>
     <qresource prefix="/gif">
         <file>assets/loader.gif</file>
@@ -44,6 +52,13 @@
         <file>assets/16_offline.svg</file>
         <file>assets/16_restarting.svg</file>
         <file>assets/16_updating.svg</file>
+        <file>assets/16_open.svg</file>
+        <file>assets/16_refresh.svg</file>
+        <file>assets/16_revert.svg</file>
+        <file>assets/16_tick.svg</file>
+        <file>assets/16_edit.svg</file>
+        <file>assets/16_add.svg</file>
+        <file>assets/16_remove.svg</file>
     </qresource>
     <qresource prefix="/identity">
         <file>appicon.png</file>
@@ -62,5 +77,8 @@
     </qresource>
     <qresource prefix="/schema">
         <file>setoptions.schema.json</file>
+    </qresource>
+    <qresource prefix="/data">
+        <file>tasmota-releases.json</file>
     </qresource>
 </RCC>

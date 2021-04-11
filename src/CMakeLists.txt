@@ -2,12 +2,24 @@
 file(GLOB tasmomanager_SOURCES
     main.cpp
     app/*.cpp
+    misc/*.cpp
     gui/*.cpp
+    gui/device_controls/*.cpp
+    gui/device_options/*.cpp
+    gui/wizards/*.cpp
     )
 
 file(GLOB tasmomanager_FORMS
     gui/*.ui
+    gui/device_controls/*.ui
+    gui/device_options/*.ui
+    gui/wizards/*.ui
     )
+
+file(GLOB semver
+    ../lib/semver.c/semver.c)
+
+include_directories("../lib/semver.c")
 
 set(tasmomanager_RESOURCES ../resources/resources.qrc)
 
@@ -32,6 +44,7 @@ set(tasmomanager_COMPILE
     ${tasmomanager_SOURCES}
     ${tasmomanager_FORMS_HEADERS}
     ${tasmomanager_RESOURCES_RCC}
+    ${semver}
     )
 
 if (NOT tasmomanager_version)
@@ -54,7 +67,6 @@ elseif(APPLE)
         "\\3" CPACK_PACKAGE_VERSION_PATCH
         "${tasmomanager_version}"
         )
-
     set(MACOSX_BUNDLE_BUNDLE_NAME "${TASMOMANAGER_EXECUTABLE_NAME}")
     set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.tombutcher.tasmomanager")
     set(MACOSX_BUNDLE_INFO_STRING "A beginner friendly desktop UI for Tasmota flashed devices.")
@@ -67,6 +79,8 @@ elseif(APPLE)
     set(tasmomanager_COMPILE ${tasmomanager_COMPILE} "${CMAKE_CURRENT_SOURCE_DIR}/../resources/appicon.icns")
 
     add_executable(${TASMOMANAGER_EXECUTABLE_NAME} MACOSX_BUNDLE ${tasmomanager_COMPILE})
+elseif(NOT APPLE AND NOT WIN32)
+    add_executable(${TASMOMANAGER_EXECUTABLE_NAME} ${tasmomanager_COMPILE})
 endif()
 
 add_dependencies(${TASMOMANAGER_EXECUTABLE_NAME} generate_version_header)
@@ -77,6 +91,13 @@ foreach (tasmomanager_qt_module ${tasmomanager_qt_modules})
     find_package(Qt5${tasmomanager_qt_module} REQUIRED)
     list(APPEND tasmomanager_LIBRARIES Qt5::${tasmomanager_qt_module})
 endforeach()
+
+# OpenSSL
+set(OPENSSL_USE_STATIC_LIBS TRUE)
+find_package(OpenSSL REQUIRED)
+
+set(OPENSSL_LIBRARIES ${OPENSSL_SSL_LIBRARIES} ${OPENSSL_CRYPTO_LIBRARIES} )
+list(APPEND tasmomanager_LIBRARIES ${OPENSSL_LIBRARIES})
 
 # macros definitions for preprocessor and moc
 set_target_properties(${TASMOMANAGER_EXECUTABLE_NAME} PROPERTIES COMPILE_DEFINITIONS "${tasmomanager_DEFINITIONS}")

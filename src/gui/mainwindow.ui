@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
+    <width>956</width>
     <height>500</height>
    </rect>
   </property>
@@ -26,6 +26,9 @@
 	font-weight: 400;
 	color: white;
 }
+
+QComboBox::drop-down {border-width: 0px; } QComboBox::down-arrow {image: url(noimg); border-width: 0px;}
+
 
 QToolTip {
 	color: black;
@@ -71,6 +74,7 @@ QHeaderView::section::first {
 	border-radius: 0px;
 	padding-left: 5px;
 	padding-right: 5px;
+	min-width: 45px;
 }
 
 #toolBar QToolButton:pressed {
@@ -91,6 +95,16 @@ QHeaderView::section::first {
 	border-left: 1px Solid #0C0C0C;
 }
 
+#toolBar #deviceToolsContainer {
+	background-color: #252525;
+	border-left: 1px Solid #0C0C0C;
+}
+
+#newUpdateBar {
+	background-color: #646464;
+	border-top: 1px Solid #0C0C0C;
+}
+
 QTreeWidget::item {
    	padding: 5px;
 	border: 0px; 
@@ -104,7 +118,7 @@ QTreeWidget::item:selected {
 QPushButton {
 	border-radius: 5px;
 	border: none;
-	padding: 5px 15px;
+	padding: 4px 15px;
 	background-color: #1fa3ec;
 }
 
@@ -117,6 +131,11 @@ QPushButton:!enabled {
 }
 
 QMessageBox {
+	background-color: rgb(37, 37, 37);
+	min-width: 500px;
+}
+
+QProgressDialog {
 	background-color: rgb(37, 37, 37);
 }
 
@@ -140,6 +159,18 @@ QMenu::item {
 
 QMenu::item:selected { 
     background-color: #1fa3ec;
+}
+
+QProgressBar:horizontal {
+    border: 1px solid #0C0C0C;
+    border-radius: 5px;
+    background-color: transparent;
+	padding: 1px;
+	margin: 0px;
+    height: 5px;
+}
+QProgressBar::chunk:horizontal {
+    background: #1fa3ec;
 }
 
 QMenuBar {
@@ -170,7 +201,33 @@ QComboBox QAbstractItemView {
 
 QComboBox:item::hover {
     background-color: #1fa3ec;
-}</string>
+}
+
+QTabWidget::pane {
+	top:-1px; 
+	border: 1px Solid #0C0C0C;
+	border-radius: 5px;
+	background-color: transparent;
+} 
+
+  QTabBar::tab {
+	background-color: #4f4f4f;
+	border: 1px Solid #0C0C0C;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+	padding-left: 12px;
+	padding-right: 12px;
+	margin-left: 2px;
+	margin-right: 2px;
+	font-size: 11px;
+  } 
+  
+  QTabBar::tab:selected { 
+	background-color: #1fa3ec;
+	color: white;
+  }</string>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonTextUnderIcon</enum>
@@ -217,7 +274,7 @@ QComboBox:item::hover {
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>10</number>
        </property>
        <property name="bottomMargin">
         <number>1</number>
@@ -376,6 +433,82 @@ QComboBox:item::hover {
            </widget>
           </item>
           <item>
+           <widget class="QToolButton" name="mqttButton">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="contextMenuPolicy">
+             <enum>Qt::NoContextMenu</enum>
+            </property>
+            <property name="text">
+             <string>MQTT</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../resources/resources.qrc">
+              <normaloff>:/32/assets/32_mqtt.svg</normaloff>:/32/assets/32_mqtt.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextUnderIcon</enum>
+            </property>
+            <property name="arrowType">
+             <enum>Qt::NoArrow</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="wifiButton">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="contextMenuPolicy">
+             <enum>Qt::NoContextMenu</enum>
+            </property>
+            <property name="text">
+             <string>WIFI</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../resources/resources.qrc">
+              <normaloff>:/32/assets/32_wifi.svg</normaloff>:/32/assets/32_wifi.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextUnderIcon</enum>
+            </property>
+            <property name="arrowType">
+             <enum>Qt::NoArrow</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QToolButton" name="restartButton">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -440,25 +573,19 @@ QComboBox:item::hover {
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="mqttButton">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
+           <widget class="QToolButton" name="webUIButton">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
-            </property>
             <property name="text">
-             <string>MQTT</string>
+             <string>Web UI</string>
             </property>
             <property name="icon">
              <iconset resource="../../resources/resources.qrc">
-              <normaloff>:/32/assets/32_mqtt.svg</normaloff>:/32/assets/32_mqtt.svg</iconset>
+              <normaloff>:/32/assets/32_web.svg</normaloff>:/32/assets/32_web.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -467,20 +594,51 @@ QComboBox:item::hover {
              </size>
             </property>
             <property name="popupMode">
-             <enum>QToolButton::InstantPopup</enum>
+             <enum>QToolButton::DelayedPopup</enum>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextUnderIcon</enum>
             </property>
-            <property name="arrowType">
-             <enum>Qt::NoArrow</enum>
-            </property>
            </widget>
           </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QWidget" name="deviceToolsContainer" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>1</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QToolButton" name="firmwareButton">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -515,7 +673,7 @@ QComboBox:item::hover {
           <item>
            <widget class="QToolButton" name="backupButton">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -550,40 +708,11 @@ QComboBox:item::hover {
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QToolButton" name="webUIButton">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Web UI</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../resources/resources.qrc">
-              <normaloff>:/32/assets/32_web.svg</normaloff>:/32/assets/32_web.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>30</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="popupMode">
-             <enum>QToolButton::DelayedPopup</enum>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextUnderIcon</enum>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer_2">
+        <spacer name="horizontalSpacer_3">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -678,6 +807,11 @@ QComboBox:item::hover {
         </column>
         <column>
          <property name="text">
+          <string>Friendly Name</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
           <string>IP Address</string>
          </property>
         </column>
@@ -694,6 +828,11 @@ QComboBox:item::hover {
         <column>
          <property name="text">
           <string>Firmware Version</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Module</string>
          </property>
         </column>
         <column>
@@ -732,7 +871,7 @@ QComboBox:item::hover {
            <x>0</x>
            <y>0</y>
            <width>260</width>
-           <height>414</height>
+           <height>388</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -786,6 +925,53 @@ QComboBox:item::hover {
       </item>
      </layout>
     </item>
+    <item>
+     <widget class="QWidget" name="newUpdateBar" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <property name="spacing">
+        <number>10</number>
+       </property>
+       <property name="leftMargin">
+        <number>10</number>
+       </property>
+       <property name="topMargin">
+        <number>5</number>
+       </property>
+       <property name="rightMargin">
+        <number>10</number>
+       </property>
+       <property name="bottomMargin">
+        <number>5</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="widget" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">image: url(:/24/assets/24_swupdate_square.svg);</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="newUpdateLabel">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -793,7 +979,7 @@ QComboBox:item::hover {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>900</width>
+     <width>956</width>
      <height>24</height>
     </rect>
    </property>
@@ -801,6 +987,9 @@ QComboBox:item::hover {
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionConnect"/>
+    <addaction name="actionRefresh_device_List"/>
+    <addaction name="separator"/>
     <addaction name="actionPreferences"/>
     <addaction name="actionAbout"/>
    </widget>
@@ -816,10 +1005,35 @@ QComboBox:item::hover {
     <property name="title">
      <string>Devices</string>
     </property>
+    <addaction name="actionDevice_Options"/>
+    <addaction name="actionMQTT_OPtions"/>
+    <addaction name="actionWIFI_Options"/>
+    <addaction name="separator"/>
+    <addaction name="actionRestart_device"/>
+    <addaction name="actionTerminal"/>
+    <addaction name="actionFirmware_Upadte"/>
+    <addaction name="separator"/>
     <addaction name="actiontest"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionDeviceName"/>
+    <addaction name="actionFriendlyName"/>
+    <addaction name="actionIP_Address"/>
+    <addaction name="actionWIFI_Strengt"/>
+    <addaction name="actionMAC_Address"/>
+    <addaction name="actionFirmware_Version"/>
+    <addaction name="actionModule"/>
+    <addaction name="actionStatus"/>
+    <addaction name="separator"/>
+    <addaction name="actionSidebar"/>
+    <addaction name="actionToolBar"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuView"/>
    <addaction name="menuDevices"/>
   </widget>
   <action name="actionPreferences">
@@ -864,29 +1078,358 @@ QComboBox:item::hover {
     <string>Ctrl+N</string>
    </property>
   </action>
+  <action name="actionDevice_Options">
+   <property name="text">
+    <string>Device Options</string>
+   </property>
+  </action>
+  <action name="actionMQTT_OPtions">
+   <property name="text">
+    <string>MQTT Options</string>
+   </property>
+  </action>
+  <action name="actionWIFI_Options">
+   <property name="text">
+    <string>WIFI Options</string>
+   </property>
+  </action>
+  <action name="actionRestart_device">
+   <property name="text">
+    <string>Restart Device</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+R</string>
+   </property>
+  </action>
+  <action name="actionTerminal">
+   <property name="text">
+    <string>Terminal</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+T</string>
+   </property>
+  </action>
+  <action name="actionFirmware_Upadte">
+   <property name="text">
+    <string>Firmware Update</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+F</string>
+   </property>
+  </action>
+  <action name="actionConnect">
+   <property name="text">
+    <string>Connect...</string>
+   </property>
+  </action>
+  <action name="actionRefresh_device_List">
+   <property name="text">
+    <string>Refresh Device List</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionDeviceName">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Device Name</string>
+   </property>
+  </action>
+  <action name="actionFriendlyName">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Friendly Name</string>
+   </property>
+  </action>
+  <action name="actionIP_Address">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>IP Address</string>
+   </property>
+  </action>
+  <action name="actionWIFI_Strengt">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>WIFI Strength</string>
+   </property>
+  </action>
+  <action name="actionMAC_Address">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>MAC Address</string>
+   </property>
+  </action>
+  <action name="actionFirmware_Version">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Firmware Version</string>
+   </property>
+  </action>
+  <action name="actionStatus">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Status</string>
+   </property>
+  </action>
+  <action name="actionModule">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Module</string>
+   </property>
+  </action>
+  <action name="actionSidebar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Sidebar</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionToolBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Toolbar</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+T</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
    <class>DeviceColorWidget</class>
    <extends>QWidget</extends>
-   <header>gui/devicecolorwidget.h</header>
+   <header>gui/device_controls/devicecolorwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>DeviceInfoWidget</class>
    <extends>QWidget</extends>
-   <header>gui/deviceinfowidget.h</header>
+   <header>gui/device_controls/deviceinfowidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>DevicePowerWidget</class>
    <extends>QWidget</extends>
-   <header>gui/devicepowerwidget.h</header>
+   <header>gui/device_controls/devicepowerwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
   <include location="../../resources/resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionDevice_Options</sender>
+   <signal>triggered()</signal>
+   <receiver>deviceButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>245</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionMQTT_OPtions</sender>
+   <signal>triggered()</signal>
+   <receiver>mqttButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>303</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionWIFI_Options</sender>
+   <signal>triggered()</signal>
+   <receiver>wifiButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>362</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRefresh_device_List</sender>
+   <signal>triggered()</signal>
+   <receiver>refreshButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>90</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRestart_device</sender>
+   <signal>triggered()</signal>
+   <receiver>restartButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>421</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionTerminal</sender>
+   <signal>triggered()</signal>
+   <receiver>terminalButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>486</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFirmware_Upadte</sender>
+   <signal>triggered()</signal>
+   <receiver>firmwareButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>660</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionConnect</sender>
+   <signal>triggered()</signal>
+   <receiver>connectButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>28</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSidebar</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>sideBarContainer</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>768</x>
+     <y>291</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionToolBar</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>toolBar</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>449</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

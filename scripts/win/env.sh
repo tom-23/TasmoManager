@@ -6,6 +6,8 @@ export CMAKE_GENERATOR_ARCH="x64"
 
 export PATH=$QTDIR/bin:$PATH
 
+export OPENSSL_ROOT_DIR="C:\OpenSSL-v111-Win64"
+
 export BUILD_PATH=$APPVEYOR_BUILD_FOLDER/build
 export CMAKE_PREFIX_PATH=$QTDIR/lib/cmake
 

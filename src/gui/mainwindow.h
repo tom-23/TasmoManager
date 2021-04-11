@@ -7,15 +7,20 @@
 #include <QTreeWidgetItem>
 #include <QProgressDialog>
 #include <QCloseEvent>
+#include <QSystemTrayIcon>
 
-#include "setupdevicedialog.h"
+#include "wizards/setupdevicedialog.h"
+#include "wizards/updatedevicedialog.h"
 #include "preferencesdialog.h"
 #include "terminaldialog.h"
 #include "selectserverdialog.h"
-#include "deviceoptionswidget.h"
+#include "device_options/deviceoptionswidget.h"
+#include "misc/softwareupdate.h"
 
-#include "../app/devicemanager.h"
-#include "../app/mqttservermanager.h"
+
+#include "app/devicemanager.h"
+#include "app/mqttservermanager.h"
+#include "app/preferencesmanager.h"
 
 class DeviceColorWidget;
 class PreferencesDialog;
@@ -34,6 +39,7 @@ public:
 
     DeviceManager *deviceManager;
     MQTTServerManager *serverManager;
+    PreferencesManager *preferencesManager;
 
 private slots:
 
@@ -65,14 +71,46 @@ private slots:
 
     void closeEvent(QCloseEvent *event);
 
+    void on_mqttButton_clicked();
+
+    void on_wifiButton_clicked();
+
+    void on_deviceList_itemDoubleClicked(QTreeWidgetItem *item, int column);
+
+    void on_firmwareButton_clicked();
+
+    void on_actionDeviceName_toggled(bool arg1);
+
+    void on_actionFriendlyName_toggled(bool arg1);
+
+    void on_actionIP_Address_toggled(bool arg1);
+
+    void on_actionWIFI_Strengt_toggled(bool arg1);
+
+    void on_actionMAC_Address_toggled(bool arg1);
+
+    void on_actionFirmware_Version_toggled(bool arg1);
+
+    void on_actionStatus_toggled(bool arg1);
+
+    void on_actionModule_toggled(bool arg1);
+
 private:
     Ui::MainWindow *ui;
 
     void updateInfoText();
+    void updateWidgetDevices(Device *device);
 
     PreferencesDialog *preferencesDialog;
+    DeviceOptionsWidget *deviceOptionsWidget = nullptr;
 
-    Device *selectedDevice;
+    Device *selectedDevice = nullptr;
+
+    void updatePrefs();
+
+    void checkForUpdates();
+
+    SoftwareUpdate *softwareUpdate = new SoftwareUpdate(this);
 
 };
 #endif // MAINWINDOW_H

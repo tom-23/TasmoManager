@@ -1,3 +1,5 @@
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum OSX deployment version" FORCE)
+
 project(tasmomanager)
 
 if (APPLE)
@@ -29,6 +31,7 @@ OPTION(WITH_PLUGINS "Compile plugins" ON)
 set(CMAKE_AUTOMOC ON)
 
 find_package(Qt5Widgets 5.8.0 REQUIRED)
+
 list(APPEND tasmomanager_LIBRARIES Qt5::Widgets)
 
 # Be more strict while compiling debugging version

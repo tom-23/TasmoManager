@@ -1,3 +1,4 @@
+#!/bin/bash
 source scripts/macOS/env.sh
 mkdir build
 cd build

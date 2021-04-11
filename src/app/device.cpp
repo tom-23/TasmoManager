@@ -2,7 +2,8 @@
 
 Device::Device(QObject *parent) : QObject(parent)
 {
-
+    deviceInfo.mqttServer->currentlyConnected = false;
+    deviceInfo.mqttServer->name = "device";
 }
 
 void Device::getDeviceInfo(QString fullTopic, int delay) {
@@ -17,7 +18,7 @@ void Device::getDeviceInfo(QString fullTopic, int delay) {
         qDebug() << "[Device] Subscribing to STAT topic...";
         qDebug() << "[Device] TOPIC:" << statTopic + "#";
         qDebug() << "[Device] Subscribing to TELE topic...";
-        qDebug() << "[Device] TOPIC:" << statTopic + "#";
+        qDebug() << "[Device] TOPIC:" << teleTopic + "#";
         deviceManager->mqttClient->subscribe((statTopic + "#").toUtf8());
         deviceManager->mqttClient->subscribe((teleTopic + "#").toUtf8());
     }
@@ -148,6 +149,147 @@ void Device::sendCommand(QString command) {
     deviceManager->mqttClient->publish(message);
 }
 
+void Device::getSetOptions(QList<SetOption *> *setOptionList) {
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "Backlog");
+    QString payload = "";
+    for (int i = 0; i < setOptionList->size(); i++) {
+        SetOption *setOption = setOptionList->at(i);
+        payload = payload + "SetOption" + QString::number(setOption->number);
+        if (i != setOptionList->size()) {
+            payload = payload + "; ";
+        }
+    }
+    getSetOptionsAmount = setOptionList->size() - 1;
+    getSetOptionsProgress = 0;
+    message.setPayload(payload.toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
+void Device::saveSetOptions(QList<SetOption *> *setOptionList) {
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "Backlog");
+    QString payload = "";
+    for (int i = 0; i < setOptionList->size(); i++) {
+        SetOption *setOption = setOptionList->at(i);
+
+        if (setOption->typeName == "ENUM" || setOption->typeName == "INTEGER") {
+            payload = payload + "SetOption" + QString::number(setOption->number) + " "
+            + QString::number(setOption->value);
+        } else {
+            payload = payload + "SetOption" + QString::number(setOption->number) + " "
+            + setOption->valueString;
+        }
+
+        if (i != setOptionList->size()) {
+            payload = payload + "; ";
+        }
+    }
+    getSetOptionsAmount = setOptionList->size() - 1;
+    getSetOptionsProgress = 0;
+    message.setPayload(payload.toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
+void Device::getWifiNetworkSettings() {
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "Backlog");
+    QString backlog = "AP; Ssid; IPAddress1; IPAddress2; IPAddress3; IPAddress4";
+    message.setPayload(backlog.toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
+void Device::setWifiNetworkSettings() {
+
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "Backlog");
+
+    QString backlog = "";
+    backlog = backlog + "AP " + QString::number(deviceInfo.activeAP) + "; ";
+    backlog = backlog + "Ssid1 " + deviceInfo.ap1SSID + "; ";
+    backlog = backlog + "Ssid2 " + deviceInfo.ap2SSID + "; ";
+
+    if (deviceInfo.ap1Password != "") {
+        backlog = backlog + "Password1 " + deviceInfo.ap1Password + "; ";
+
+    }
+
+    if (deviceInfo.ap2Password != "") {
+        backlog = backlog + "Password2 " + deviceInfo.ap2Password + "; ";
+    }
+
+    if (deviceInfo.useStaticIP) {
+        backlog = backlog + "IPAddress1 " + deviceInfo.ipAddress.toString() + "; ";
+        backlog = backlog + "IPAddress2 " + deviceInfo.gateway.toString() + "; ";
+        backlog = backlog + "IPAddress3 " + deviceInfo.subnetMask.toString() + "; ";
+        backlog = backlog + "IPAddress4 " + deviceInfo.dnsServer.toString() + "; ";
+    } else {
+        backlog = backlog + "IPAddress1 0.0.0.0; ";
+    }
+    backlog = backlog + "restart 1";
+
+    message.setPayload(backlog.toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
+void Device::getMQTTSettings() {
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "Backlog");
+    QString backlog = "FullTopic; MqttClient; MqttHost; MqttUser; MqttPort; MqttPassword; Topic";
+    message.setPayload(backlog.toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
+void Device::setMQTTSettings() {
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "Backlog");
+
+    QString backlog = "";
+    backlog = backlog + "FullTopic " + deviceInfo.mqttFullTopic + "; ";
+    backlog = backlog + "Topic " + deviceInfo.mqttTopic + "; ";
+    backlog = backlog + "MqttClient " + deviceInfo.mqttClient + "; ";
+    QString host;
+    if (!deviceInfo.mqttServer->ipAddress.isNull()) {
+        host = deviceInfo.mqttServer->ipAddress.toString();
+    } else {
+        host = deviceInfo.mqttServer->host;
+    }
+    backlog = backlog + "MqttHost " + host + "; ";
+    backlog = backlog + "MqttPort " + QString::number(deviceInfo.mqttServer->port) + "; ";
+    backlog = backlog + "MqttUser " + deviceInfo.mqttServer->username + "; ";
+    if (!(deviceInfo.mqttServer->password == "****")) {
+        backlog = backlog + "MqttPassword " + deviceInfo.mqttServer->password + "; ";
+    }
+
+    message.setPayload(backlog.toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
+void Device::setOTAUrl() {
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "OtaUrl");
+    message.setPayload(deviceInfo.OTAUrl.toString().toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
+void Device::setOTAUrlAndUpgrade() {
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "Backlog");
+
+    QString backlog = "";
+    backlog = backlog + "OtaUrl " + deviceInfo.OTAUrl.toString() + "; ";
+    backlog = backlog + "Upgrade 1; ";
+    message.setPayload(backlog.toUtf8());
+    deviceManager->mqttClient->publish(message);
+}
+
+void Device::startFirmwareUpgrade() {
+    QMQTT::Message message;
+    message.setTopic(cmndTopic + "Upgrade");
+    message.setPayload("1");
+    deviceManager->mqttClient->publish(message);
+}
+
 void Device::on_Message(QMQTT::Message message) {
 
     QStringList topicSplit = message.topic().split("/");
@@ -162,6 +304,26 @@ void Device::on_Message(QMQTT::Message message) {
         } else if (message.payload() == "Offline") {
             deviceInfo.status = Offline;
         }
+        emit recievedInfoUpdate();
+        emit deviceManager->device_InfoUpdate(deviceInfo);
+    }
+
+    if (endTopic == "UPGRADE") {
+        jsonDoc = QJsonDocument::fromJson(message.payload());
+        if (jsonDoc.object().value("Upgrade").toString().contains("Successful")) {
+            deviceInfo.updateStep = deviceInfo.updateStep + 1;
+        } else {
+            deviceInfo.updateError = jsonDoc.object().value("Upgrade").toString();
+        }
+        emit recievedInfoUpdate();
+        emit deviceManager->device_InfoUpdate(deviceInfo);
+    }
+    if (endTopic == "INFO1") {
+        jsonDoc = QJsonDocument::fromJson(message.payload());
+        deviceInfo.firmwareVersion = jsonDoc.object().value("Version").toString();
+        deviceInfo.minimalFirmware = (jsonDoc.object().value("Version").toString().toLower().contains("(minimal)") == true);
+
+        emit recievedInfoUpdate();
         emit deviceManager->device_InfoUpdate(deviceInfo);
     }
 
@@ -172,6 +334,7 @@ void Device::on_Message(QMQTT::Message message) {
         deviceInfo.name = statusObject.value("DeviceName").toString();
         deviceInfo.friendlyName = statusObject.value("FriendlyName").toArray()[0].toString();
 
+        emit recievedInfoUpdate();
         emit deviceManager->device_InfoUpdate(deviceInfo);
 
     } else if (endTopic == "STATUS1") {
@@ -181,6 +344,7 @@ void Device::on_Message(QMQTT::Message message) {
         deviceInfo.OTAUrl = QUrl(status1Object.value("OtaUrl").toString());
         deviceInfo.bootCount = status1Object.value("BootCount").toInt();
 
+        emit recievedInfoUpdate();
         emit deviceManager->device_InfoUpdate(deviceInfo);
 
     } else if (endTopic == "STATUS2") {
@@ -188,10 +352,13 @@ void Device::on_Message(QMQTT::Message message) {
         jsonDoc = QJsonDocument::fromJson(message.payload());
         QJsonObject status2Object = jsonDoc.object().value("StatusFWR").toObject();
         deviceInfo.firmwareVersion = status2Object.value("Version").toString();
+        deviceInfo.minimalFirmware = status2Object.value("Version").toString().toUpper().contains("MINIMAL");
+        deviceInfo.coreSDKVersion = status2Object.value("Core").toString() + " / " + status2Object.value("SDK").toString();
         deviceInfo.buildDateAndTime = status2Object.value("BuildDateTime").toString();
         deviceInfo.cpuFreq = status2Object.value("CpuFrequency").toInt();
         deviceInfo.hardware = status2Object.value("Hardware").toString();
 
+        emit recievedInfoUpdate();
         emit deviceManager->device_InfoUpdate(deviceInfo);
 
     } else if (endTopic == "STATUS5") {
@@ -200,10 +367,12 @@ void Device::on_Message(QMQTT::Message message) {
         QJsonObject status5Object = jsonDoc.object().value("StatusNET").toObject();
         deviceInfo.hostName = status5Object.value("Hostname").toString();
         deviceInfo.ipAddress = QHostAddress(status5Object.value("IPAddress").toString());
+        deviceInfo.subnetMask = QHostAddress(status5Object.value("Subnetmask").toString());
         deviceInfo.gateway = QHostAddress(status5Object.value("Gateway").toString());
         deviceInfo.dnsServer = QHostAddress(status5Object.value("DNSServer").toString());
         deviceInfo.macAddress = status5Object.value("Mac").toString();
 
+        emit recievedInfoUpdate();
         emit deviceManager->device_InfoUpdate(deviceInfo);
 
     } else if (endTopic == "STATUS11") {
@@ -216,9 +385,10 @@ void Device::on_Message(QMQTT::Message message) {
         deviceInfo.wifiRSSI = wifiObject.value("RSSI").toInt();
         deviceInfo.wifiSignal = wifiObject.value("Signal").toInt();
 
+        emit recievedInfoUpdate();
         emit deviceManager->device_InfoUpdate(deviceInfo);
-    } else if (endTopic == "LOGGING") {
 
+    } else if (endTopic == "LOGGING") {
         emit recievedLogMessage(message.payload());
     } else if (endTopic == "RESULT") {
 
@@ -240,8 +410,6 @@ void Device::on_Message(QMQTT::Message message) {
                 deviceInfo.power[i] = value;
             }
         }
-
-
 
         // Go through 5 light channels
         for (int i = 0; i < deviceInfo.capabilities.channels.size(); i++) {
@@ -280,7 +448,134 @@ void Device::on_Message(QMQTT::Message message) {
             emit deviceManager->device_InfoUpdate(deviceInfo);
         }
 
-        emit recievedStateUpdate();
+        if (!rootObject.value("Ap").isUndefined()) {
+            QJsonObject ap = rootObject.value("Ap").toObject();
+            int activeAP = 0;
+            if (!ap.value("1").isUndefined()) {
+                activeAP = 1;
+            }
+            if (!ap.value("2").isUndefined()) {
+                activeAP = 2;
+            }
+            deviceInfo.activeAP = activeAP;
+            emit recievedWifiInfoUpdate();
+        }
 
+        if (!rootObject.value("SSId1").isUndefined()) {
+            deviceInfo.ap1SSID = rootObject.value("SSId1").toString();
+            emit recievedWifiInfoUpdate();
+        }
+
+        if (!rootObject.value("SSId2").isUndefined()) {
+            deviceInfo.ap2SSID = rootObject.value("SSId2").toString();
+            emit recievedWifiInfoUpdate();
+        }
+
+        if (!rootObject.value("IPAddress1").isUndefined()) {
+            QString ipAddress = rootObject.value("IPAddress1").toString().toUpper();
+            deviceInfo.useStaticIP = !ipAddress.contains("(IP UNSET)");
+            if (deviceInfo.useStaticIP) {
+                deviceInfo.useStaticIP = !ipAddress.contains("0.0.0.0");
+            }
+            QStringList ipAddressSplit = ipAddress.replace("(IP UNSET)", "").split(" ");
+            if (deviceInfo.useStaticIP) {
+                deviceInfo.ipAddress = QHostAddress(ipAddressSplit[1]);
+            } else {
+                deviceInfo.ipAddress = QHostAddress(ipAddress);
+            }
+
+            emit recievedWifiInfoUpdate();
+        }
+
+        if (!rootObject.value("IPAddress2").isUndefined()) {
+            QString gatewayAddress = rootObject.value("IPAddress2").toString();
+            deviceInfo.gateway = QHostAddress(gatewayAddress);
+            emit recievedWifiInfoUpdate();
+        }
+
+        if (!rootObject.value("IPAddress3").isUndefined()) {
+            QString subnetAddress = rootObject.value("IPAddress3").toString();
+            deviceInfo.subnetMask = QHostAddress(subnetAddress);
+            emit recievedWifiInfoUpdate();
+        }
+
+        if (!rootObject.value("IPAddress4").isUndefined()) {
+            QString dnsAddress = rootObject.value("IPAddress4").toString();
+            deviceInfo.dnsServer = QHostAddress(dnsAddress);
+            emit recievedWifiInfoUpdate();
+        }
+
+        if (!rootObject.value("MqttClient").isUndefined()) {
+            QString mqttClient = rootObject.value("MqttClient").toString();
+            deviceInfo.mqttClient = mqttClient;
+            emit recievedMQTTInfoUpdate();
+        }
+
+        if (!rootObject.value("MqttHost").isUndefined()) {
+            QString mqttHost = rootObject.value("MqttHost").toString();
+            if (QHostAddress(mqttHost).isNull()) {
+                deviceInfo.mqttServer->host = mqttHost;
+            } else {
+                deviceInfo.mqttServer->ipAddress = QHostAddress(mqttHost);
+            }
+            emit recievedMQTTInfoUpdate();
+        }
+
+        if (!rootObject.value("MqttUser").isUndefined()) {
+            QString mqttUser = rootObject.value("MqttUser").toString();
+            deviceInfo.mqttServer->username = mqttUser;
+            emit recievedMQTTInfoUpdate();
+        }
+
+        if (!rootObject.value("MqttPort").isUndefined()) {
+            int mqttPort = rootObject.value("MqttPort").toInt();
+            deviceInfo.mqttServer->port = mqttPort;
+            emit recievedMQTTInfoUpdate();
+        }
+
+        if (!rootObject.value("MqttPassword").isUndefined()) {
+            QString mqttPassword = rootObject.value("MqttPassword").toString();
+            deviceInfo.mqttServer->password = mqttPassword.toUtf8();
+            emit recievedMQTTInfoUpdate();
+        }
+
+        if (!rootObject.value("Topic").isUndefined()) {
+            QString mqttTopic = rootObject.value("Topic").toString();
+            deviceInfo.mqttTopic = mqttTopic;
+            emit recievedMQTTInfoUpdate();
+        }
+
+        if (!rootObject.value("FullTopic").isUndefined()) {
+            QString mqttFullTopic = rootObject.value("FullTopic").toString();
+            deviceInfo.mqttFullTopic = mqttFullTopic;
+            emit recievedMQTTInfoUpdate();
+        }
+
+        for (int i = 0; i < deviceInfo.setOptions->size(); i++) {
+            SetOption *setOption = deviceInfo.setOptions->at(i);
+            if (!rootObject.value("SetOption" + QString::number(setOption->number)).isUndefined()) {
+                QJsonValue value = rootObject.value("SetOption" + QString::number(setOption->number));
+                if (value.type() == QJsonValue::String) {
+                    if (value.toString() == "OFF") {
+                        setOption->value = 0;
+
+                    } else if (value.toString() == "ON") {
+                        setOption->value = 1;
+                    } else {
+                        setOption->valueString = value.toString();
+                    }
+                } else {
+                    setOption->value = value.toInt();
+                }
+                emit setOptionValueUpdate(setOption);
+                getSetOptionsProgress = getSetOptionsProgress + 1;
+                if (getSetOptionsProgress - 1 == getSetOptionsAmount) {
+                    emit getSetOptionsDone();
+                }
+            }
+
+        }
+
+        emit recievedStateUpdate();
     }
 }

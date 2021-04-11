@@ -9,6 +9,7 @@
 #include <QColor>
 #include <QDesktopServices>
 #include <math.h>
+#include <QMetaType>
 
 #include "mqttserver.h"
 #include <qmqtt.h>
@@ -20,22 +21,40 @@ struct MQTTServerInfo;
 enum SetOptionCategory {
     General,
     Buttons,
-    Ligting,
+    Lighting,
     Temperature,
     MQTT,
     WIFI,
     Misc,
+    IrRf,
     null,
 };
 
+class Device;
 
 struct SetOption {
     int number;
-    int value;
     bool restartRequired = false;
+    bool valueChanged;
     QString name;
+    QString typeName;
+    QString info;
+    QString info1;
+    QString info2;
+    QString info3;
+    QString info4;
+    QString info5;
+    QString info6;
+    QString warning;
+    QUrl link;
+    QUrl link1;
+    QList<QString> values;
     SetOptionCategory category;
-    QList<QString> valueNames;
+    int value;
+    int valueMin;
+    int valueMax;
+    QString valueString;
+    Device *device;
 };
 
 enum DeviceStatus {
@@ -58,22 +77,32 @@ struct DeviceInfo {
     QString name;
     QString friendlyName;
 
+    QString module;
     QString moduleTemplate;
 
-    MQTTServerInfo mqttServer;
+    MQTTServerInfo *mqttServer = new MQTTServerInfo;
     QString mqttTopic;
     QString mqttFullTopic;
+    QString mqttClient;
 
     QUrl OTAUrl;
+    int updateStep = 0;
+    QString updateError = "";
+
     int bootCount;
 
     QString firmwareVersion;
+    QString oldFirmwareVerson;
+    bool minimalFirmware = false;
+    QString coreSDKVersion;
     QString buildDateAndTime;
     int cpuFreq;
     QString hardware;
 
     QString hostName;
+    bool useStaticIP;
     QHostAddress ipAddress;
+    QHostAddress subnetMask;
     QHostAddress gateway;
     QHostAddress dnsServer;
     QString macAddress;
@@ -94,7 +123,13 @@ struct DeviceInfo {
     QColor color;
     int colorTemp;
 
-    QList<SetOption> setOptions;
+    QList<SetOption*> *setOptions;
+
+    int activeAP;
+    QString ap1SSID;
+    QString ap2SSID;
+    QString ap1Password;
+    QString ap2Password;
 };
 
 Q_DECLARE_METATYPE(DeviceInfo)
@@ -133,6 +168,19 @@ public:
 
     void sendCommand(QString command);
 
+    void getSetOptions(QList<SetOption *> *setOptionList);
+    void saveSetOptions(QList<SetOption *> *setOptionList);
+
+    void getWifiNetworkSettings();
+    void setWifiNetworkSettings();
+
+    void getMQTTSettings();
+    void setMQTTSettings();
+
+    void setOTAUrl();
+    void setOTAUrlAndUpgrade();
+    void startFirmwareUpgrade();
+
     QString statTopic;
     QString cmndTopic;
     QString teleTopic;
@@ -161,11 +209,22 @@ private:
         return round(ostart + (ostop - ostart) * ((value - istart) / (istop - istart)));
     }
 
+    int getSetOptionsAmount;
+    int getSetOptionsProgress;
+
 
 signals:
 
     void recievedLogMessage(QString message);
+    void recievedInfoUpdate();
     void recievedStateUpdate();
+    void recievedWifiInfoUpdate();
+    void recievedMQTTInfoUpdate();
+
+    void setOptionValueUpdate(SetOption *setOption);
+    void getSetOptionsDone();
+
+
 };
 
 #endif // DEVICE_H

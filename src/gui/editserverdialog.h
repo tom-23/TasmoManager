@@ -17,8 +17,8 @@ public:
     explicit EditServerDialog(QWidget *parent = nullptr);
     ~EditServerDialog();
 
-    void setMQTTServer(MQTTServerInfo serverInfo);
-    MQTTServerInfo serverInfo;
+    void setMQTTServer(MQTTServerInfo *serverInfo);
+    MQTTServerInfo *serverInfo;
 
 private slots:
     void on_saveChangesButton_clicked();

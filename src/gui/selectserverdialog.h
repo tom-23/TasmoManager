@@ -20,7 +20,7 @@ public:
 
     void setMQTTServerManager(MQTTServerManager *serverManager);
 
-    MQTTServerInfo selectedServer;
+    MQTTServerInfo *selectedServer;
 private slots:
     void on_connectButton_clicked();
 

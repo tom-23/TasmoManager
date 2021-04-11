@@ -8,7 +8,6 @@ MQTTServerManager::MQTTServerManager(QObject *parent) : QObject(parent)
 
     serverListJSONLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/.tasmoManagerServers.json";
     qDebug() << "[Server Man] JSON Location:" << serverListJSONLocation;
-    serverList = new QList<MQTTServerInfo>;
 }
 
 void MQTTServerManager::loadServerList() {
@@ -25,13 +24,13 @@ void MQTTServerManager::loadServerList() {
 
         for (int i = 0; i < serversArray.size(); i++ ) {
             QJsonObject server = serversArray.at(i).toObject();
-            MQTTServerInfo serverInf;
-            serverInf.ipAddress = QHostAddress(server.value("ipAddress").toString());
-            serverInf.host = server.value("host").toString();
-            serverInf.name = server.value("name").toString();
-            serverInf.password = server.value("password").toString().toUtf8();
-            serverInf.username = server.value("username").toString();
-            serverInf.port = server.value("port").toInt();
+            MQTTServerInfo *serverInf = new MQTTServerInfo();
+            serverInf->ipAddress = QHostAddress(server.value("ipAddress").toString());
+            serverInf->name = server.value("name").toString();
+            serverInf->host = server.value("host").toString();
+            serverInf->password = server.value("password").toString().toUtf8();
+            serverInf->username = server.value("username").toString();
+            serverInf->port = server.value("port").toInt();
             serverList->append(serverInf);
         }
     } else {
@@ -47,13 +46,13 @@ void MQTTServerManager::saveServerList() {
 
         for (int i = 0; i < serverList->size(); i++ ) {
             QJsonObject server;
-            MQTTServerInfo serverInfo = serverList->at(i);
-            server.insert("ipAddress", serverInfo.ipAddress.toString());
-            server.insert("name", serverInfo.name);
-            server.insert("host", serverInfo.host);
-            server.insert("username", serverInfo.username);
-            server.insert("password", QString::fromUtf8(serverInfo.password));
-            server.insert("port", serverInfo.port);
+            MQTTServerInfo *serverInfo = serverList->at(i);
+            server.insert("ipAddress", serverInfo->ipAddress.toString());
+            server.insert("name", serverInfo->name);
+            server.insert("host", serverInfo->host);
+            server.insert("username", serverInfo->username);
+            server.insert("password", QString::fromUtf8(serverInfo->password));
+            server.insert("port", serverInfo->port);
 
             serversArray.append(server);
 

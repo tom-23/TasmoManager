@@ -1,10 +1,11 @@
+#!/bin/bash
 source scripts/macOS/env.sh
 
 if test -d build/TasmoManager.app; then
     export PATH=${CMAKE_PREFIX_PATH}/bin:${PATH}
     cd build
     macdeployqt TasmoManager.app -always-overwrite -verbose=1
-    python ../lib/macdeployqtfix/macdeployqtfix.py --quiet TasmoManager.app/Contents/MacOS/TasmoManager ${CMAKE_PREFIX_PATH}
+    python ../lib/macdeployqtfix/macdeployqtfix.py --quiet "TasmoManager.app/Contents/MacOS/TasmoManager ${CMAKE_PREFIX_PATH}"
     create-dmg --volname TasmoManager \
     --volicon "../resources/appicon.icns" \
     --background "../shared/dmgbackground.png" \
@@ -15,8 +16,13 @@ if test -d build/TasmoManager.app; then
     --hide-extension "TasmoManager.app" \
     --app-drop-link 368 88 \
     --skip-jenkins \
-    "TasmoManager.dmg" \
+    "${APP}.dmg" \
     "TasmoManager.app"
+    pkgbuild --root "TasmoManager.app" \
+         --install-location "/Applications/TasmoManager.app" \
+         --identifier "com.tombutcher.tasmomanager.pkg" \
+         --version "${APP_VERSION}" \
+         "${APP}.pkg"
 else
     true
 fi

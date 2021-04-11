@@ -32,6 +32,7 @@ TerminalDialog::~TerminalDialog()
 }
 
 void TerminalDialog::closeEvent(QCloseEvent *closeEvent) {
+    Q_UNUSED(closeEvent);
     device->setLogLevel(0);
 }
 

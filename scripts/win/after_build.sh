@@ -12,6 +12,9 @@ mkdir -p "$Destination"
 
 cmake --install "$BUILD_PATH" --config Release --prefix "$Destination" --verbose
 
+cp -v "C:\OpenSSL-v111-Win64\bin\libcrypto-1_1-x64.dll" "$Destination"
+cp -v "C:\OpenSSL-v111-Win64\bin\libssl-1_1-x64.dll" "$Destination"
+
 cp -v "$Source/LICENSE" "$Destination"
 cp -v "$Source/README.md" "$Destination"
 

@@ -7,8 +7,8 @@ EditServerDialog::EditServerDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
-    MQTTServerInfo _serverInfo;
-    _serverInfo.port = 1883;
+    MQTTServerInfo *_serverInfo = new MQTTServerInfo();
+    _serverInfo->port = 1883;
     setMQTTServer(_serverInfo);
 }
 
@@ -17,18 +17,30 @@ EditServerDialog::~EditServerDialog()
     delete ui;
 }
 
-void EditServerDialog::setMQTTServer(MQTTServerInfo _serverInfo) {
-    serverInfo = _serverInfo;
-    ui->name->setText(serverInfo.name);
-    if (!serverInfo.ipAddress.isNull()) {
-        ui->host->setText(serverInfo.ipAddress.toString());
-    } else {
-        ui->host->setText(serverInfo.host);
+void EditServerDialog::setMQTTServer(MQTTServerInfo *_serverInfo) {
+    qDebug() << _serverInfo->currentlyConnected;
+    if (_serverInfo->currentlyConnected) {
+        qDebug() << "Server already connected";
+        auto m = new QMessageBox(this);
+        m->setText("Cannot edit a currently connected server.");
+        m->setIcon(QMessageBox::Warning);
+        m->setWindowModality(Qt::WindowModal);
+        m->setStandardButtons(QMessageBox::Ok);
+        m->exec();
+        this->reject();
     }
-    ui->port->setValue(serverInfo.port);
-    ui->username->setText(serverInfo.username);
-    ui->password->setText(serverInfo.password);
+    serverInfo = _serverInfo;
+    ui->name->setText(serverInfo->name);
+    if (!serverInfo->ipAddress.isNull()) {
+        ui->host->setText(serverInfo->ipAddress.toString());
+    } else {
+        ui->host->setText(serverInfo->host);
+    }
+    ui->port->setValue(serverInfo->port);
+    ui->username->setText(serverInfo->username);
+    ui->password->setText(serverInfo->password);
 }
+
 
 void EditServerDialog::on_saveChangesButton_clicked()
 {
@@ -53,16 +65,15 @@ void EditServerDialog::on_saveChangesButton_clicked()
         return;
     }
 
-    serverInfo.name = ui->name->text();
+    serverInfo->name = ui->name->text();
     if (!QHostAddress(ui->host->text()).isNull()) {
-        serverInfo.ipAddress = QHostAddress(ui->host->text());
+        serverInfo->ipAddress = QHostAddress(ui->host->text());
     } else {
-        serverInfo.host = ui->host->text();
+        serverInfo->host = ui->host->text();
     }
-
-    serverInfo.port = ui->port->value();
-    serverInfo.username = ui->username->text();
-    serverInfo.password = ui->password->text().toUtf8();
+    serverInfo->port = ui->port->value();
+    serverInfo->username = ui->username->text();
+    serverInfo->password = ui->password->text().toUtf8();
 
     this->accept();
 }

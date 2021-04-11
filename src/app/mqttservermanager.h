@@ -21,7 +21,7 @@ public:
     void loadServerList();
     void saveServerList();
 
-    QList<MQTTServerInfo> *serverList;
+    QList<MQTTServerInfo*> *serverList = new QList<MQTTServerInfo*>;
 
 
 private:

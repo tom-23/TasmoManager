@@ -177,3 +177,7 @@ if (APPLE)
         COMPONENT Runtime
         )
 endif()
+
+if (UNIX AND NOT APPLE)
+    install(DIRECTORY "${CMAKE_BINARY_DIR}/Distro/" DESTINATION "/opt/${CMAKE_PROJECT_NAME}")
+endif()

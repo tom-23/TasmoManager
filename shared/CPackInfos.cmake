@@ -1,3 +1,15 @@
+find_package(Git QUIET)
+
+if (GIT_EXECUTABLE AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
+    execute_process(
+        COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        RESULT_VARIABLE CMD_RESULT
+        OUTPUT_VARIABLE VCS_REVISION
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+endif()
+
 if (UNIX)
     execute_process(
         COMMAND uname -m
@@ -33,7 +45,7 @@ message(STATUS "Architecture: ${CPACK_ARCH}")
 
 set(CPACK_PACKAGE_NAME "tasmomanager")
 string(TOLOWER ${CPACK_PACKAGE_NAME} CPACK_PACKAGE_NAME)
-set(CPACK_PACKAGE_VERSION "${DATE_VERSION}-${VCS_REVISION}")
+set(CPACK_PACKAGE_VERSION "${VCS_REVISION}")
 set(CPACK_PACKAGE_VENDOR "Tom Butcher")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A beginner friendly desktop UI for Tasmota flashed devices.")
 set(CPACK_PACKAGE_DESCRIPTION "A beginner friendly desktop UI for Tasmota flashed devices for Windows, macOS and Linux.")
@@ -62,6 +74,7 @@ message( "-- Depends: ${CPACK_DEBIAN_PACKAGE_DEPENDS}" )
 # Ubuntu 20.04 Depends:  "libc6 (>= 2.29), libfftw3-double3 (>= 3.3.5), libgcc-s1 (>= 3.0), libqt5core5a (>= 5.12.2), libqt5gui5 (>= 5.8.0) | libqt5gui5-gles (>= 5.8.0), libqt5printsupport5 (>= 5.10.0), libqt5widgets5 (>= 5.4.0), libstdc++6 (>= 5), libusb-1.0-0 (>= 2:1.0.16)
 
 set(CPACK_DEBIAN_FILE_NAME "DEB-DEFAULT")
+set(CPACK_DEBIAN_MAINTAINER ${CPACK_PACKAGE_VENDOR})
 
 # Linux RPM (not tested on debian)
 # Architecture for package and file name are automatically detected

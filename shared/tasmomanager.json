@@ -2,10 +2,5 @@
     "noOverwrite": false,
     "bin": "tasmomanager",
     "verbose": 3,
-    "qif": true,
-    "icon": "../resources/appicon.png",
-    "name": "TasmoManager",
-    "description": "this is description for default package",
-    "publisher": "Tom Butcher",
-    "qifStyle": ""
+    "targetDir": "./Distro"
 }

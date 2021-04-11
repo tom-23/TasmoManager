@@ -1,4 +1,4 @@
-export QTDIR=$HOME/Qt/5.15.2/clang_64
+export QTDIR=$HOME/Qt/5.15.2/gcc_64
 
 export PATH=$QTDIR/bin:$PATH
 

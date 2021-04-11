@@ -29,7 +29,7 @@ A beginner friendly desktop UI for Tasmota flashed devices for Windows and macOS
 
 ## Downloads
 
-Go to the [releases section](https://github.com/tom-23/TasmoManager/releases) on this repo and user the latest release, click on Assets and download the installer for your system.
+Go to the [releases section](https://github.com/tom-23/TasmoManager/releases) on this repo and under the latest release, click on Assets and download the installer for your system.
 
 ## Documenation
 

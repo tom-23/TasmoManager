@@ -102,9 +102,10 @@ if (PEDANTIC)
         )
 endif()
 
-include(shared/CPackInfos.cmake)
+
 include(version.cmake)
 message(STATUS "Building Tasmomanager version ${tasmomanager_version}.")
+include(shared/CPackInfos.cmake)
 
 # Generate version.h from current git commit if available.
 add_custom_target(

@@ -106,19 +106,6 @@ set_target_properties(${TASMOMANAGER_EXECUTABLE_NAME} PROPERTIES COMPILE_DEFINIT
 set_target_properties(${TASMOMANAGER_EXECUTABLE_NAME} PROPERTIES LINK_FLAGS "${tasmomanager_LINK_FLAGS}")
 target_link_libraries(${TASMOMANAGER_EXECUTABLE_NAME} ${tasmomanager_LIBRARIES})
 
-# install
-if (MSVC)
-    install(TARGETS ${TASMOMANAGER_EXECUTABLE_NAME}
-        RUNTIME DESTINATION . COMPONENT Runtime
-        LIBRARY DESTINATION . COMPONENT Runtime
-        )
-else()
-    install(TARGETS ${TASMOMANAGER_EXECUTABLE_NAME}
-        BUNDLE DESTINATION . COMPONENT Runtime
-        RUNTIME DESTINATION bin COMPONENT Runtime
-        )
-endif()
-
 if (APPLE)
 
     set_target_properties(${TASMOMANAGER_EXECUTABLE_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/../shared/tasmomanager.plist")
@@ -180,4 +167,6 @@ endif()
 
 if (UNIX AND NOT APPLE)
     install(DIRECTORY "${CMAKE_BINARY_DIR}/Distro/" DESTINATION "/opt/${CMAKE_PROJECT_NAME}")
+    execute_process(COMMAND ln -s /opt/tasmomanager/bin/tasmomanager ${CMAKE_BINARY_DIR}/tasmomanager)
+    install(FILES ${CMAKE_BINARY_DIR}/tasmomanager DESTINATION /usr/bin/tasmomanager)
 endif()

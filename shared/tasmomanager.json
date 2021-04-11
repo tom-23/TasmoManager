@@ -1,6 +1,0 @@
-{
-    "noOverwrite": false,
-    "bin": "tasmomanager",
-    "verbose": 3,
-    "targetDir": "./Distro"
-}

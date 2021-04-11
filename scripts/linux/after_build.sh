@@ -2,5 +2,5 @@
 source scripts/macOS/env.sh
 
 cd build
-cqtdeployer -confFile ../shared/tasmomanager.json
-cpack
+cqtdeployer -bin tasmomanager -targetDir ./Distro
+make package

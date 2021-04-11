@@ -27,10 +27,13 @@ A beginner friendly desktop UI for Tasmota flashed devices for Windows and macOS
 -   Multi device upgrading
 -   Very easy installation + updating
 
-## Getting Started / Installation
+## Downloads
 
-Head [here](https://github.com/tom-23/TasmoManager/releases) and click on Assets under the latest version to find installer packages for your system. (.exe for windows and .pkg or .dmg for macOS)
-For a more indepth guide to getting started, head over to the Wiki.
+Go to the [releases section](https://github.com/tom-23/TasmoManager/releases) on this repo and user the latest release, click on Assets and download the installer for your system.
+
+## Documenation
+
+Documation on installation, general usage and troubleshooting can be found [HERE](https://tom-23.github.io/tasmomanager-docs/)
 
 ## Found a Bug
 

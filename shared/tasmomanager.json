@@ -6,5 +6,6 @@
     "icon": "../resources/appicon.png",
     "name": "TasmoManager",
     "description": "this is description for default package",
-    "publisher": "Tom Butcher"
+    "publisher": "Tom Butcher",
+    "qifStyle": ""
 }

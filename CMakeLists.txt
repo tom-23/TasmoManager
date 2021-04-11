@@ -102,6 +102,7 @@ if (PEDANTIC)
         )
 endif()
 
+include(shared/CPackInfos.cmake)
 include(version.cmake)
 message(STATUS "Building Tasmomanager version ${tasmomanager_version}.")
 

@@ -6,18 +6,9 @@ if test -d build/TasmoManager.app; then
     cd build
     macdeployqt TasmoManager.app -always-overwrite -verbose=1
     python ../lib/macdeployqtfix/macdeployqtfix.py --quiet "TasmoManager.app/Contents/MacOS/TasmoManager ${CMAKE_PREFIX_PATH}"
-    create-dmg --volname TasmoManager \
-    --volicon "../resources/appicon.icns" \
-    --background "../shared/dmgbackground.png" \
-    --window-pos 200 120 \
-    --window-size 500 300 \
-    --icon-size 160 \
-    --icon "TasmoManager.app" 120 88 \
-    --hide-extension "TasmoManager.app" \
-    --app-drop-link 368 88 \
-    --skip-jenkins \
-    "macOS-${APP}-diskimage.dmg" \
-    "TasmoManager.app"
+    create-dmg --help
+    create-dmg TasmoManager.app 
+    for f in *.dmg; do mv -- "$f" "macOS-${APP}-diskimage.dmg"; done
     pkgbuild --root "TasmoManager.app" \
          --install-location "/Applications/TasmoManager.app" \
          --identifier "com.tombutcher.tasmomanager.pkg" \

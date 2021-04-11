@@ -21,11 +21,11 @@ if (UNIX)
         DESTINATION share/applications
         )
     install(
-        FILES resources/appiconx48.png
+        FILES shared/tasmomanager.png
         DESTINATION share/icons/hicolor/48x48/apps
     )
     install(
-        FILES resources/appicon.svg
+        FILES shared/tasmomanagere.svg
         DESTINATION share/icons/hicolor/scalable/apps
     )
 
@@ -56,7 +56,7 @@ set(CPACK_DEBIAN_PACKAGE_SECTION "electronic")
 # use deb stable packages without version explicitely to support also legacy installations
 # local build uses Debian stable (currently buster)
 # CI build (github actions or appveyor) uses Ubuntu 18.04 LTS until Debian "bullseye" becomes "stable"
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libfftw3-double3, libglu1-mesa")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "")
 message( "-- Depends: ${CPACK_DEBIAN_PACKAGE_DEPENDS}" )
 # Debian buster Depends: "libc6 (>= 2.14), libfftw3-double3 (>= 3.3.5), libgcc1 (>= 1:3.0), libglu1-mesa | libglu1, libglx0, libopengl0, libqt5core5a (>= 5.11.0~rc1), libqt5gui5 (>= 5.8.0), libqt5opengl5 (>= 5.0.2), libqt5printsupport5 (>= 5.10.0), libqt5widgets5 (>= 5.4.0), libstdc++6 (>= 5), libusb-1.0-0 (>= 2:1.0.16)"
 # Debian bullseye Depends: tbd

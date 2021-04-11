@@ -9,6 +9,7 @@ version: 1.0.{build}
 image:
   - Visual Studio 2019
   - macOS
+  - Ubuntu
 
 # Process the build for each build environment
 for:

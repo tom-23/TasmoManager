@@ -227,12 +227,13 @@ void SoftwareUpdate::installPackage(QString packagePath) {
         });
     } else if (packagePath.endsWith(".deb")) {
         QStringList processArguments;
-        processArguments << "echo" << sudoPassword << "| " <<"sudo" << "dpkg" << "-i" << packagePath;
+        processArguments << "-c" << ("\"echo \"" + sudoPassword + "\" | " + "sudo -S " + "dpkg " + "-i \"" + packagePath + "\"\"");
         process->start("/bin/sh", processArguments);
         connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
             [=](int exitCode, QProcess::ExitStatus exitStatus){
             Q_UNUSED(exitStatus);
             qDebug() << "[S/W Update] Finished install with exit code" << exitCode;
+            qDebug() << process->readAllStandardError();
             if (exitCode == 0) {
                 qDebug() << "[S/W Update] Restarting app...";
                 qApp->quit();

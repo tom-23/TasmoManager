@@ -13,7 +13,7 @@ if test -d build/TasmoManager.app; then
          --install-location "/Applications/TasmoManager.app" \
          --identifier "com.tombutcher.tasmomanager.pkg" \
          --version "${APP_VERSION}" \
-         "macOS${APP}-installer.pkg"
+         "macOS-${APP}-installer.pkg"
 else
     true
 fi

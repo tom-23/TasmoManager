@@ -84,10 +84,18 @@ void SoftwareUpdate::netManagerFinished(QNetworkReply *reply) {
               update->author = updateObject.value("author").toObject().value("login").toString();
               update->authorProfile = QUrl(updateObject.value("author").toObject().value("html_url").toString());
               QJsonArray assets = updateObject.value("assets").toArray();
+
               QUrl windowsInstaller;
               QString windowsInstallerName;
+
               QUrl macOSInstaller;
               QString macOSInstallerName;
+
+              QUrl debInstaller;
+              QString debInstallerName;
+              QUrl rpmInstaller;
+              QString rpmInstallerName;
+
 
               for (int a = 0; a < assets.size(); a++) {
                   QJsonObject asset = assets.at(a).toObject();
@@ -101,15 +109,37 @@ void SoftwareUpdate::netManagerFinished(QNetworkReply *reply) {
                       macOSInstaller = QUrl(asset.value("browser_download_url").toString());
                       macOSInstallerName = asset.value("name").toString();
                   }
+                  if (assetName.endsWith(".deb")) {
+                      debInstaller = QUrl(asset.value("browser_download_url").toString());
+                      debInstallerName = asset.value("name").toString();
+                  }
+                  if (assetName.endsWith(".deb")) {
+                      rpmInstaller = QUrl(asset.value("browser_download_url").toString());
+                      rpmInstallerName = asset.value("name").toString();
+                  }
               }
 
               #ifdef __APPLE__
                 update->downloadPath = macOSInstaller;
                 update->downloadFileName = macOSInstallerName;
               #endif
+
               #ifdef _WIN32
                 update->downloadPath = windowsInstaller;
                 update->downloadFileName = windowsInstallerName;
+              #endif
+
+              #ifdef __linux__
+
+                LinuxPackageManager packageManager = getLinuxPackageManager();
+
+                if (packageManager == LinuxPackageManager::apt) {
+                    update->downloadPath = debInstaller;
+                    update->downloadFileName = debInstallerName;
+                } else if (packageManager == LinuxPackageManager::rpm) {
+                    update->downloadPath = rpmInstaller;
+                    update->downloadFileName = rpmInstallerName;
+                }
               #endif
 
               if (!updateObject.value("draft").toBool()) {
@@ -138,6 +168,41 @@ void SoftwareUpdate::netManagerFinished(QNetworkReply *reply) {
     }
     qDebug() << "[S/W Update] You are running the latest version of TasmoManager!";
     emit on_getUpdatesFinised();
+}
+
+bool SoftwareUpdate::isSudoPasswordCorrect(QString password) {
+    QProcess sudoProcess(this);
+    sudoProcess.setProcessChannelMode(QProcess::MergedChannels);
+    QStringList processArguments;
+    processArguments << "-c" << ("echo '" + password + "' | sudo -S echo correct");
+    sudoProcess.start("/bin/sh", processArguments);
+    sudoProcess.waitForStarted();
+    sudoProcess.waitForReadyRead();
+    sudoProcess.kill();
+    sudoProcess.waitForFinished();
+    if (sudoProcess.readAll().endsWith("correct\n")) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+LinuxPackageManager SoftwareUpdate::getLinuxPackageManager() {
+    QProcess detectionProcess(this);
+    detectionProcess.setProcessChannelMode(QProcess::MergedChannels);
+    detectionProcess.start("apt", {"-v"});
+    detectionProcess.waitForStarted();
+    detectionProcess.waitForBytesWritten();
+    if (detectionProcess.readAll().startsWith("apt")) {
+        return LinuxPackageManager::apt;
+    }
+
+    detectionProcess.start("rpm", {""});
+    detectionProcess.waitForStarted();
+    detectionProcess.waitForBytesWritten();
+    if (detectionProcess.readAll().startsWith("RPM")) {
+        return LinuxPackageManager::rpm;
+    }
 }
 
 void SoftwareUpdate::installPackage(QString packagePath) {
@@ -173,6 +238,41 @@ void SoftwareUpdate::installPackage(QString packagePath) {
             Q_UNUSED(exitStatus);
             qDebug() << "[S/W Update] Finished install with exit code" << exitCode;
             if (exitCode != 0) {
+                qDebug() << "[S/W Update] An error occoured whilst trying to install the app package.";
+                emit on_softwareUpdateError();
+            }
+        });
+    } else if (packagePath.endsWith(".deb")) {
+        QStringList processArguments;
+        processArguments << "-c" << ("echo '" + sudoPassword + "' | sudo -S dpkg -i '" + packagePath + "'");
+        process->start("/bin/sh", processArguments);
+        connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+            [=](int exitCode, QProcess::ExitStatus exitStatus){
+            Q_UNUSED(exitStatus);
+            qDebug() << "[S/W Update] Finished install with exit code" << exitCode;
+            qDebug() << process->readAllStandardError();
+            if (exitCode == 0) {
+                qDebug() << "[S/W Update] Restarting app...";
+                qApp->quit();
+                QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+            } else {
+                qDebug() << "[S/W Update] An error occoured whilst trying to install the app package.";
+                emit on_softwareUpdateError();
+            }
+        });
+    } else if (packagePath.endsWith(".rpm")) {
+        QStringList processArguments;
+        processArguments << "-c" << ("echo '" + sudoPassword + "' | sudo -S rpm -i '" + packagePath + "' --nodeps --force");
+        process->start("/bin/sh", processArguments);
+        connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+            [=](int exitCode, QProcess::ExitStatus exitStatus){
+            Q_UNUSED(exitStatus);
+            qDebug() << "[S/W Update] Finished install with exit code" << exitCode;
+            if (exitCode == 0) {
+                qDebug() << "[S/W Update] Restarting app...";
+                qApp->quit();
+                QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+            } else {
                 qDebug() << "[S/W Update] An error occoured whilst trying to install the app package.";
                 emit on_softwareUpdateError();
             }

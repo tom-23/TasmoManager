@@ -9,6 +9,7 @@ version: 1.0.{build}
 image:
   - Visual Studio 2019
   - macOS
+  - Ubuntu
 
 # Process the build for each build environment
 for:
@@ -40,8 +41,8 @@ for:
   after_build:
     - bash scripts/win/after_build.sh
   artifacts:
-    - path: 'tasmomanager-*-setup.exe'
-      name: TasmoManager Windows Installer
+    - path: 'windows-tasmomanager-*-installer.exe'
+      name: Windows Installer
 
 # Build MacOS packages
 - matrix:
@@ -61,6 +62,23 @@ for:
     - path: build/*.pkg
       name: Package Installer
 
+# Build Linux packages
+- matrix:
+    only: 
+      - image: Ubuntu
+  install:
+    - bash scripts/linux/install.sh
+  before_build:
+    - bash scripts/linux/before_build.sh
+  build_script:
+    - bash scripts/linux/build.sh
+  after_build:
+    - bash scripts/linux/after_build.sh
+  artifacts:
+    - path: build/packages/*.deb
+      name: Debian Package
+    - path: build/packages/*.rpm
+      name: RPM Package
 
 # Upload all packages to GitHub, but only if the push was tagged
 deploy:
@@ -68,7 +86,7 @@ deploy:
   tag: $(APPVEYOR_REPO_TAG_NAME)
   auth_token:
     secure: kOuvS5K+YgF6WCqkdU9EXV3eVDUhmnb7jSqY4WoZIrqFRMup7+NFR51LOaZSvOpm
-  artifact: /.*\.dmg/, /.*\.exe/, /.*\.pkg/
+  artifact: /.*\.dmg/, /.*\.exe/, /.*\.pkg/, /.*\.deb/, /.*\.rpm/
   prerelease: true
   force_update: true
   on:

@@ -231,6 +231,35 @@ void PreferencesDialog::on_manualButton_toggled(bool checked)
 
 void PreferencesDialog::on_beginSoftwareUpdateButton_clicked()
 {
+
+#ifdef __linux__
+    bool sudoPasswordCorrect = false;
+    while (!sudoPasswordCorrect) {
+        bool ok;
+        QInputDialog *inputDialog = new QInputDialog(this);
+        inputDialog->setWindowModality(Qt::WindowModal);
+        QString sudoPassword = inputDialog->getText(this, tr("Enter the sudo password"),
+                                                     tr("sudo Passoword:"), QLineEdit::Password,
+                                                     "", &ok);
+        if (!ok) {
+            return;
+        } else {
+
+            sudoPasswordCorrect = softwareUpdate->isSudoPasswordCorrect(sudoPassword);
+            if (sudoPasswordCorrect) {
+                softwareUpdate->sudoPassword = sudoPassword;
+            } else {
+                auto m = new QMessageBox(this);
+                m->setText("sudo Password Incorrect!");
+                m->setIcon(QMessageBox::Critical);
+                m->setWindowModality(Qt::WindowModal);
+                m->setStandardButtons(QMessageBox::Ok);
+                m->exec();
+            }
+        }
+    }
+#endif
+
     ui->closeButton->setEnabled(false);
     ui->listWidget->setEnabled(false);
 

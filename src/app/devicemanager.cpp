@@ -66,14 +66,16 @@ void DeviceManager::on_mqttMessage(QMQTT::Message message) {
             QJsonDocument jsonDoc = QJsonDocument::fromJson(message.payload());
             QString macAddress = jsonDoc.object().value("mac").toString();
             QString ipAddress = jsonDoc.object().value("ip").toString();
-            QString fullTopicWithWildC = jsonDoc.object().value("ft").toString();
+            QString fullTopicWithTokens = jsonDoc.object().value("ft").toString();
             QString topic = jsonDoc.object().value("t").toString();
+            QString hostName = jsonDoc.object().value("hn").toString();
 
-            if (!fullTopicWithWildC.endsWith("/")) { // Ensure the fulltopic has a trailing slash.
-                fullTopicWithWildC = fullTopicWithWildC + "/";
+            if (!fullTopicWithTokens.endsWith("/")) { // Ensure the fulltopic has a trailing slash.
+                fullTopicWithTokens = fullTopicWithTokens + "/";
             }
 
             Device *device = getDeviceByMAC(macAddress);
+
             if (device == nullptr) {
                 device = new Device(this);
                 device->deviceManager = this;
@@ -89,6 +91,7 @@ void DeviceManager::on_mqttMessage(QMQTT::Message message) {
                 device->deviceInfo.ipAddress = QHostAddress(ipAddress);
                 device->deviceInfo.macAddress = macAddress;
                 device->deviceInfo.module = jsonDoc.object().value("md").toString();
+                device->deviceInfo.hostName = hostName;
                 device->deviceInfo.friendlyName = jsonDoc.object().value("fn").toArray().at(0).toString();
                 deviceList->append(device);
                 emit device_Discovered(device->deviceInfo);
@@ -99,7 +102,9 @@ void DeviceManager::on_mqttMessage(QMQTT::Message message) {
                     emit setupNewDevices_Progress(stepIndex, 3, "Device has connected to mqtt...");
                 }
             }
-            QString fullTopic = fullTopicWithWildC.replace("%topic%", topic);
+            QString fullTopic = fullTopicWithTokens;
+            fullTopic.replace("%topic%", topic);
+            fullTopic.replace("%hostname%", hostName);
             device->getDeviceInfo(fullTopic, getDeviceDiscoveryInfoDelay);
             getDeviceDiscoveryInfoDelay = getDeviceDiscoveryInfoDelay + refreshDelay;
         }

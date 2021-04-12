@@ -1,6 +1,7 @@
 #!/bin/bash
-source scripts/macOS/env.sh
-npm install --global create-dmg
+source scripts/linux/env.sh
+sudo apt-get -y install mesa-common-dev libglu1-mesa-dev rpm
+sudo snap install cqtdeployer
 git submodule update --init --recursive
 cd lib/qmqtt
 mkdir build

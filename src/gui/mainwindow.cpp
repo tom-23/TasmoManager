@@ -516,3 +516,8 @@ void MainWindow::checkForUpdates() {
     }
     softwareUpdate->getSoftwareUpdates();
 }
+
+void MainWindow::on_actionDocumentation_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://tom-23.github.io/tasmomanager-docs"));
+}

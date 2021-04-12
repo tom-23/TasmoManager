@@ -262,7 +262,7 @@ void SoftwareUpdate::installPackage(QString packagePath) {
         });
     } else if (packagePath.endsWith(".rpm")) {
         QStringList processArguments;
-        processArguments << "echo" << sudoPassword << "| " <<"sudo" << "rpm" << "-i" << packagePath << "--nodeps" << "--force";
+        processArguments << "-c" << ("echo '" + sudoPassword + "' | sudo -S rpm -i '" + packagePath + "' --nodeps --force");
         process->start("/bin/sh", processArguments);
         connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
             [=](int exitCode, QProcess::ExitStatus exitStatus){

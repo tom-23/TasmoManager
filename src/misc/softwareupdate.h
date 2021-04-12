@@ -61,8 +61,7 @@ public:
 private:
     QNetworkAccessManager *networkManager;
     QNetworkReply *networkReply;
-    QUrl updateURL = QUrl("http://192.168.1.68:5500/releases");
-    //QUrl updateURL = QUrl("https://api.github.com/repos/tom-23/tasmomanager/releases");
+    QUrl updateURL = QUrl("https://api.github.com/repos/tom-23/tasmomanager/releases");
     void netManagerFinished(QNetworkReply *reply);
     void installPackage(QString packagePath);
 

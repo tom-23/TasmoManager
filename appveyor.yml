@@ -41,7 +41,7 @@ for:
   after_build:
     - bash scripts/win/after_build.sh
   artifacts:
-    - path: 'tasmomanager-*-setup.exe'
+    - path: 'windows-tasmomanager-*-installer.exe'
       name: Windows Installer
 
 # Build MacOS packages

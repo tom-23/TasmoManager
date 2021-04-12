@@ -52,6 +52,8 @@ public:
 
     void beginSoftwareUpdate(Update *update);
 
+    bool isSudoPasswordCorrect(QString password);
+
     VersionType versionChannel = Stable;
 
     QString sudoPassword;
@@ -59,7 +61,8 @@ public:
 private:
     QNetworkAccessManager *networkManager;
     QNetworkReply *networkReply;
-    QUrl updateURL = QUrl("https://api.github.com/repos/tom-23/tasmomanager/releases");
+    QUrl updateURL = QUrl("http://192.168.1.68:5500/releases");
+    //QUrl updateURL = QUrl("https://api.github.com/repos/tom-23/tasmomanager/releases");
     void netManagerFinished(QNetworkReply *reply);
     void installPackage(QString packagePath);
 

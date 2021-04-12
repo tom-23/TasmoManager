@@ -35,7 +35,7 @@
 	border: none;
 }
 
-QMessageBox {
+QMessageBox, QInputDialog {
 	background-color: rgb(37, 37, 37);
 	min-width: 500px;
 }

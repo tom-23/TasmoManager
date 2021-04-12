@@ -170,6 +170,23 @@ void SoftwareUpdate::netManagerFinished(QNetworkReply *reply) {
     emit on_getUpdatesFinised();
 }
 
+bool SoftwareUpdate::isSudoPasswordCorrect(QString password) {
+    QProcess sudoProcess(this);
+    sudoProcess.setProcessChannelMode(QProcess::MergedChannels);
+    QStringList processArguments;
+    processArguments << "-c" << ("echo '" + password + "' | sudo -S echo correct");
+    sudoProcess.start("/bin/sh", processArguments);
+    sudoProcess.waitForStarted();
+    sudoProcess.waitForReadyRead();
+    sudoProcess.kill();
+    sudoProcess.waitForFinished();
+    if (sudoProcess.readAll().endsWith("correct\n")) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 LinuxPackageManager SoftwareUpdate::getLinuxPackageManager() {
     QProcess detectionProcess(this);
     detectionProcess.setProcessChannelMode(QProcess::MergedChannels);
@@ -227,7 +244,7 @@ void SoftwareUpdate::installPackage(QString packagePath) {
         });
     } else if (packagePath.endsWith(".deb")) {
         QStringList processArguments;
-        processArguments << "-c" << ("\"echo \"" + sudoPassword + "\" | " + "sudo -S " + "dpkg " + "-i \"" + packagePath + "\"\"");
+        processArguments << "-c" << ("echo '" + sudoPassword + "' | sudo -S dpkg -i '" + packagePath + "'");
         process->start("/bin/sh", processArguments);
         connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
             [=](int exitCode, QProcess::ExitStatus exitStatus){

@@ -6,7 +6,7 @@
 ![GitHub commits since latest release (by SemVer including pre-releases)](https://img.shields.io/github/commits-since/tom-23/tasmomanager/latest?include_prereleases)
 ![GitHub last commit](https://img.shields.io/github/last-commit/tom-23/tasmomanager)
 
-A beginner friendly desktop UI for Tasmota flashed devices for Windows and macOS (Linux cominng soon!).
+A beginner friendly desktop UI for Tasmota flashed devices for Windows, macOS and Linux.
 
 ![TasmoManager Screenshot](resources/screenshots/MainWindow.png?raw=true "TasmoManager Screenshot")
 

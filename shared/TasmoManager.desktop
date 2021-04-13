@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
 Name=TasmoManager
-Exec=/usr/bin/tasmomanager/tasmomanager.sh
+Exec=tasmomanager
 Icon=tasmomanager.svg
 Categories=Development;Electronics;

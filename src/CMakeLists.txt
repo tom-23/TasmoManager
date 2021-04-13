@@ -173,13 +173,23 @@ if (APPLE)
 endif()
 
 if (UNIX AND NOT APPLE)
-    install(DIRECTORY "${CMAKE_BINARY_DIR}/Distro/" DESTINATION "bin/${CMAKE_PROJECT_NAME}"
+    install(DIRECTORY "${CMAKE_BINARY_DIR}/Distro/" DESTINATION "share/${CMAKE_PROJECT_NAME}"
     PATTERN "tasmomanager.sh" EXCLUDE
     PATTERN "bin/tasmomanager" EXCLUDE)
-    install(FILES "${CMAKE_BINARY_DIR}/Distro/tasmomanager.sh" DESTINATION "bin/${CMAKE_PROJECT_NAME}"  
+    install(FILES "${CMAKE_BINARY_DIR}/Distro/tasmomanager.sh" DESTINATION "share/${CMAKE_PROJECT_NAME}"  
     PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
     GROUP_EXECUTE GROUP_READ GROUP_WRITE WORLD_EXECUTE WORLD_WRITE WORLD_READ)
-    install(FILES "${CMAKE_BINARY_DIR}/Distro/bin/tasmomanager" DESTINATION "bin/${CMAKE_PROJECT_NAME}/bin"  
+    install(FILES "${CMAKE_BINARY_DIR}/Distro/bin/tasmomanager" DESTINATION "share/${CMAKE_PROJECT_NAME}/bin"  
+    PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
+    GROUP_EXECUTE GROUP_WRITE WORLD_EXECUTE)
+    if (NOT EXISTS "${CMAKE_BINARY_DIR}/src/tasmomanager")
+        install(CODE "execute_process(
+        COMMAND bash -c \"set -e
+        echo -n .. Creating symlink...
+        ln -sv /usr/share/${CMAKE_PROJECT_NAME}/tasmomanager.sh ${CMAKE_BINARY_DIR}/src/tasmomanager
+        \")")
+    endif()
+    install(FILES "${CMAKE_BINARY_DIR}/src/tasmomanager" DESTINATION "bin/"
     PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
     GROUP_EXECUTE GROUP_WRITE WORLD_EXECUTE)
 endif()

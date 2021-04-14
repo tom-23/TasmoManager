@@ -800,6 +800,9 @@ QTabWidget::pane {
         <property name="rootIsDecorated">
          <bool>false</bool>
         </property>
+        <property name="sortingEnabled">
+         <bool>true</bool>
+        </property>
         <column>
          <property name="text">
           <string>Device Name</string>
@@ -1045,7 +1048,7 @@ QTabWidget::pane {
   </widget>
   <action name="actionPreferences">
    <property name="text">
-    <string>Preferences</string>
+    <string>Settings</string>
    </property>
   </action>
   <action name="actionAbout">

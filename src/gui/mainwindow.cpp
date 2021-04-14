@@ -25,6 +25,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->newUpdateBar->setVisible(false);
 
+    ui->deviceList->setColumnWidth(0, 200);
+    ui->deviceList->setColumnWidth(1, 200);
+    ui->deviceList->setColumnWidth(2, 125);
+    ui->deviceList->setColumnWidth(4, 125);
+    ui->deviceList->setColumnWidth(5, 125);
+
     connect(deviceManager, &DeviceManager::device_Discovered, this, &MainWindow::on_deviceDiscovered);
     connect(deviceManager, &DeviceManager::device_InfoUpdate, this, &MainWindow::on_deviceInfoUpdate);
 

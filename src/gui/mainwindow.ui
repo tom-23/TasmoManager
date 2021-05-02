@@ -105,6 +105,11 @@ QHeaderView::section::first {
 	border-top: 1px Solid #0C0C0C;
 }
 
+#statusBar {
+	background-color: #646464;
+	border-top: 1px Solid #0C0C0C;
+}
+
 QTreeWidget::item {
    	padding: 5px;
 	border: 0px; 
@@ -874,7 +879,7 @@ QTabWidget::pane {
            <x>0</x>
            <y>0</y>
            <width>260</width>
-           <height>388</height>
+           <height>363</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -929,6 +934,34 @@ QTabWidget::pane {
      </layout>
     </item>
     <item>
+     <widget class="QWidget" name="statusBar" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <property name="spacing">
+        <number>10</number>
+       </property>
+       <property name="leftMargin">
+        <number>10</number>
+       </property>
+       <property name="topMargin">
+        <number>5</number>
+       </property>
+       <property name="rightMargin">
+        <number>10</number>
+       </property>
+       <property name="bottomMargin">
+        <number>5</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="statusBarText">
+         <property name="text">
+          <string>0 total device(s), 0 online device(s)</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
      <widget class="QWidget" name="newUpdateBar" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <property name="spacing">
@@ -961,7 +994,7 @@ QTabWidget::pane {
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">image: url(:/24/assets/24_swupdate_square.svg);</string>
+          <string notr="true">image: url(:/16/assets/16_updating.svg);</string>
          </property>
         </widget>
        </item>
@@ -1033,6 +1066,7 @@ QTabWidget::pane {
     <addaction name="separator"/>
     <addaction name="actionSidebar"/>
     <addaction name="actionToolBar"/>
+    <addaction name="actionStatus_Bar"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -1150,6 +1184,9 @@ QTabWidget::pane {
    <property name="text">
     <string>Device Name</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+0</string>
+   </property>
   </action>
   <action name="actionFriendlyName">
    <property name="checkable">
@@ -1160,6 +1197,9 @@ QTabWidget::pane {
    </property>
    <property name="text">
     <string>Friendly Name</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
    </property>
   </action>
   <action name="actionIP_Address">
@@ -1172,6 +1212,9 @@ QTabWidget::pane {
    <property name="text">
     <string>IP Address</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
+   </property>
   </action>
   <action name="actionWIFI_Strengt">
    <property name="checkable">
@@ -1182,6 +1225,9 @@ QTabWidget::pane {
    </property>
    <property name="text">
     <string>WIFI Strength</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
    </property>
   </action>
   <action name="actionMAC_Address">
@@ -1194,6 +1240,9 @@ QTabWidget::pane {
    <property name="text">
     <string>MAC Address</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+4</string>
+   </property>
   </action>
   <action name="actionFirmware_Version">
    <property name="checkable">
@@ -1204,6 +1253,9 @@ QTabWidget::pane {
    </property>
    <property name="text">
     <string>Firmware Version</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+5</string>
    </property>
   </action>
   <action name="actionStatus">
@@ -1216,6 +1268,9 @@ QTabWidget::pane {
    <property name="text">
     <string>Status</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+7</string>
+   </property>
   </action>
   <action name="actionModule">
    <property name="checkable">
@@ -1226,6 +1281,9 @@ QTabWidget::pane {
    </property>
    <property name="text">
     <string>Module</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+6</string>
    </property>
   </action>
   <action name="actionSidebar">
@@ -1259,6 +1317,20 @@ QTabWidget::pane {
   <action name="actionDocumentation">
    <property name="text">
     <string>Documentation</string>
+   </property>
+  </action>
+  <action name="actionStatus_Bar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Status Bar</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+B</string>
    </property>
   </action>
  </widget>
@@ -1443,6 +1515,22 @@ QTabWidget::pane {
     <hint type="destinationlabel">
      <x>449</x>
      <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionStatus_Bar</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>statusBar</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>477</x>
+     <y>460</y>
     </hint>
    </hints>
   </connection>

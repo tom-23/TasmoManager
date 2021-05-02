@@ -190,9 +190,11 @@ void MainWindow::on_deviceDiscovered(DeviceInfo deviceInfo) {
     if (ui->deviceList->selectedItems().size() == 0) {
         ui->deviceList->topLevelItem(0)->setSelected(true);
     }
+    updateStatusBar();
 }
 
 void MainWindow::on_deviceInfoUpdate(DeviceInfo deviceInfo) {
+    updateStatusBar();
     for (int i = 0; i < ui->deviceList->topLevelItemCount(); i++) {
 
         QTreeWidgetItem *item = ui->deviceList->topLevelItem(i);
@@ -526,4 +528,20 @@ void MainWindow::checkForUpdates() {
 void MainWindow::on_actionDocumentation_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://tom-23.github.io/tasmomanager-docs"));
+}
+
+void MainWindow::updateStatusBar()
+{
+    QString deviceTotalCountString = QString::number(deviceManager->deviceList->size());
+    int deviceOnlineCount = 0;
+    for (int i = 0; i < deviceManager->deviceList->size(); i++) {
+        Device *device = deviceManager->deviceList->at(i);
+        if (device->deviceInfo.status == DeviceStatus::Online) {
+            deviceOnlineCount += 1;
+        }
+    }
+    QString deviceOnlineCountString = QString::number(deviceOnlineCount);
+
+    ui->statusBarText->setText(deviceTotalCountString + " total device(s), "
+                               + deviceOnlineCountString + " online device(s).");
 }

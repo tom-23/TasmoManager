@@ -109,6 +109,7 @@ private:
     Device *selectedDevice = nullptr;
 
     void updatePrefs();
+    void updateStatusBar();
 
     void checkForUpdates();
 

@@ -50,7 +50,7 @@ void UpdateDeviceDialog::on_cancelButton_clicked()
 {
     auto m = new QMessageBox(this);
     m->setText("Are you sure you want to cancel firmware update?");
-    m->setInformativeText("You will loose changes.");
+    m->setInformativeText("You will lose any changes");
     m->setIcon(QMessageBox::Warning);
     m->setWindowModality(Qt::WindowModal);
     m->setStandardButtons(QMessageBox::Yes | QMessageBox::No);

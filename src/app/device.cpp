@@ -98,14 +98,33 @@ void Device::setLogLevel(int level) {
 }
 
 void Device::setPower(int powerID, bool on) {
-    if (powerID <= 4 && powerID >= 1){
+    if (powerID >= 1) {
         deviceInfo.power.at(powerID - 1)->power = on;
         QMQTT::Message message;
         message.setTopic((cmndTopic + "POWER" + QString::number(powerID)).toUtf8());
         message.setPayload(boolToOnOff(on).toUtf8());
         deviceManager->mqttClient->publish(message);
     } else {
-        qDebug() << "[Device] Power ID is out of range (1 - 4)";
+        qDebug() << "[Device] Power ID is out of range";
+    }
+}
+
+void Device::setWebUIButtonName(int powerID, QString name)
+{
+    if (powerID >= 1) {
+        deviceInfo.power.at(powerID - 1)->webUiName = name;
+        QMQTT::Message message;
+        message.setTopic((cmndTopic + "WebButton" + QString::number(powerID)).toUtf8());
+        QString payload;
+        if (name == "") {
+            payload = "\"\"";
+        } else {
+            payload = name;
+        }
+        message.setPayload(payload.toUtf8());
+        deviceManager->mqttClient->publish(message);
+    } else {
+        qDebug() << "[Device] Power ID is out of range";
     }
 }
 

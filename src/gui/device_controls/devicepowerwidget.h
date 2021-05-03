@@ -1,6 +1,7 @@
 #ifndef DEVICEPOWERWIDGET_H
 #define DEVICEPOWERWIDGET_H
 
+#include <QDialogButtonBox>
 #include <QWidget>
 
 #include "../mainwindow.h"

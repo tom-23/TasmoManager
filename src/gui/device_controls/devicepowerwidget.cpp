@@ -52,11 +52,35 @@ void DevicePowerWidget::updateUI() {
             pushButton->setObjectName("power" + QString::number(i + 1));
             pushButton->setProperty("powerNumber", i + 1);
             pushButton->setCheckable(true);
+            pushButton->setContextMenuPolicy(Qt::CustomContextMenu);
             connect(pushButton, &QPushButton::toggled, this, [=](bool toggled) {
                 if (updatingUI) {
                     return;
                 }
                 device->setPower(pushButton->property("powerNumber").toInt(), toggled);
+            });
+
+            connect(pushButton, &QPushButton::customContextMenuRequested, this, [=]() {
+                QInputDialog *inputDialog = new QInputDialog(this);
+                inputDialog->setWindowModality(Qt::WindowModal);
+                inputDialog->setInputMode(QInputDialog::TextInput);
+                inputDialog->setWindowTitle("Edit WebUI Button Name");
+                inputDialog->setLabelText("Enter a new button name:");
+                inputDialog->setTextValue(pushButton->text());
+                inputDialog->setBaseSize(300, 150);
+
+                // this bit of code allows be to change the color of the buttons and that's all.
+                // THANKS Qt!!!!!!!!!
+                QList<QDialogButtonBox *> objectList = inputDialog
+                                                           ->findChildren<QDialogButtonBox *>();
+                if (!objectList.isEmpty()) {
+                    objectList.first()->button(QDialogButtonBox::Ok)->setObjectName("okButton");
+                }
+
+                if (inputDialog->exec() == 1) {
+                    QString newName = inputDialog->textValue();
+                    device->setWebUIButtonName(pushButton->property("powerNumber").toInt(), newName);
+                }
             });
 
             QGridLayout *gridLayout = qobject_cast<QGridLayout *>(ui->centralWidget->layout());

@@ -29,7 +29,20 @@
 
 QComboBox::drop-down {border-width: 0px; } QComboBox::down-arrow {image: url(noimg); border-width: 0px;}
 
+QLineEdit,  QComboBox, QSpinBox {
+	background-color: #4f4f4f;
+	padding: 3px;
+	border-radius: 5px;
+	border: 1px Solid #0C0C0C;
+}
 
+QPushButton[text=&quot;OK&quot;] {
+	background-color: #47c266;
+}
+
+QPushButton[text=&quot;Cancel&quot;] {
+	background-color: #d43535;
+}
 QToolTip {
 	color: black;
 }
@@ -136,6 +149,11 @@ QPushButton:!enabled {
 }
 
 QMessageBox {
+	background-color: rgb(37, 37, 37);
+	min-width: 500px;
+}
+
+QInputDialog {
 	background-color: rgb(37, 37, 37);
 	min-width: 500px;
 }
@@ -854,7 +872,7 @@ QTabWidget::pane {
        <widget class="QScrollArea" name="sideBarContainer">
         <property name="maximumSize">
          <size>
-          <width>260</width>
+          <width>300</width>
           <height>16777215</height>
          </size>
         </property>
@@ -878,7 +896,7 @@ QTabWidget::pane {
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>260</width>
+           <width>300</width>
            <height>366</height>
           </rect>
          </property>

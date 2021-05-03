@@ -187,7 +187,8 @@ bool SoftwareUpdate::isSudoPasswordCorrect(QString password) {
     }
 }
 
-LinuxPackageManager SoftwareUpdate::getLinuxPackageManager() {
+LinuxPackageManager SoftwareUpdate::getLinuxPackageManager()
+{
     QProcess detectionProcess(this);
     detectionProcess.setProcessChannelMode(QProcess::MergedChannels);
     detectionProcess.start("apt", {"-v"});

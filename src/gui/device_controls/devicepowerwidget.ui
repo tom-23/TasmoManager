@@ -27,6 +27,15 @@ QPushButton {
 QPushButton:checked {
 	background-color: #1FA3EC;
 }
+
+
+QPushButton[text=&quot;OK&quot;] {
+	background-color: #47c266;
+}
+
+QPushButton[text=&quot;Cancel&quot;] {
+	background-color: #d43535;
+}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">

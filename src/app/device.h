@@ -171,6 +171,8 @@ public:
     void restart();
 
     void setPower(int powerID, bool on);
+    void setWebUIButtonName(int powerID, QString name);
+
     void setChannel(int channelID, int value);
 
     void setDimmer(int value);

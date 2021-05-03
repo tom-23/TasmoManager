@@ -21,7 +21,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">* {
-	font: &quot;Rublik&quot;;
+	font-family: &quot;Inter&quot;;
 	font-size: 12px;
 	font-weight: 400;
 	color: white;
@@ -879,7 +879,7 @@ QTabWidget::pane {
            <x>0</x>
            <y>0</y>
            <width>260</width>
-           <height>363</height>
+           <height>366</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">

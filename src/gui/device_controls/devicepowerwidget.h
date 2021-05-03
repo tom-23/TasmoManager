@@ -19,19 +19,6 @@ public:
 
     void setDevice(Device *device);
 
-private slots:
-    void on_power1_toggled(bool checked);
-
-    void on_power2_toggled(bool checked);
-
-    void on_power3_toggled(bool checked);
-
-    void on_power4_toggled(bool checked);
-
-    void on_power5_toggled(bool checked);
-
-    void on_power6_toggled(bool checked);
-
 private:
     Ui::DevicePowerWidget *ui;
 

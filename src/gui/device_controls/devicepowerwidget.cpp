@@ -50,7 +50,15 @@ void DevicePowerWidget::updateUI() {
         if (!pushButton) {
             pushButton = new QPushButton(ui->centralWidget);
             pushButton->setObjectName("power" + QString::number(i + 1));
+            pushButton->setProperty("powerNumber", i + 1);
             pushButton->setCheckable(true);
+            connect(pushButton, &QPushButton::toggled, this, [=](bool toggled) {
+                if (updatingUI) {
+                    return;
+                }
+                device->setPower(pushButton->property("powerNumber").toInt(), toggled);
+            });
+
             QGridLayout *gridLayout = qobject_cast<QGridLayout *>(ui->centralWidget->layout());
             int col = 0;
             if (gridLayout->count() % 2 != 0) {
@@ -73,52 +81,4 @@ void DevicePowerWidget::updateUI() {
     this->setVisible(device->deviceInfo.power[0]->enabled);
 
     updatingUI = false;
-}
-
-void DevicePowerWidget::on_power1_toggled(bool checked)
-{
-    if (updatingUI) {
-        return;
-    }
-    device->setPower(1, checked);
-}
-
-void DevicePowerWidget::on_power2_toggled(bool checked)
-{
-    if (updatingUI) {
-        return;
-    }
-    device->setPower(2, checked);
-}
-
-void DevicePowerWidget::on_power3_toggled(bool checked)
-{
-    if (updatingUI) {
-        return;
-    }
-    device->setPower(3, checked);
-}
-
-void DevicePowerWidget::on_power4_toggled(bool checked)
-{
-    if (updatingUI) {
-        return;
-    }
-    device->setPower(4, checked);
-}
-
-void DevicePowerWidget::on_power5_toggled(bool checked)
-{
-    if (updatingUI) {
-        return;
-    }
-    device->setPower(5, checked);
-}
-
-void DevicePowerWidget::on_power6_toggled(bool checked)
-{
-    if (updatingUI) {
-        return;
-    }
-    device->setPower(6, checked);
 }

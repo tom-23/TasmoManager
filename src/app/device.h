@@ -18,6 +18,21 @@
 class DeviceManager;
 struct MQTTServerInfo;
 
+struct Slider
+{
+    bool enabled = false;
+    int min = 0;
+    int max = 100;
+    int value = 0;
+};
+
+struct Power
+{
+    QString webUiName = "";
+    bool power = false;
+    bool enabled = false;
+};
+
 enum SetOptionCategory {
     General,
     Buttons,
@@ -65,7 +80,6 @@ enum DeviceStatus {
 };
 
 struct DeviceCapabilities {
-    QList<bool> power = {false, false, false, false, false, false};
     QList<bool> channels = {false, false, false, false, false};
     bool color = false;
     bool colorTemp = false;
@@ -115,10 +129,11 @@ struct DeviceInfo {
 
     DeviceCapabilities capabilities = DeviceCapabilities();
 
-    QList<bool> power = {false, false, false, false, false, false};
+    QVarLengthArray<Power *, 16> power;
+    QVarLengthArray<Slider *, 5> sliders;
 
     int dimmer;
-    QList<int> channels = {0, 0, 0, 0, 0};
+    //QList<int> channels = {0, 0, 0, 0, 0};
 
     QColor color;
     int colorTemp;

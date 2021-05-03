@@ -34,8 +34,6 @@ void DeviceInfoWidget::setDevice(Device *_device) {
 
 void DeviceInfoWidget::on_deviceName_textChanged(const QString &arg1)
 {
-    qDebug() << lastDeviceName;
-    qDebug() << arg1;
     deviceNameChanged = (lastDeviceName != arg1);
     updateButtonVisibility();
 }

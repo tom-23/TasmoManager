@@ -52,7 +52,7 @@ private:
     int previousCT;
     int previousDimmer;
 
-    QList<int> previousChannels;
+    QVarLengthArray<Slider *, 5> previousChannels;
 
     bool updatingUI = false;
 };

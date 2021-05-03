@@ -88,6 +88,10 @@ QListView::item:selected {
 	background-color: #1fa3ec;
 }
 
+#sideBarList::item:selected {
+	background-color: rgb(66, 66, 66);
+}
+
 #mqttServersList {
 	background-color: rgb(37, 37, 37);
 	padding: 3px;
@@ -131,7 +135,7 @@ QComboBox::drop-down {border-width: 0px; } QComboBox::down-arrow {image: url(noi
     <number>0</number>
    </property>
    <item>
-    <widget class="QListWidget" name="listWidget">
+    <widget class="QListWidget" name="sideBarList">
      <property name="maximumSize">
       <size>
        <width>200</width>
@@ -288,6 +292,33 @@ QComboBox::drop-down {border-width: 0px; } QComboBox::down-arrow {image: url(noi
             <item>
              <property name="text">
               <string>Disabled</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>Connect Last MQTT on startup:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="showConnectLastMQTT">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <item>
+             <property name="text">
+              <string>Disabled (default)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Enabled</string>
              </property>
             </item>
            </widget>

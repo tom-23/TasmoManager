@@ -4,6 +4,14 @@ Device::Device(QObject *parent) : QObject(parent)
 {
     deviceInfo.mqttServer->currentlyConnected = false;
     deviceInfo.mqttServer->name = "device";
+
+    for (int i = 0; i < 16; i++) {
+        deviceInfo.power.append(new Power);
+    }
+
+    for (int i = 0; i < 5; i++) {
+        deviceInfo.sliders.append(new Slider);
+    }
 }
 
 void Device::getDeviceInfo(QString fullTopic, int delay) {
@@ -26,10 +34,8 @@ void Device::getDeviceInfo(QString fullTopic, int delay) {
     qDebug() << "[Device] TOPIC:" << cmndTopic + "Status";
     QMQTT::Message message;
 
-    message.setTopic((cmndTopic + "Status").toUtf8());
-    message.setPayload("0");
-
-
+    message.setTopic((cmndTopic + "Backlog").toUtf8());
+    message.setPayload("Status 0; WebButton;");
 
     QTimer *delayTimer = new QTimer(this);
     delayTimer->setSingleShot(true);
@@ -52,7 +58,6 @@ void Device::setDeviceNames(QString name, QString friendlyName) {
     emit deviceManager->device_InfoUpdate(deviceInfo);
 }
 
-
 void Device::openWebUI() {
     QDesktopServices::openUrl(QUrl("http://" + deviceInfo.ipAddress.toString() + "/"));
 }
@@ -67,8 +72,8 @@ void Device::getState() {
     deviceInfo.capabilities.dimmer = false;
     deviceInfo.capabilities.colorTemp = false;
 
-    for (int i = 0; i < deviceInfo.capabilities.power.size(); i++) {
-        deviceInfo.capabilities.power[i] = false;
+    for (int i = 0; i < deviceInfo.power.size(); i++) {
+        deviceInfo.power.at(i)->enabled = false;
     }
 
     for (int i = 0; i < deviceInfo.capabilities.channels.size(); i++) {
@@ -94,7 +99,7 @@ void Device::setLogLevel(int level) {
 
 void Device::setPower(int powerID, bool on) {
     if (powerID <= 4 && powerID >= 1){
-        deviceInfo.power[powerID - 1] = on;
+        deviceInfo.power.at(powerID - 1)->power = on;
         QMQTT::Message message;
         message.setTopic((cmndTopic + "POWER" + QString::number(powerID)).toUtf8());
         message.setPayload(boolToOnOff(on).toUtf8());
@@ -106,7 +111,7 @@ void Device::setPower(int powerID, bool on) {
 
 void Device::setChannel(int channelID, int value) {
     if (channelID <= 5 && channelID >= 1){
-        deviceInfo.channels[channelID - 1] = value;
+        deviceInfo.sliders[channelID - 1]->value = value;
         QMQTT::Message message;
         message.setTopic((cmndTopic + "Channel" + QString::number(channelID)).toUtf8());
         message.setPayload(QString::number(map(value, 0, 255, 0, 100)).toUtf8());
@@ -398,25 +403,32 @@ void Device::on_Message(QMQTT::Message message) {
         // Here is where we identify a device's capabilities (color, power, etc...) and set the respective values.
 
         if (!rootObject.value("POWER").isUndefined()) {
-            deviceInfo.capabilities.power[0] = true;
-            deviceInfo.power[0] = onOffToBool(rootObject.value("POWER").toString());
+            deviceInfo.power[0]->enabled = true;
+            deviceInfo.power[0]->power = onOffToBool(rootObject.value("POWER").toString());
         }
 
-        // Go through 4 power swiches
-        for (int i = 0; i < deviceInfo.capabilities.power.size(); i++) {
+        // Go through 16 power swiches
+        for (int i = 0; i < deviceInfo.power.size(); i++) {
             if (!rootObject.value("POWER" + QString::number(i + 1)).isUndefined()) {
                 bool value = onOffToBool(rootObject.value("POWER" + QString::number(i + 1)).toString());
-                deviceInfo.capabilities.power[i] = true;
-                deviceInfo.power[i] = value;
+                deviceInfo.power[i]->enabled = true;
+                deviceInfo.power[i]->power = value;
+            }
+            if (!rootObject.value("WebButton" + QString::number(i + 1)).isUndefined()) {
+                QString value = rootObject.value("WebButton" + QString::number(i + 1)).toString();
+                deviceInfo.power[i]->webUiName = value;
             }
         }
 
         // Go through 5 light channels
-        for (int i = 0; i < deviceInfo.capabilities.channels.size(); i++) {
+        for (int i = 0; i < deviceInfo.sliders.size(); i++) {
             if (!rootObject.value("Channel" + QString::number(i + 1)).isUndefined()) {
                 int value = rootObject.value("Channel" + QString::number(i + 1)).toInt();
                 deviceInfo.capabilities.channels[i] = true;
-                deviceInfo.channels[i] = map(value, 0, 100, 0, 255);
+                deviceInfo.sliders.at(i)->value = map(value, 0, 100, 0, 255);
+                deviceInfo.sliders.at(i)->min = 0;
+                deviceInfo.sliders.at(i)->max = 255;
+                deviceInfo.sliders.at(i)->enabled = true;
             }
         }
 

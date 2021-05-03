@@ -30,7 +30,7 @@ public:
     void goToAboutPage();
 
 private slots:
-    void on_listWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+    void on_sideBarList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 
     void on_addButton_clicked();
 

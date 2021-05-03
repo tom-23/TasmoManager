@@ -24,7 +24,7 @@ void DeviceColorWidget::setDevice(Device *_device) {
 
     if (device != nullptr) {
         previousChannels.clear();
-        previousChannels.append(device->deviceInfo.channels);
+        previousChannels = device->deviceInfo.sliders;
 
         updateUI();
 
@@ -58,12 +58,12 @@ void DeviceColorWidget::updateColor() {
 
         bool noChannelsChanged = true;
 
-        for (int i = 0; i < device->deviceInfo.capabilities.channels.size(); i++) {
+        for (int i = 0; i < device->deviceInfo.sliders.size(); i++) {
             QSlider *slider = this->findChild<QSlider*>("channel" + QString::number(i + 1));
             if (slider) {
-                if (previousChannels[i] != slider->value()) {
+                if (previousChannels[i]->value != slider->value()) {
                     noChannelsChanged = false;
-                    previousChannels[i] = slider->value();
+                    previousChannels[i]->value = slider->value();
                     device->setChannel(i + 1, slider->value());
                 }
             }
@@ -86,10 +86,9 @@ void DeviceColorWidget::updateUI() {
     // Only show ui objects which can be controlled.
 
     bool displayWidget = device->deviceInfo.capabilities.colorTemp
-            || device->deviceInfo.capabilities.color
-            || device->deviceInfo.capabilities.dimmer
-            || device->deviceInfo.capabilities.channels[0];
-
+                         || device->deviceInfo.capabilities.color
+                         || device->deviceInfo.capabilities.dimmer
+                         || device->deviceInfo.sliders[0]->enabled;
 
     ui->brightness->setVisible(device->deviceInfo.capabilities.dimmer);
 
@@ -97,13 +96,6 @@ void DeviceColorWidget::updateUI() {
     ui->saturation->setVisible(device->deviceInfo.capabilities.color);
 
     ui->colorTemp->setVisible(device->deviceInfo.capabilities.colorTemp);
-
-    ui->channel1->setVisible(device->deviceInfo.capabilities.channels[0]);
-    ui->channel2->setVisible(device->deviceInfo.capabilities.channels[1]);
-    ui->channel3->setVisible(device->deviceInfo.capabilities.channels[2]);
-    ui->channel4->setVisible(device->deviceInfo.capabilities.channels[3]);
-    ui->channel5->setVisible(device->deviceInfo.capabilities.channels[4]);
-
 
     if (displayWidget) {
         this->setVisible(true);
@@ -123,10 +115,11 @@ void DeviceColorWidget::updateUI() {
 
         ui->colorTemp->setValue(device->deviceInfo.colorTemp);
 
-        for (int i = 0; i < device->deviceInfo.capabilities.channels.size(); i++) {
+        for (int i = 0; i < device->deviceInfo.sliders.size(); i++) {
             QSlider *slider = this->findChild<QSlider*>("channel" + QString::number(i + 1));
             if (slider) {
-                slider->setValue(device->deviceInfo.channels[i]);
+                slider->setVisible(device->deviceInfo.sliders[i]->enabled);
+                slider->setValue(device->deviceInfo.sliders[i]->value);
             }
         }
         updatingUI = false;

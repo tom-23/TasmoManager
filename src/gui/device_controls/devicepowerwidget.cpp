@@ -39,21 +39,38 @@ void DevicePowerWidget::setDevice(Device *_device) {
 }
 
 void DevicePowerWidget::updateUI() {
-    qDebug() << "updating power";
+    qDebug() << "[Power Widget] Updating info...";
     if (!device) {
         return;
     }
     updatingUI = true;
 
-    for (int i = 0; i < device->deviceInfo.capabilities.power.size(); i++) {
-        QPushButton *pushButton = this->findChild<QPushButton*>("power" + QString::number(i + 1));
+    for (int i = 0; i < device->deviceInfo.power.size(); i++) {
+        QPushButton *pushButton = this->findChild<QPushButton *>("power" + QString::number(i + 1));
+        if (!pushButton) {
+            pushButton = new QPushButton(ui->centralWidget);
+            pushButton->setObjectName("power" + QString::number(i + 1));
+            pushButton->setCheckable(true);
+            QGridLayout *gridLayout = qobject_cast<QGridLayout *>(ui->centralWidget->layout());
+            int col = 0;
+            if (gridLayout->count() % 2 != 0) {
+                col = 1;
+            }
+            gridLayout->addWidget(pushButton, gridLayout->count() / 2, col);
+        }
         if (pushButton) {
-            pushButton->setVisible(device->deviceInfo.capabilities.power[i]);
-            pushButton->setChecked(device->deviceInfo.power[i]);
+            pushButton->setVisible(device->deviceInfo.power[i]->enabled);
+            pushButton->setChecked(device->deviceInfo.power[i]->power);
+            QString webUiName = device->deviceInfo.power[i]->webUiName;
+            if (webUiName != "") {
+                pushButton->setText(webUiName);
+            } else {
+                pushButton->setText("POWER " + QString::number(i + 1));
+            }
         }
     }
 
-    this->setVisible(device->deviceInfo.capabilities.power[0]);
+    this->setVisible(device->deviceInfo.power[0]->enabled);
 
     updatingUI = false;
 }

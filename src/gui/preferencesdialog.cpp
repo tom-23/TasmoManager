@@ -7,7 +7,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->version->setText(TASMOMANAGER_VERSION);
-    ui->listWidget->setCurrentRow(0);
+    ui->sideBarList->setCurrentRow(0);
     ui->saveIPSettingsButton->setVisible(false);
 
     QMovie *movie = new QMovie(":/gif/assets/light_loader.gif");
@@ -58,11 +58,12 @@ void PreferencesDialog::checkForSoftwareUpdates() {
     softwareUpdate->getSoftwareUpdates();
 }
 
-void PreferencesDialog::on_listWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+void PreferencesDialog::on_sideBarList_currentItemChanged(QListWidgetItem *current,
+                                                          QListWidgetItem *previous)
 {
     Q_UNUSED(current);
     Q_UNUSED(previous);
-    ui->stackedWidget->setCurrentIndex(ui->listWidget->currentIndex().row());
+    ui->stackedWidget->setCurrentIndex(ui->sideBarList->currentIndex().row());
 }
 
 void PreferencesDialog::setMQTTManager(MQTTServerManager *_serverManager) {
@@ -137,7 +138,7 @@ void PreferencesDialog::on_removeButton_clicked()
 }
 
 void PreferencesDialog::goToAboutPage() {
-    ui->listWidget->setCurrentRow(ui->listWidget->count() - 1);
+    ui->sideBarList->setCurrentRow(ui->sideBarList->count() - 1);
 }
 
 void PreferencesDialog::on_githubButton_clicked()
@@ -261,7 +262,7 @@ void PreferencesDialog::on_beginSoftwareUpdateButton_clicked()
 #endif
 
     ui->closeButton->setEnabled(false);
-    ui->listWidget->setEnabled(false);
+    ui->sideBarList->setEnabled(false);
 
     QProgressDialog *progressDialog = new QProgressDialog(this);
     progressDialog->setMinimumDuration(0);

@@ -14,11 +14,26 @@ int main(int argc, char *argv[])
 
     qDebug() << "TasmoManager version" << TASMOMANAGER_VERSION;
 
-    QFontDatabase::addApplicationFont(":/fonts/fonts/Rublik/Rubik-Regular.ttf");
-    QFontDatabase::addApplicationFont(":/fonts/fonts/Rublik/Rubik-Medium.ttf");
-    QFontDatabase::addApplicationFont(":/fonts/fonts/Rublik/Rubik-MediumItalic.ttf");
-    QFontDatabase::addApplicationFont(":/fonts/fonts/Rublik/Rubik-Bold.ttf");
-    QFontDatabase::addApplicationFont(":/fonts/fonts/Rublik/Rubik-Italic.ttf");
+    if (QFontDatabase::addApplicationFont(":/fonts/fonts/Inter-Light.ttf") == -1) {
+        qDebug() << "[Fonts] WARNING! Couldn't load Inter-Light.ttf";
+    }
+
+    if (QFontDatabase::addApplicationFont(":/fonts/fonts/Inter-Regular.ttf") == -1) {
+        qDebug() << "[Fonts] WARNING! Couldn't load Inter-Regular.ttf";
+    }
+
+    if (QFontDatabase::addApplicationFont(":/fonts/fonts/Inter-Medium.ttf") == -1) {
+        qDebug() << "[Fonts] WARNING! Couldn't load Inter-Medium.ttf";
+    }
+
+    if (QFontDatabase::addApplicationFont(":/fonts/fonts/Inter-SemiBold.ttf") == -1) {
+        qDebug() << "[Fonts] WARNING! Couldn't load Inter-SemiBold.ttf";
+    }
+
+    if (QFontDatabase::addApplicationFont(":/fonts/fonts/Inter-Bold.ttf") == -1) {
+        qDebug() << "[Fonts] WARNING! Couldn't load Inter-Bold.ttf";
+    }
+
     MainWindow w;
     w.show();
     return a.exec();

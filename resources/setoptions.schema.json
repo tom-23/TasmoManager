@@ -50,7 +50,7 @@
             "category": "Temperature",
             "type": "enum",
             "values": [
-                "Semove retained message on old topic LWT (default)",
+                "Remove retained message on old topic LWT (default)",
                 "Send 'Offline' to old topic LWT"
             ],
             "requiresRestart": false
